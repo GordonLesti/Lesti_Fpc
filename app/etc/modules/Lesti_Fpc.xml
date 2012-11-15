@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Lesti_Fpc>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Lesti_Fpc>
+    </modules>
+</config>

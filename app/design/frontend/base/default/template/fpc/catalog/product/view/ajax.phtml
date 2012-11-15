@@ -1,0 +1,13 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: gordon
+ * Date: 08.11.12
+ * Time: 13:49
+ * To change this template use File | Settings | File Templates.
+ */
+if($url = $this->getAjaxUrl()): ?>
+    <script type="text/javascript">
+        new Ajax.Request(<?php echo '"' . $url . '"'; ?>);
+    </script>
+<?php endif;
