@@ -47,12 +47,11 @@ class Lesti_Fpc_Model_Observer
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $cacheableActions = Mage::helper('fpc')->getCacheableActions();
             if (in_array($fullActionName, $cacheableActions)) {
+                $fpc->cleanOld();
                 $key = Mage::helper('fpc')->getKey();
                 $body = $observer->getEvent()->getResponse()->getBody();
                 $this->_cache_tags = array_merge(Mage::helper('fpc')->getCacheTags(), $this->_cache_tags);
                 $fpc->save($body, $key, $this->_cache_tags);
-                $url =Mage::getUrl('*/*/*', array('_current' => true, '_use_rewrite' => true));
-                $fpc->save($url, Mage::helper('fpc')->getKey('_url'), array('url'));
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 $observer->getEvent()->getResponse()->setBody($body);
@@ -127,6 +126,11 @@ class Lesti_Fpc_Model_Observer
             $fpc = $this->_getFpc();
             $fpc->cleanbyTag('cmsblock_' . $object->getIdentifier());
         }
+    }
+
+    public function rebuildCache($observer)
+    {
+        $this->_getFpc()->rebuild();
     }
 
     protected function _getFpc()
