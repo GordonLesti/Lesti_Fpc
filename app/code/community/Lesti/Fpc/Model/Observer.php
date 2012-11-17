@@ -92,45 +92,56 @@ class Lesti_Fpc_Model_Observer
 
     public function catalogProductSaveAfter($observer)
     {
-        $product = $observer->getEvent()->getProduct();
-        if ($product->getId()) {
-            $fpc = $this->_getFpc();
-            $fpc->cleanByTag('product_' . $product->getId());
+        $fpc = $this->_getFpc();
+        if ($fpc->isActive()) {
+            $product = $observer->getEvent()->getProduct();
+            if ($product->getId()) {
+                $fpc->cleanByTag('product_' . $product->getId());
+            }
         }
     }
 
     public function catalogCategorySaveAfter($observer)
     {
-        $category = $observer->getEvent()->getCategory();
-        if ($category->getId()) {
-            $fpc = $this->_getFpc();
-            $fpc->cleanByTag('category_' . $category->getId());
+        $fpc = $this->_getFpc();
+        if ($fpc->isActive()) {
+            $category = $observer->getEvent()->getCategory();
+            if ($category->getId()) {
+                $fpc->cleanByTag('category_' . $category->getId());
+            }
         }
     }
 
     public function cmsPageSaveAfter($observer)
     {
-        $page = $observer->getEvent()->getObject();
-        if ($page->getId()) {
-            $fpc = $this->_getFpc();
-            $tags = array('cms_' . $page->getId(),
-                'cms_' . $page->getIdentifier());
-            $fpc->cleanByTag($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
+        $fpc = $this->_getFpc();
+        if ($fpc->isActive()) {
+            $page = $observer->getEvent()->getObject();
+            if ($page->getId()) {
+                $tags = array('cms_' . $page->getId(),
+                    'cms_' . $page->getIdentifier());
+                $fpc->cleanByTag($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
+            }
         }
     }
 
     public function modelSaveAfter($observer)
     {
-        $object = $observer->getEvent()->getObject();
-        if (get_class($object) == get_class(Mage::getModel('cms/block'))) {
-            $fpc = $this->_getFpc();
-            $fpc->cleanbyTag('cmsblock_' . $object->getIdentifier());
+        $fpc = $this->_getFpc();
+        if ($fpc->isActive()) {
+            $object = $observer->getEvent()->getObject();
+            if (get_class($object) == get_class(Mage::getModel('cms/block'))) {
+                $fpc->cleanbyTag('cmsblock_' . $object->getIdentifier());
+            }
         }
     }
 
     public function rebuildCache($observer)
     {
-        $this->_getFpc()->rebuild();
+        $fpc = $this->_getFpc();
+        if ($fpc->isActive()) {
+            $this->_getFpc()->rebuild();
+        }
     }
 
     protected function _getFpc()
