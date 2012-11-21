@@ -161,6 +161,7 @@ right.reports.product.viewed,
 catalog.compare.sidebar,
 wishlist_sidebar]]></dynamic_blocks>
                 <lifetime>86400</lifetime>
+                <rebuild_cache>0</rebuild_cache>
                 <curl_max_request>60</curl_max_request>
                 <use_recently_viewed_products>1</use_recently_viewed_products>
             </fpc>

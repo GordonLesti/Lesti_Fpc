@@ -33,30 +33,36 @@ class Lesti_Fpc_Model_Fpc
     public function save($body, $key, $tags = array())
     {
         $this->_cache->save($body, $key, $tags);
-        $url =Mage::getUrl('*/*/*', array('_current' => true, '_use_rewrite' => true));
-        $this->_cache->save($url, Mage::helper('fpc')->getKey('_url'), array('url'));
-        $this->_removeUrlsFromRebuild(array($url));
+        if(Mage::helper('fpc')->rebuildCache()) {
+            $url =Mage::getUrl('*/*/*', array('_current' => true, '_use_rewrite' => true));
+            $this->_cache->save($url, Mage::helper('fpc')->getKey('_url'), array('url'));
+            $this->_removeUrlsFromRebuild(array($url));
+        }
         return $this;
     }
 
     public function cleanAll()
     {
-        $keys = $this->_cache->getIdsNotMatchingTags(array('url'));
-        $this->_addUrlsToRebuild($keys);
+        if(Mage::helper('fpc')->rebuildCache()) {
+            $keys = $this->_cache->getIdsNotMatchingTags(array('url'));
+            $this->_addUrlsToRebuild($keys);
+        }
         $this->_cache->clean(Zend_Cache::CLEANING_MODE_ALL);
     }
 
     public function cleanByTag($tag, $cleaningMode = Zend_Cache::CLEANING_MODE_MATCHING_TAG)
     {
-        if (!is_array($tag)) {
-            $tag = array($tag);
+        if(Mage::helper('fpc')->rebuildCache()) {
+            if (!is_array($tag)) {
+                $tag = array($tag);
+            }
+            if ($cleaningMode == Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
+                $keys = $this->_cache->getIdsMatchingTags($tag);
+            } else if ($cleaningMode == Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG) {
+                $keys = $this->_cache->getIdsMatchingAnyTags($tag);
+            }
+            $this->_addUrlsToRebuild($keys);
         }
-        if ($cleaningMode == Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
-            $keys = $this->_cache->getIdsMatchingTags($tag);
-        } else if ($cleaningMode == Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG) {
-            $keys = $this->_cache->getIdsMatchingAnyTags($tag);
-        }
-        $this->_addUrlsToRebuild($keys);
         $this->_cache->clean($cleaningMode, $tag);
     }
 
