@@ -9,7 +9,7 @@
 class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const CACHEABLE_ACTIONS_XML_PATH = 'system/fpc/cache_actions';
-    const XML_PATH_REBULD_CACHE = 'system/fpc/rebuild_cache';
+    const XML_PATH_REBUILD_CACHE = 'system/fpc/rebuild_cache';
     const LAYOUT_ELEMENT_CLASS = 'Mage_Core_Model_Layout_Element';
 
     public function getCacheableActions()
