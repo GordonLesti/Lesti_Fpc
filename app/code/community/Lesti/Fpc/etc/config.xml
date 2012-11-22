@@ -160,6 +160,9 @@ cart_sidebar,
 right.reports.product.viewed,
 catalog.compare.sidebar,
 wishlist_sidebar]]></dynamic_blocks>
+                <session_params><![CDATA[limit_page,
+sort_order,
+sort_direction]]></session_params>
                 <lifetime>86400</lifetime>
                 <rebuild_cache>0</rebuild_cache>
                 <curl_max_request>60</curl_max_request>

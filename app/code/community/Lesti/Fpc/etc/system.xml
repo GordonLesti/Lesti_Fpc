@@ -29,11 +29,20 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </dynamic_blocks>
+                        <session_params>
+                            <label>Session Params</label>
+                            <frontend_type>textarea</frontend_type>
+                            <comment>All Session Params, seperated with Comma</comment>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </session_params>
                         <lifetime>
                             <label>Lifetime</label>
                             <frontend_type>text</frontend_type>
                             <comment>Lifetime in Seconds</comment>
-                            <sort_order>30</sort_order>
+                            <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
@@ -42,7 +51,7 @@
                             <label>Rebuild Cache</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>40</sort_order>
+                            <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -51,7 +60,7 @@
                             <label>Max Curl-Requests</label>
                             <frontend_type>text</frontend_type>
                             <comment>Maximal number of Curl-Requests by rebuilding the Cache</comment>
-                            <sort_order>50</sort_order>
+                            <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
@@ -60,7 +69,7 @@
                             <label>Use Recently Viewed Products</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>60</sort_order>
+                            <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>

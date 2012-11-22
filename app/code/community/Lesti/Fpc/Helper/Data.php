@@ -10,6 +10,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const CACHEABLE_ACTIONS_XML_PATH = 'system/fpc/cache_actions';
     const XML_PATH_REBUILD_CACHE = 'system/fpc/rebuild_cache';
+    const XML_PATH_SESSION_PARAMS = 'system/fpc/session_params';
     const LAYOUT_ELEMENT_CLASS = 'Mage_Core_Model_Layout_Element';
 
     public function getCacheableActions()
@@ -25,10 +26,28 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getKey($postfix = '_page')
     {
-        $uri = Mage::helper('core/http')->getRequestUri(true);
-        return sha1($_SERVER['HTTP_HOST'] . '_' .
-            $_SERVER['SERVER_PORT'] . '_' .
-            $uri) . $postfix;
+        return sha1($this->_getParams()) . $postfix;
+    }
+
+    protected function _getParams()
+    {
+        $params = array('host' => $_SERVER['HTTP_HOST'],
+            'port' => $_SERVER['SERVER_PORT'],
+            'uri' => $_SERVER['REQUEST_URI']);
+        $sessionParams = $this->_getSessionParams();
+        $session = Mage::getSingleton('catalog/session');
+        foreach ($sessionParams as $param) {
+            if ($session->getData($param)) {
+                $params[$param] = $session->getData($param);
+            }
+        }
+        return serialize($params);
+    }
+
+    protected function _getSessionParams()
+    {
+        $params = Mage::getStoreConfig(self::XML_PATH_SESSION_PARAMS);
+        return array_map('trim', explode(',', $params));
     }
 
     public function getCacheTags()
