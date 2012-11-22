@@ -25,9 +25,10 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getKey($postfix = '_page')
     {
+        $uri = Mage::helper('core/http')->getRequestUri(true);
         return sha1($_SERVER['HTTP_HOST'] . '_' .
             $_SERVER['SERVER_PORT'] . '_' .
-            $_SERVER['REQUEST_URI']) . $postfix;
+            $uri) . $postfix;
     }
 
     public function getCacheTags()
