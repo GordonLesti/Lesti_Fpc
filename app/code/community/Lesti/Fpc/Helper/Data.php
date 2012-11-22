@@ -13,6 +13,8 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_SESSION_PARAMS = 'system/fpc/session_params';
     const LAYOUT_ELEMENT_CLASS = 'Mage_Core_Model_Layout_Element';
 
+    protected $_params;
+
     public function getCacheableActions()
     {
         $actions = Mage::getStoreConfig(self::CACHEABLE_ACTIONS_XML_PATH);
@@ -31,17 +33,27 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 
     protected function _getParams()
     {
-        $params = array('host' => $_SERVER['HTTP_HOST'],
-            'port' => $_SERVER['SERVER_PORT'],
-            'uri' => $_SERVER['REQUEST_URI']);
-        $sessionParams = $this->_getSessionParams();
-        $session = Mage::getSingleton('catalog/session');
-        foreach ($sessionParams as $param) {
-            if ($session->getData($param)) {
-                $params[$param] = $session->getData($param);
+        if (!$this->_params) {
+            $params = array('host' => $_SERVER['HTTP_HOST'],
+                'port' => $_SERVER['SERVER_PORT'],
+                'uri' => $_SERVER['REQUEST_URI']);
+            if (count(Mage::app()->getWebsite()->getStores())>1) {
+                $cookie = Mage::getSingleton('core/cookie');
+                $storeCode = $cookie->get(Mage_Core_Model_Store::COOKIE_NAME);
+                if ($storeCode) {
+                    $params['store'] = $storeCode;
+                }
             }
+            $sessionParams = $this->_getSessionParams();
+            $session = Mage::getSingleton('catalog/session');
+            foreach ($sessionParams as $param) {
+                if ($session->getData($param)) {
+                    $params[$param] = $session->getData($param);
+                }
+            }
+            $this->_params = serialize($params);
         }
-        return serialize($params);
+        return $this->_params;
     }
 
     protected function _getSessionParams()
