@@ -52,10 +52,10 @@ class Lesti_Fpc_Model_Fpc
 
     public function cleanByTag($tag, $cleaningMode = Zend_Cache::CLEANING_MODE_MATCHING_TAG)
     {
+        if (!is_array($tag)) {
+            $tag = array($tag);
+        }
         if(Mage::helper('fpc')->rebuildCache()) {
-            if (!is_array($tag)) {
-                $tag = array($tag);
-            }
             if ($cleaningMode == Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
                 $keys = $this->_cache->getIdsMatchingTags($tag);
             } else if ($cleaningMode == Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG) {
