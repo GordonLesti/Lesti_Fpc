@@ -13,7 +13,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_SESSION_PARAMS = 'system/fpc/session_params';
     const LAYOUT_ELEMENT_CLASS = 'Mage_Core_Model_Layout_Element';
 
-    protected $_params;
+    const REGISTRY_KEY_PARAMS = 'fpc_params';
 
     public function getCacheableActions()
     {
@@ -33,7 +33,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 
     protected function _getParams()
     {
-        if (!$this->_params) {
+        if (!Mage::registry(self::REGISTRY_KEY_PARAMS)) {
             $params = array('host' => $_SERVER['HTTP_HOST'],
                 'port' => $_SERVER['SERVER_PORT'],
                 'uri' => $_SERVER['REQUEST_URI']);
@@ -51,9 +51,9 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     $params[$param] = $session->getData($param);
                 }
             }
-            $this->_params = serialize($params);
+            Mage::register(self::REGISTRY_KEY_PARAMS, serialize($params));
         }
-        return $this->_params;
+        return Mage::registry(self::REGISTRY_KEY_PARAMS);
     }
 
     protected function _getSessionParams()
@@ -69,36 +69,36 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         $request = Mage::app()->getRequest();
         switch ($fullActionName) {
             case 'cms_index_index' :
-                $cacheTags[] = 'cms';
+                $cacheTags[] = sha1('cms');
                 $pageId = Mage::getStoreConfig(Mage_Cms_Helper_Page::XML_PATH_HOME_PAGE);
                 if ($pageId) {
-                    $cacheTags[] = 'cms_' . $pageId;
+                    $cacheTags[] = sha1('cms_' . $pageId);
                 }
                 break;
             case 'cms_page_view' :
-                $cacheTags[] = 'cms';
+                $cacheTags[] = sha1('cms');
                 $pageId = $request->getParam('page_id', $request->getParam('id', false));
                 if ($pageId) {
-                    $cacheTags[] = 'cms_' . $pageId;
+                    $cacheTags[] = sha1('cms_' . $pageId);
                 }
                 break;
             case 'catalog_product_view' :
-                $cacheTags[] = 'product';
+                $cacheTags[] = sha1('product');
                 $productId  = (int) $request->getParam('id');
                 if ($productId) {
-                    $cacheTags[] = 'product_' . $productId;
+                    $cacheTags[] = sha1('product_' . $productId);
                     $categoryId = (int) $request->getParam('category', false);
                     if ($categoryId) {
-                        $cacheTags[] = 'category';
-                        $cacheTags[] = 'category_' . $categoryId;
+                        $cacheTags[] = sha1('category');
+                        $cacheTags[] = sha1('category_' . $categoryId);
                     }
                 }
                 break;
             case 'catalog_category_view' :
-                $cacheTags[] = 'category';
+                $cacheTags[] = sha1('category');
                 $categoryId = (int) $request->getParam('id', false);
                 if ($categoryId) {
-                    $cacheTags[] = 'category_' . $categoryId;
+                    $cacheTags[] = sha1('category_' . $categoryId);
                 }
                 break;
         }

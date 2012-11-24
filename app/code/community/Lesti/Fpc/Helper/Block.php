@@ -40,13 +40,13 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         $cacheTags = array();
         $blockName = $block->getNameInLayout();
         if ($blockName == 'product_list') {
-            $cacheTags[] = 'product';
+            $cacheTags[] = sha1('product');
             foreach($block->getLoadedProductCollection() as $product) {
-                $cacheTags[] = 'product_' . $product->getId();
+                $cacheTags[] = sha1('product_' . $product->getId());
             }
         } else if (get_class($block) == get_class(Mage::getBlockSingleton('cms/block'))) {
-            $cacheTags[] = 'cmsblock';
-            $cacheTags[] = 'cmsblock_' . $block->getBlockId();
+            $cacheTags[] = sha1('cmsblock');
+            $cacheTags[] = sha1('cmsblock_' . $block->getBlockId());
         }
         return $cacheTags;
     }

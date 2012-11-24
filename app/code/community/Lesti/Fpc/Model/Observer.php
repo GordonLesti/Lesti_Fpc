@@ -96,7 +96,7 @@ class Lesti_Fpc_Model_Observer
         if ($fpc->isActive()) {
             $product = $observer->getEvent()->getProduct();
             if ($product->getId()) {
-                $fpc->cleanByTag('product_' . $product->getId());
+                $fpc->cleanByTag(sha1('product_' . $product->getId()));
             }
         }
     }
@@ -107,7 +107,7 @@ class Lesti_Fpc_Model_Observer
         if ($fpc->isActive()) {
             $category = $observer->getEvent()->getCategory();
             if ($category->getId()) {
-                $fpc->cleanByTag('category_' . $category->getId());
+                $fpc->cleanByTag(sha1('category_' . $category->getId()));
             }
         }
     }
@@ -118,8 +118,8 @@ class Lesti_Fpc_Model_Observer
         if ($fpc->isActive()) {
             $page = $observer->getEvent()->getObject();
             if ($page->getId()) {
-                $tags = array('cms_' . $page->getId(),
-                    'cms_' . $page->getIdentifier());
+                $tags = array(sha1('cms_' . $page->getId()),
+                    sha1('cms_' . $page->getIdentifier()));
                 $fpc->cleanByTag($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
             }
         }
@@ -131,7 +131,7 @@ class Lesti_Fpc_Model_Observer
         if ($fpc->isActive()) {
             $object = $observer->getEvent()->getObject();
             if (get_class($object) == get_class(Mage::getModel('cms/block'))) {
-                $fpc->cleanbyTag('cmsblock_' . $object->getIdentifier());
+                $fpc->cleanbyTag(sha1('cmsblock_' . $object->getIdentifier()));
             }
         }
     }

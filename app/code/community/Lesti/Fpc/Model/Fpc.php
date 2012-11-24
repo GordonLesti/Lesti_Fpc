@@ -35,7 +35,7 @@ class Lesti_Fpc_Model_Fpc
         $this->_cache->save($body, $key, $tags);
         if(Mage::helper('fpc')->rebuildCache()) {
             $url =Mage::getUrl('*/*/*', array('_current' => true, '_use_rewrite' => true));
-            $this->_cache->save($url, Mage::helper('fpc')->getKey('_url'), array('url'));
+            $this->_cache->save($url, Mage::helper('fpc')->getKey('_url'), array(sha1('url')));
             $this->_removeUrlsFromRebuild(array($url));
         }
         return $this;
@@ -44,7 +44,7 @@ class Lesti_Fpc_Model_Fpc
     public function cleanAll()
     {
         if(Mage::helper('fpc')->rebuildCache()) {
-            $keys = $this->_cache->getIdsNotMatchingTags(array('url'));
+            $keys = $this->_cache->getIdsNotMatchingTags(array(sha1('url')));
             $this->_addUrlsToRebuild($keys);
         }
         $this->_cache->clean(Zend_Cache::CLEANING_MODE_ALL);
