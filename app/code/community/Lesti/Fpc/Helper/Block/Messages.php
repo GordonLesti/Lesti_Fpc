@@ -20,7 +20,6 @@ class Lesti_Fpc_Helper_Block_Messages extends Mage_Core_Helper_Abstract
                 $block = $layout->getMessagesBlock();
                 $block->addMessages($storage->getMessages(true));
                 $block->setEscapeMessageFlag($storage->getEscapeMessages(true));
-                $block->addStorageType($storageName);
             } else {
                 Mage::throwException(
                     Mage::helper('core')->__('Invalid messages storage "%s" for layout messages initialization', (string)$storageName)

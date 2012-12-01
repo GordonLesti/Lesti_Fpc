@@ -9,15 +9,26 @@
 $installer = $this;
 $installer->startSetup();
 
-$table = $installer->getConnection()
-    ->newTable(Lesti_Fpc_Model_Fpc::TABLE_FPC_URL)
-    ->addColumn('url', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
-        'nullable' => false)
+$version = Mage::getVersion();
+if ($version < '1.6') {
+    $installer->run("
+    -- DROP TABLE IF EXISTS " . Lesti_Fpc_Model_Fpc::TABLE_FPC_URL . ";
+    CREATE TABLE " . Lesti_Fpc_Model_Fpc::TABLE_FPC_URL . " (
+      `url` varchar(255) NOT NULL,
+      UNIQUE KEY `fpc_url` (`url`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    ");
+} else {
+    $table = $installer->getConnection()
+        ->newTable(Lesti_Fpc_Model_Fpc::TABLE_FPC_URL)
+        ->addColumn('url', Varien_Db_Ddl_Table::TYPE_VARCHAR, 255, array(
+            'nullable' => false)
     )
-    ->addIndex('UNQ_FPC_URL',
+        ->addIndex('UNQ_FPC_URL',
         array('url'),
         array('type' => Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE)
     );
-$installer->getConnection()->createTable($table);
+    $installer->getConnection()->createTable($table);
+}
 
 $installer->endSetup();
