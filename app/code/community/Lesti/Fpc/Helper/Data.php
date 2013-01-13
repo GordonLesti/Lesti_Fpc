@@ -37,12 +37,14 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             $params = array('host' => $_SERVER['HTTP_HOST'],
                 'port' => $_SERVER['SERVER_PORT'],
                 'uri' => $_SERVER['REQUEST_URI']);
-            if (count(Mage::app()->getWebsite()->getStores())>1) {
-                $cookie = Mage::getSingleton('core/cookie');
-                $storeCode = $cookie->get(Mage_Core_Model_Store::COOKIE_NAME);
-                if ($storeCode) {
-                    $params['store'] = $storeCode;
-                }
+            $cookie = Mage::getSingleton('core/cookie');
+            $storeCode = $cookie->get(Mage_Core_Model_Store::COOKIE_NAME);
+            if ($storeCode) {
+                $params['store'] = $storeCode;
+            }
+            $currencyCode = $cookie->get(Mage_Core_Model_Store::COOKIE_CURRENCY);
+            if ($currencyCode) {
+                $params['currency'] = $currencyCode;
             }
             $sessionParams = $this->_getSessionParams();
             $session = Mage::getSingleton('catalog/session');
