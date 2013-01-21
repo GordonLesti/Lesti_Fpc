@@ -13,4 +13,5 @@ Can handle with:
 - Dynamic Block like Minicart and Toplinks
 - all other Block if you want to
 - Multistores
+- Multicurrency
 - Session Parameters like limit and order
