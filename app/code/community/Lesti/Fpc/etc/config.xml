@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Lesti_Fpc>
-            <version>0.1.5</version>
+            <version>0.1.7</version>
         </Lesti_Fpc>
     </modules>
     <global>
@@ -162,7 +162,8 @@ catalog.compare.sidebar,
 wishlist_sidebar]]></dynamic_blocks>
                 <session_params><![CDATA[limit_page,
 sort_order,
-sort_direction]]></session_params>
+sort_direction,
+display_mode]]></session_params>
                 <lifetime>86400</lifetime>
                 <rebuild_cache>0</rebuild_cache>
                 <curl_max_request>60</curl_max_request>

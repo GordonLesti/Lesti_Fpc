@@ -42,9 +42,11 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             if ($storeCode) {
                 $params['store'] = $storeCode;
             }
-            $currencyCode = $cookie->get(Mage_Core_Model_Store::COOKIE_CURRENCY);
-            if ($currencyCode) {
-                $params['currency'] = $currencyCode;
+            if (defined('Mage_Core_Model_Store::COOKIE_CURRENCY')) {
+                $currencyCode = $cookie->get(Mage_Core_Model_Store::COOKIE_CURRENCY);
+                if ($currencyCode) {
+                    $params['currency'] = $currencyCode;
+                }
             }
             $sessionParams = $this->_getSessionParams();
             $session = Mage::getSingleton('catalog/session');
