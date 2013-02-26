@@ -9,6 +9,7 @@
 class Lesti_Fpc_Model_Observer
 {
     const CACHE_TYPE = 'fpc';
+    const CUSTOMER_SESSION_REGISTRY_KEY = 'fpc_customer_session';
 
     protected $_cached = false;
     protected $_html = array();
@@ -18,10 +19,10 @@ class Lesti_Fpc_Model_Observer
     public function customerSessionInit($observer)
     {
         $fpc = $this->_getFpc();
-        $key = Mage::helper('fpc')->getKey();
         if ($fpc->isActive() && !$this->_cached) {
-            if ($fpc->test($key)) {
-                $body = $fpc->load($key);
+            Mage::register(self::CUSTOMER_SESSION_REGISTRY_KEY, $observer->getEvent()->getCustomerSession());
+            $key = Mage::helper('fpc')->getKey();
+            if ($body = $fpc->load($key)) {
                 $this->_cached = true;
                 $layout = Mage::helper('fpc')->initLayout();
                 $dynamicBlocks = Mage::helper('fpc/block')->getDynamicBlocks();

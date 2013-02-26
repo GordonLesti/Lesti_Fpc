@@ -8,16 +8,17 @@
  */
 class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    const CACHEABLE_ACTIONS_XML_PATH = 'system/fpc/cache_actions';
+    const XML_PATH_CACHEABLE_ACTIONS = 'system/fpc/cache_actions';
     const XML_PATH_REBUILD_CACHE = 'system/fpc/rebuild_cache';
     const XML_PATH_SESSION_PARAMS = 'system/fpc/session_params';
+    const XML_PATH_CUSTOMER_GROUPS = 'system/fpc/customer_groups';
     const LAYOUT_ELEMENT_CLASS = 'Mage_Core_Model_Layout_Element';
 
     const REGISTRY_KEY_PARAMS = 'fpc_params';
 
     public function getCacheableActions()
     {
-        $actions = Mage::getStoreConfig(self::CACHEABLE_ACTIONS_XML_PATH);
+        $actions = Mage::getStoreConfig(self::XML_PATH_CACHEABLE_ACTIONS);
         return array_map('trim', explode(',', $actions));
     }
 
@@ -48,11 +49,15 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     $params['currency'] = $currencyCode;
                 }
             }
+            if(Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
+                $customerSession = Mage::registry(Lesti_Fpc_Model_Observer::CUSTOMER_SESSION_REGISTRY_KEY);
+                $params['customer_group_id'] = $customerSession->getCustomerGroupId();
+            }
             $sessionParams = $this->_getSessionParams();
-            $session = Mage::getSingleton('catalog/session');
+            $catalogSession = Mage::getSingleton('catalog/session');
             foreach ($sessionParams as $param) {
-                if ($session->getData($param)) {
-                    $params[$param] = $session->getData($param);
+                if ($data = $catalogSession->getData($param)) {
+                    $params[$param] = $data;
                 }
             }
             Mage::register(self::REGISTRY_KEY_PARAMS, serialize($params));
