@@ -12,6 +12,5 @@ Can cache:
 Can handle with:
 - Dynamic Block like Minicart and Toplinks
 - all other Block if you want to
-- Multistores
-- Multicurrency
+- Multistores, Multicurrency and Customergroups
 - Session Parameters like limit and order
