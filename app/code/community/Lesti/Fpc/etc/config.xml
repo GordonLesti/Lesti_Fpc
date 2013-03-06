@@ -159,7 +159,8 @@ catalog_category_view]]></cache_actions>
 cart_sidebar,
 right.reports.product.viewed,
 catalog.compare.sidebar,
-wishlist_sidebar]]></dynamic_blocks>
+wishlist_sidebar,
+global_notices]]></dynamic_blocks>
                 <session_params><![CDATA[limit_page,
 sort_order,
 sort_direction,
