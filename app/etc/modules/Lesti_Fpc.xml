@@ -4,6 +4,11 @@
         <Lesti_Fpc>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+                <Mage_Catalog/>
+                <Mage_Cms/>
+                <Mage_Core/>
+            </depends>
         </Lesti_Fpc>
     </modules>
 </config>
