@@ -16,16 +16,29 @@ class Lesti_Fpc_Model_Observer
     protected $_placeholder = array();
     protected $_cache_tags = array();
 
-    public function customerSessionInit($observer)
+    public function controllerActionLayoutGenerateBlocksBefore($observer)
     {
         $fpc = $this->_getFpc();
         if ($fpc->isActive() && !$this->_cached) {
-            Mage::register(self::CUSTOMER_SESSION_REGISTRY_KEY, $observer->getEvent()->getCustomerSession());
             $key = Mage::helper('fpc')->getKey();
-            if ($body = $fpc->load($key)) {
+            if($body = $fpc->load($key)) {
                 $this->_cached = true;
-                $layout = Mage::helper('fpc')->initLayout();
+                $layout = $observer->getEvent()->getLayout();
+                $xml = simplexml_load_string($layout->getXmlString(), Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS);
+                $cleanXml = simplexml_load_string('<layout/>', Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS);
+                $types = array('block', 'reference', 'action');
                 $dynamicBlocks = Mage::helper('fpc/block')->getDynamicBlocks();
+                foreach ($dynamicBlocks as $blockName) {
+                    foreach ($types as $type) {
+                        $xPath = $xml->xpath("//" . $type . "[@name='" . $blockName . "']");
+                        foreach ($xPath as $child) {
+                            $cleanXml->appendChild($child);
+                        }
+                    }
+                }
+                $layout->setXml($cleanXml);
+                $layout->generateBlocks();
+                $layout = Mage::helper('fpc/block_messages')->initLayoutMessages($layout);
                 foreach ($dynamicBlocks as $blockName) {
                     $block = $layout->getBlock($blockName);
                     if ($block) {

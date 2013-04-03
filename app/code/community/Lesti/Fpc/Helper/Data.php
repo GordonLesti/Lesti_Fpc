@@ -50,7 +50,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 }
             }
             if(Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
-                $customerSession = Mage::registry(Lesti_Fpc_Model_Observer::CUSTOMER_SESSION_REGISTRY_KEY);
+                $customerSession = Mage::getSingleton('customer/session');
                 $params['customer_group_id'] = $customerSession->getCustomerGroupId();
             }
             $sessionParams = $this->_getSessionParams();
@@ -120,42 +120,6 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         return $request->getRequestedRouteName() . $delimiter .
             $request->getRequestedControllerName() . $delimiter .
             $request->getRequestedActionName();
-    }
-
-    public function initLayout()
-    {
-        $layout = Mage::getSingleton('core/layout');
-        $update = $layout->getUpdate();
-        $update->addHandle('default');
-        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
-            $update->addHandle('customer_logged_in');
-        } else {
-            $update->addHandle('customer_logged_out');
-        }
-        $update->addHandle('STORE_' . Mage::app()->getStore()->getCode());
-        $package = Mage::getSingleton('core/design_package');
-        $update->addHandle(
-            'THEME_' . $package->getArea() . '_' . $package->getPackageName() . '_' . $package->getTheme('layout')
-        );
-        $update->addHandle(strtolower($this->getFullActionName()));
-        $update->load();
-        $layout->generateXml();
-        $xml = simplexml_load_string($layout->getXmlString(), self::LAYOUT_ELEMENT_CLASS);
-        $cleanXml = simplexml_load_string('<layout/>', self::LAYOUT_ELEMENT_CLASS);
-        $types = array('block', 'reference', 'action');
-        $dynamicBlocks = Mage::helper('fpc/block')->getDynamicBlocks();
-        foreach ($dynamicBlocks as $blockName) {
-            foreach ($types as $type) {
-                $xPath = $xml->xpath("//" . $type . "[@name='" . $blockName . "']");
-                foreach ($xPath as $child) {
-                    $cleanXml->appendChild($child);
-                }
-            }
-        }
-        $layout->setXml($cleanXml);
-        $layout->generateBlocks();
-        $layout = Mage::helper('fpc/block_messages')->initLayoutMessages($layout);
-        return $layout;
     }
 
 }

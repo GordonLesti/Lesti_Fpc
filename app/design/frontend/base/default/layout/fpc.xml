@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
+    <default>
+        <reference name="header">
+            <block type="fpc/page_html_header_welcome" name="header.welcome"/>
+        </reference>
+    </default>
     <catalog_product_view>
         <reference name="after_body_start">
-            <block type="fpc/catalog_product_view_ajax" template="fpc/catalog/product/view/ajax.phtml"/>
+            <block type="fpc/catalog_product_view_ajax" name="fpc.catalog.product.view.ajax" template="fpc/catalog/product/view/ajax.phtml"/>
         </reference>
     </catalog_product_view>
 </layout>

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Lesti_Fpc>
-            <version>0.1.11</version>
+            <version>0.1.12</version>
         </Lesti_Fpc>
     </modules>
     <global>
@@ -87,15 +87,15 @@
             </fpc>
         </routers>
         <events>
-            <customer_session_init>
+            <controller_action_layout_generate_blocks_before>
                 <observers>
-                    <fpc_customer_session_init>
+                    <fpc_controller_action_layout_generate_blocks_before>
                         <class>fpc/observer</class>
                         <type>singleton</type>
-                        <method>customerSessionInit</method>
-                    </fpc_customer_session_init>
+                        <method>controllerActionLayoutGenerateBlocksBefore</method>
+                    </fpc_controller_action_layout_generate_blocks_before>
                 </observers>
-            </customer_session_init>
+            </controller_action_layout_generate_blocks_before>
             <http_response_send_before>
                 <observers>
                     <fpc_http_response_send_before>
@@ -160,7 +160,8 @@ cart_sidebar,
 right.reports.product.viewed,
 catalog.compare.sidebar,
 wishlist_sidebar,
-global_notices]]></dynamic_blocks>
+global_notices,
+header.welcome]]></dynamic_blocks>
                 <session_params><![CDATA[limit_page,
 sort_order,
 sort_direction,
