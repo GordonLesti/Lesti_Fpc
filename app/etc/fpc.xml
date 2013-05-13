@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <fpc>
+            <lifetime>1</lifetime>
+
+            <!-- example for memcached -->
+            <!--backend>memcached</backend>
+            <memcached>
+                <servers>
+                    <server>
+                        <host><![CDATA[127.0.0.1]]></host>
+                        <port><![CDATA[11211]]></port>
+                        <persistent><![CDATA[1]]></persistent>
+                    </server>
+                </servers>
+                <compression><![CDATA[0]]></compression>
+                <cache_dir><![CDATA[]]></cache_dir>
+                <hashed_directory_level><![CDATA[]]></hashed_directory_level>
+                <hashed_directory_umask><![CDATA[]]></hashed_directory_umask>
+                <file_name_prefix><![CDATA[]]></file_name_prefix>
+            </memcached-->
+        </fpc>
+    </global>
+</config>
