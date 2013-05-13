@@ -48,15 +48,6 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </customer_groups>
-                        <lifetime>
-                            <label>Lifetime</label>
-                            <frontend_type>text</frontend_type>
-                            <comment>Lifetime in Seconds</comment>
-                            <sort_order>50</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </lifetime>
                         <use_recently_viewed_products>
                             <label>Use Recently Viewed Products</label>
                             <frontend_type>select</frontend_type>

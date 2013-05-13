@@ -61,7 +61,6 @@ class Lesti_Fpc_Model_Observer
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $cacheableActions = Mage::helper('fpc')->getCacheableActions();
             if (in_array($fullActionName, $cacheableActions)) {
-                $fpc->cleanOld();
                 $key = Mage::helper('fpc')->getKey();
                 $body = $observer->getEvent()->getResponse()->getBody();
                 $this->_cache_tags = array_merge(Mage::helper('fpc')->getCacheTags(), $this->_cache_tags);
@@ -100,7 +99,7 @@ class Lesti_Fpc_Model_Observer
     {
         if ($observer->getEvent()->getType() == self::CACHE_TYPE) {
             $fpc = $this->_getFpc();
-            $fpc->cleanAll();
+            $fpc->clean();
         }
     }
 
@@ -110,7 +109,7 @@ class Lesti_Fpc_Model_Observer
         if ($fpc->isActive()) {
             $product = $observer->getEvent()->getProduct();
             if ($product->getId()) {
-                $fpc->cleanByTag(sha1('product_' . $product->getId()));
+                $fpc->clean(sha1('product_' . $product->getId()));
             }
         }
     }
@@ -121,7 +120,7 @@ class Lesti_Fpc_Model_Observer
         if ($fpc->isActive()) {
             $category = $observer->getEvent()->getCategory();
             if ($category->getId()) {
-                $fpc->cleanByTag(sha1('category_' . $category->getId()));
+                $fpc->clean(sha1('category_' . $category->getId()));
             }
         }
     }
@@ -134,7 +133,7 @@ class Lesti_Fpc_Model_Observer
             if ($page->getId()) {
                 $tags = array(sha1('cms_' . $page->getId()),
                     sha1('cms_' . $page->getIdentifier()));
-                $fpc->cleanByTag($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
+                $fpc->clean($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
             }
         }
     }
@@ -145,7 +144,7 @@ class Lesti_Fpc_Model_Observer
         if ($fpc->isActive()) {
             $object = $observer->getEvent()->getObject();
             if (get_class($object) == get_class(Mage::getModel('cms/block'))) {
-                $fpc->cleanbyTag(sha1('cmsblock_' . $object->getIdentifier()));
+                $fpc->clean(sha1('cmsblock_' . $object->getIdentifier()));
             }
         }
     }
@@ -153,6 +152,16 @@ class Lesti_Fpc_Model_Observer
     protected function _getFpc()
     {
         return Mage::getSingleton('fpc/fpc');
+    }
+
+    /**
+     * Cron job method to clean old cache resources
+     *
+     * @param Mage_Cron_Model_Schedule $schedule
+     */
+    public function coreCleanCache($observer)
+    {
+        $this->_getFpc()->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
     }
 
 }
