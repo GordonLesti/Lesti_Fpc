@@ -33,20 +33,11 @@ class Lesti_Fpc_Model_Fpc
     public function save($body, $key, $tags = array())
     {
         $this->_cache->save($body, $key, $tags);
-        if(Mage::helper('fpc')->rebuildCache()) {
-            $url =Mage::getUrl('*/*/*', array('_current' => true, '_use_rewrite' => true));
-            $this->_cache->save($url, Mage::helper('fpc')->getKey('_url'), array(sha1('url')));
-            $this->_removeUrlsFromRebuild(array($url));
-        }
         return $this;
     }
 
     public function cleanAll()
     {
-        if(Mage::helper('fpc')->rebuildCache()) {
-            $keys = $this->_cache->getIdsNotMatchingTags(array(sha1('url')));
-            $this->_addUrlsToRebuild($keys);
-        }
         $this->_cache->clean(Zend_Cache::CLEANING_MODE_ALL);
     }
 
@@ -54,14 +45,6 @@ class Lesti_Fpc_Model_Fpc
     {
         if (!is_array($tag)) {
             $tag = array($tag);
-        }
-        if(Mage::helper('fpc')->rebuildCache()) {
-            if ($cleaningMode == Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
-                $keys = $this->_cache->getIdsMatchingTags($tag);
-            } else if ($cleaningMode == Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG) {
-                $keys = $this->_cache->getIdsMatchingAnyTags($tag);
-            }
-            $this->_addUrlsToRebuild($keys);
         }
         $this->_cache->clean($cleaningMode, $tag);
     }
@@ -76,50 +59,9 @@ class Lesti_Fpc_Model_Fpc
         return Mage::app()->useCache('fpc');
     }
 
-    public function rebuild()
-    {
-        $connection = $this->_getConnection('core_read');
-        $select = $connection ->select();
-        $select->from(self::TABLE_FPC_URL)
-            ->limit((int) Mage::getStoreConfig(self::XML_PATH_CURL_MAX_REQUEST));
-        $urls = $connection->fetchAll($select);
-        $this->_removeUrlsFromRebuild($urls);
-        foreach ($urls as $url) {
-            $ch = curl_init($url['url']);
-            curl_exec($ch);
-            curl_close($ch);
-        }
-    }
-
     protected function _getConnection($type)
     {
         return $resource = Mage::getSingleton('core/resource')->getConnection($type);
-    }
-
-    protected function _removeUrlsFromRebuild($urls)
-    {
-        $connection = $this->_getConnection('core_write');
-        $connection->delete(self::TABLE_FPC_URL, array('url IN(?)' => $urls));
-    }
-
-    protected function _addUrlsToRebuild($keys)
-    {
-        $connection = $this->_getConnection('core_write');
-        $insert = array();
-        foreach ($keys as $key) {
-            $key = substr($key, 0, -5) . '_url';
-            if ($this->test($key)) {
-                $insert[] = array('url' => $this->load($key));
-                $this->_cache->remove($key);
-            }
-        }
-        try {
-            $connection->insertMultiple(self::TABLE_FPC_URL, $insert);
-        } catch (Exception $e) {
-            Mage::log(Mage::helper('fpc')->__('Problems by adding Keys: ' . implode(', ', $keys)), null, self::LOG_FPC);
-            return false;
-        }
-        return true;
     }
 
     protected function _getCache()

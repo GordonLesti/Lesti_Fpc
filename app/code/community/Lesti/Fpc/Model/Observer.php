@@ -150,14 +150,6 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
-    public function rebuildCache($observer)
-    {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive() && Mage::helper('fpc')->rebuildCache()) {
-            $this->_getFpc()->rebuild();
-        }
-    }
-
     protected function _getFpc()
     {
         return Mage::getSingleton('fpc/fpc');
