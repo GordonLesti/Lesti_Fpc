@@ -43,6 +43,8 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     $params['currency'] = $currencyCode;
                 }
             }
+            $design = Mage::getDesign();
+            $params['design'] = $design->getPackageName() . '_' . $design->getTheme('template');
             if(Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
                 $customerSession = Mage::getSingleton('customer/session');
                 $params['customer_group_id'] = $customerSession->getCustomerGroupId();
