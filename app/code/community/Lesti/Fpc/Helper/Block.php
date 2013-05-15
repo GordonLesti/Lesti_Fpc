@@ -15,8 +15,6 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
     {
         $blocks = Mage::getStoreConfig(self::DYNAMIC_BLOCKS_XML_PATH);
         $blocks = array_map('trim', explode(',', $blocks));
-        $blocks[] = 'global_messages';
-        $blocks[] = 'messages';
         return $blocks;
     }
 

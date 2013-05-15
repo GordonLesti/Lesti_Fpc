@@ -84,7 +84,6 @@ class Lesti_Fpc_Model_Observer
             if (in_array($fullActionName, $cacheableActions)) {
                 $this->_cache_tags = array_merge(Mage::helper('fpc/block')->getCacheTags($block), $this->_cache_tags);
                 if (in_array($blockName, $dynamicBlocks)) {
-                    $blockName = $blockName == 'global_messages' ? 'messages' : $blockName;
                     $placeholder = Mage::helper('fpc/block')->getPlaceholderHtml($blockName);
                     $html = $observer->getTransport()->getHtml();
                     $this->_html[] = $html;
@@ -162,6 +161,12 @@ class Lesti_Fpc_Model_Observer
     public function coreCleanCache($observer)
     {
         $this->_getFpc()->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
+    }
+
+    public function applicationCleanCache($observer)
+    {
+        $tags = $observer->getEvent()->getTags();
+        $this->_getFpc()->clean($tags);
     }
 
 }

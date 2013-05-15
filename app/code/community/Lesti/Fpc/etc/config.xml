@@ -10,6 +10,11 @@
             <fpc>
                 <class>Lesti_Fpc_Block</class>
             </fpc>
+            <core>
+                <rewrite>
+                    <messages>Lesti_Fpc_Core_Block_Messages</messages>
+                </rewrite>
+            </core>
         </blocks>
         <helpers>
             <fpc>
@@ -76,6 +81,15 @@
                     </fpc_core_clean_cache>
                 </observers>
             </core_clean_cache>
+            <application_clean_cache>
+                <observers>
+                    <fpc_application_clean_cache>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>applicationCleanCache</method>
+                    </fpc_application_clean_cache>
+                </observers>
+            </application_clean_cache>
         </events>
     </global>
     <frontend>
@@ -116,6 +130,15 @@
                     </fpc_core_block_abstract_to_html_after>
                 </observers>
             </core_block_abstract_to_html_after>
+            <core_block_messages_get_grouped_html_after>
+                <observers>
+                    <fpc_core_block_messages_get_grouped_html_after>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>coreBlockAbstractToHtmlAfter</method>
+                    </fpc_core_block_messages_get_grouped_html_after>
+                </observers>
+            </core_block_messages_get_grouped_html_after>
         </events>
         <layout>
             <updates>
@@ -145,7 +168,9 @@
 cms_page_view,
 catalog_product_view,
 catalog_category_view]]></cache_actions>
-                <dynamic_blocks><![CDATA[top.links,
+                <dynamic_blocks><![CDATA[messages,
+global_messages,
+top.links,
 cart_sidebar,
 right.reports.product.viewed,
 catalog.compare.sidebar,
