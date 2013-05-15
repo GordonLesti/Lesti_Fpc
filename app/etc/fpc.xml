@@ -2,9 +2,34 @@
 <config>
     <global>
         <fpc>
-            <lifetime>1</lifetime>
+            <lifetime>86400</lifetime>
+
+            <!-- example for redis -->
+            <!-- please read https://github.com/colinmollenhour/Cm_Cache_Backend_Redis for more informations -->
+
+            <!--backend>Cm_Cache_Backend_Redis</backend>
+            <backend_options>
+                <server>127.0.0.1</server>
+                <port>6379</port>
+                <persistent>cache-fpc</persistent>
+                <database>1</database>
+                <password></password>
+                <force_standalone>1</force_standalone>
+                <connect_retries>1</connect_retries>
+                <lifetimelimit>86400</lifetimelimit>
+                <read_timeout>10</read_timeout>
+                <compress_data>1</compress_data>
+                <compress_tags>1</compress_tags>
+                <compress_data>gzip</compress_data>
+            </backend_options-->
+
+            <!-- example for apc -->
+
+            <!--backend>apc</backend>
+            <prefix>LESTI_FPC_</prefix-->
 
             <!-- example for memcached -->
+
             <!--backend>memcached</backend>
             <memcached>
                 <servers>
