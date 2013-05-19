@@ -23,7 +23,8 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
 
     public function __construct()
     {
-        $options = Mage::getConfig()->getNode('global/fpc')->asArray();
+        $node = Mage::getConfig()->getNode('global/fpc');
+        $options = isset($node) ? $node->asArray() : array();
         parent::__construct($options);
     }
 
