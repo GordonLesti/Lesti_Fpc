@@ -33,7 +33,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 'port' => $_SERVER['SERVER_PORT'],
                 'uri' => $_SERVER['REQUEST_URI']);
             $cookie = Mage::getSingleton('core/cookie');
-            $storeCode = $cookie->get(Mage_Core_Model_Store::COOKIE_NAME);
+            $storeCode = Mage::app()->getStore(true)->getCode();
             if ($storeCode) {
                 $params['store'] = $storeCode;
             }
