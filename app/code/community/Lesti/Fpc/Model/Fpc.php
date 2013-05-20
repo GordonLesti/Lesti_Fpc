@@ -24,7 +24,10 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
     public function __construct()
     {
         $node = Mage::getConfig()->getNode('global/fpc');
-        $options = isset($node) ? $node->asArray() : array();
+        $options = array();
+        if($node) {
+            $options = $node->asArray();
+        }
         parent::__construct($options);
     }
 
@@ -45,7 +48,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         if (!in_array(Mage_Core_Model_Config::CACHE_TAG, $tags)) {
             $tags[] = self::CACHE_TAG;
         }
-        if ($this->_disallowSave) {
+        if (defined($this->_disallowSave) && $this->_disallowSave) {
             return true;
         }
         return $this->_frontend->save((string)$data, $this->_id($id), $this->_tags($tags), $lifeTime);
