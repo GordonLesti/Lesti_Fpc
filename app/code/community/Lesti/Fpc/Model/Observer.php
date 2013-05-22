@@ -126,6 +126,41 @@ class Lesti_Fpc_Model_Observer
             $product = $observer->getEvent()->getProduct();
             if ($product->getId()) {
                 $fpc->clean(sha1('product_' . $product->getId()));
+                
+		$_model = Mage::getModel('catalog/product');
+		$_product = $_model->load($product->getId());				
+		$categoryIds = $_product->getCategoryIds();
+		foreach($categoryIds as $categoryId) {
+			if ($categoryId) {
+				$fpc->clean(sha1('category_' . $categoryId));
+			}
+		}
+		
+		if($_product->getTypeId() == "simple"){
+			$parentIds = Mage::getModel('catalog/product_type_grouped')->getParentIdsByChild($_product->getId());
+			if(!$parentIds) {
+				$parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($_product->getId());
+				if(!$parentIds) {
+					$parentIds = Mage::getModel('bundle/product_type')->getParentIdsByChild($_product->getId());
+				}
+			}
+
+			foreach($parentIds as $parentId) {
+				if(isset($parentId)){
+					$fpc->clean(sha1('product_' . $parentId));
+					
+					$_model = Mage::getModel('catalog/product');
+					$_product = $_model->load($parentId);
+					$categoryIds = $_product->getCategoryIds();
+					foreach($categoryIds as $categoryId) {
+						if ($categoryId) {
+							$fpc->clean(sha1('category_' . $categoryId));
+						}
+					}
+				}
+			}
+		}
+
             }
         }
     }
