@@ -36,6 +36,15 @@
             </types>
         </cache>
         <events>
+            <sales_order_place_after>
+                <observers>
+                    <fpc_sales_order_place_after>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>salesOrderPlaceAfter</method>
+                    </fpc_sales_order_place_after>
+                </observers>
+            </sales_order_place_after>        
             <catalog_product_save_after>
                 <observers>
                     <fpc_catalog_product_save_after>
