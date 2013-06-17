@@ -94,14 +94,6 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
-    public function adminhtmlCacheRefreshType($observer)
-    {
-        if ($observer->getEvent()->getType() == self::CACHE_TYPE) {
-            $fpc = $this->_getFpc();
-            $fpc->clean();
-        }
-    }
-
     public function catalogProductSaveAfter($observer)
     {
         $fpc = $this->_getFpc();
@@ -167,6 +159,17 @@ class Lesti_Fpc_Model_Observer
     {
         $tags = $observer->getEvent()->getTags();
         $this->_getFpc()->clean($tags);
+    }
+
+    public function controllerActionPredispatchAdminhtmlCacheMassRefresh($observer)
+    {
+        $types = Mage::app()->getRequest()->getParam('types');
+        $fpc = $this->_getFpc();
+        if ($fpc->isActive()) {
+            if( (is_array($types) && in_array(self::CACHE_TYPE, $types)) || $types == self::CACHE_TYPE) {
+                $fpc->clean();
+            }
+        }
     }
 
 }

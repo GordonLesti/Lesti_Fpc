@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Lesti_Fpc>
-            <version>1.0.3</version>
+            <version>1.0.4</version>
         </Lesti_Fpc>
     </modules>
     <global>
@@ -150,15 +150,15 @@
     </frontend>
     <adminhtml>
         <events>
-            <adminhtml_cache_refresh_type>
+            <controller_action_predispatch_adminhtml_cache_massRefresh>
                 <observers>
-                    <fpc_adminhtml_cache_refresh_type>
+                    <fpc_controller_action_predispatch_adminhtml_cache_massRefresh>
                         <class>fpc/observer</class>
                         <type>singleton</type>
-                        <method>adminhtmlCacheRefreshType</method>
-                    </fpc_adminhtml_cache_refresh_type>
+                        <method>controllerActionPredispatchAdminhtmlCacheMassRefresh</method>
+                    </fpc_controller_action_predispatch_adminhtml_cache_massRefresh>
                 </observers>
-            </adminhtml_cache_refresh_type>
+            </controller_action_predispatch_adminhtml_cache_massRefresh>
         </events>
     </adminhtml>
     <default>
@@ -186,4 +186,11 @@ display_mode]]></session_params>
             </fpc>
         </system>
     </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <Lesti_Fpc/>
+            </modules>
+        </suite>
+    </phpunit>
 </config>
