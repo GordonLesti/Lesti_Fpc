@@ -112,6 +112,15 @@
             </fpc>
         </routers>
         <events>
+            <controller_action_postdispatch>
+                <observers>
+                    <fpc_controller_action_postdispatch>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>controllerActionPostdispatch</method>
+                    </fpc_controller_action_postdispatch>
+                </observers>
+            </controller_action_postdispatch>
             <controller_action_layout_generate_blocks_before>
                 <observers>
                     <fpc_controller_action_layout_generate_blocks_before>
@@ -192,6 +201,7 @@ sort_direction,
 display_mode]]></session_params>
                 <customer_groups>0</customer_groups>
                 <use_recently_viewed_products>0</use_recently_viewed_products>
+                <refresh_actions><![CDATA[checkout_cart_add]]></refresh_actions>
             </fpc>
         </system>
     </default>

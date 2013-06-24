@@ -57,6 +57,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </use_recently_viewed_products>
+                        <refresh_actions>
+                            <label>Refresh Actions</label>
+                            <frontend_type>textarea</frontend_type>
+                            <comment>All Action to refresh dynamic blocks, seperated with Comma</comment>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </refresh_actions>
                     </fields>
                 </fpc>
             </groups>

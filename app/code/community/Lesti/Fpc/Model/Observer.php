@@ -23,27 +23,41 @@ class Lesti_Fpc_Model_Observer
             $key = Mage::helper('fpc')->getKey();
             if($body = $fpc->load($key)) {
                 $this->_cached = true;
-                $layout = $observer->getEvent()->getLayout();
-                $xml = simplexml_load_string($layout->getXmlString(), Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS);
-                $cleanXml = simplexml_load_string('<layout/>', Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS);
-                $types = array('block', 'reference', 'action');
+                $session = Mage::getSingleton('customer/session');
                 $dynamicBlocks = Mage::helper('fpc/block')->getDynamicBlocks();
-                foreach ($dynamicBlocks as $blockName) {
-                    foreach ($types as $type) {
-                        $xPath = $xml->xpath("//" . $type . "[@name='" . $blockName . "']");
-                        foreach ($xPath as $child) {
-                            $cleanXml->appendChild($child);
+                if($session->getFpcRefreshDynamicBlocks() !== false) {
+                    $layout = $observer->getEvent()->getLayout();
+                    $xml = simplexml_load_string($layout->getXmlString(), Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS);
+                    $cleanXml = simplexml_load_string('<layout/>', Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS);
+                    $types = array('block', 'reference', 'action');
+                    foreach ($dynamicBlocks as $blockName) {
+                        foreach ($types as $type) {
+                            $xPath = $xml->xpath("//" . $type . "[@name='" . $blockName . "']");
+                            foreach ($xPath as $child) {
+                                $cleanXml->appendChild($child);
+                            }
                         }
                     }
-                }
-                $layout->setXml($cleanXml);
-                $layout->generateBlocks();
-                $layout = Mage::helper('fpc/block_messages')->initLayoutMessages($layout);
-                foreach ($dynamicBlocks as $blockName) {
-                    $block = $layout->getBlock($blockName);
-                    if ($block) {
-                        $this->_placeholder[] = Mage::helper('fpc/block')->getPlaceholderHtml($blockName);
-                        $this->_html[] = $block->toHtml();
+                    $layout->setXml($cleanXml);
+                    $layout->generateBlocks();
+                    $layout = Mage::helper('fpc/block_messages')->initLayoutMessages($layout);
+                    foreach ($dynamicBlocks as $blockName) {
+                        $block = $layout->getBlock($blockName);
+                        if ($block) {
+                            $this->_placeholder[] = Mage::helper('fpc/block')->getPlaceholderHtml($blockName);
+                            $html = $block->toHtml();
+                            $session->setData('fpc_dynamic_block_'.$blockName, $html);
+                            $this->_html[] = $html;
+                        }
+                    }
+                    $session->setFpcRefreshDynamicBlocks(false);
+                } else {
+                    foreach($dynamicBlocks as $blockName) {
+                        $html = $session->getData('fpc_dynamic_block_'.$blockName);
+                        if($html) {
+                            $this->_placeholder[] = Mage::helper('fpc/block')->getPlaceholderHtml($blockName);
+                            $this->_html[] = $html;
+                        }
                     }
                 }
                 $body = str_replace($this->_placeholder, $this->_html, $body);
@@ -90,6 +104,21 @@ class Lesti_Fpc_Model_Observer
                     $this->_placeholder[] = $placeholder;
                     $observer->getTransport()->setHtml($placeholder);
                 }
+            }
+        }
+    }
+
+    public function controllerActionPostdispatch($observer)
+    {
+        $fpc = $this->_getFpc();
+        if($fpc->isActive()) {
+            $request = $observer->getEvent()->getControllerAction()->getRequest();
+            $action = $request->getModuleName() . '_' .
+                $request->getControllerName() . '_' .
+                $request->getActionName();
+            if(in_array($action, Mage::helper('fpc')->getRefreshActions())) {
+                $session = Mage::getSingleton('customer/session');
+                $session->setFpcRefreshDynamicBlocks(true);
             }
         }
     }
