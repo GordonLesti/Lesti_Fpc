@@ -115,7 +115,11 @@ class Lesti_Fpc_Model_Observer
     {
         $fpc = $this->_getFpc();
         if ($fpc->isActive()) {
+            /* @var Mage_Catalog_Model_Product $product */
             $product = $observer->getEvent()->getProduct();
+            if ($product->getVisibility() == Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE) {
+                return;
+            }
             if ($product->getId()) {
                 $fpc->clean(sha1('product_' . $product->getId()));
             }
