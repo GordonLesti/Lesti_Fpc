@@ -1,7 +1,7 @@
 Lesti_Fpc
 =========
 
-Magento Fullpagecache without Ajax
+Simple Magento Fullpagecache. The offical website http://gordonlesti.com/lestifpc/.
 
 Can cache:
 - Product-View
