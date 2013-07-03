@@ -212,6 +212,7 @@ sort_direction,
 display_mode]]></session_params>
                 <customer_groups>0</customer_groups>
                 <use_recently_viewed_products>0</use_recently_viewed_products>
+                <show_age>1</show_age>
             </fpc>
         </system>
     </default>

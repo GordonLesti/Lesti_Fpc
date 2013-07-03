@@ -10,6 +10,7 @@ class Lesti_Fpc_Model_Observer
 {
     const CACHE_TYPE = 'fpc';
     const CUSTOMER_SESSION_REGISTRY_KEY = 'fpc_customer_session';
+    const SHOW_AGE_XML_PATH = 'system/fpc/show_age';
 
     protected $_cached = false;
     protected $_html = array();
@@ -21,7 +22,9 @@ class Lesti_Fpc_Model_Observer
         $fpc = $this->_getFpc();
         if ($fpc->isActive() && !$this->_cached) {
             $key = Mage::helper('fpc')->getKey();
-            if ($body = $fpc->load($key)) {
+            if ($object = $fpc->load($key)) {
+                $object = unserialize($object);
+                $body = $object['body'];
                 $this->_cached = true;
                 $session = Mage::getSingleton('customer/session');
                 $lazyBlocks = Mage::helper('fpc/block')->getLazyBlocks();
@@ -62,9 +65,15 @@ class Lesti_Fpc_Model_Observer
                     }
                 }
                 $body = str_replace($this->_placeholder, $this->_html, $body);
+                if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
+                    Mage::app()->getResponse()->setHeader('Age', time()-$time = $object['time']);
+                }
                 Mage::app()->getResponse()->setBody($body);
                 Mage::app()->getResponse()->sendResponse();
                 exit;
+            }
+            if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
+                Mage::app()->getResponse()->setHeader('Age', 0);
             }
         }
     }
@@ -79,7 +88,8 @@ class Lesti_Fpc_Model_Observer
                 $key = Mage::helper('fpc')->getKey();
                 $body = $observer->getEvent()->getResponse()->getBody();
                 $this->_cache_tags = array_merge(Mage::helper('fpc')->getCacheTags(), $this->_cache_tags);
-                $fpc->save($body, $key, $this->_cache_tags);
+                $object = array('body' => $body, 'time' => time());
+                $fpc->save(serialize($object), $key, $this->_cache_tags);
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 $observer->getEvent()->getResponse()->setBody($body);
