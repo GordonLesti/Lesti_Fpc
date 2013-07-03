@@ -32,7 +32,7 @@
                         <refresh_actions>
                             <label>Refresh Actions</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All Action to refresh dynamic blocks, seperated with Comma</comment>
+                            <comment>All Action to refresh lazy blocks, seperated with Comma</comment>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -41,7 +41,7 @@
                         <lazy_blocks>
                             <label>Lazy Blocks</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All dynamic Blocks, seperated with Comma</comment>
+                            <comment>All lazy Blocks, seperated with Comma</comment>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

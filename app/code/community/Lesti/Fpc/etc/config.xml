@@ -188,7 +188,8 @@ catalog_product_view,
 catalog_category_view]]></cache_actions>
                 <dynamic_blocks><![CDATA[messages,
 global_messages,
-global_notices]]></dynamic_blocks>
+global_notices,
+right.reports.product.viewed]]></dynamic_blocks>
                 <refresh_actions><![CDATA[checkout_cart_add,
 checkout_cart_delete,
 checkout_cart_updatePost,
@@ -199,11 +200,9 @@ wishlist_index_add,
 wishlist_index_remove,
 wishlist_index_update,
 wishlist_index_allcart,
-wishlist_index_configure]]>
-                </refresh_actions>
+wishlist_index_configure]]></refresh_actions>
                 <lazy_blocks><![CDATA[top.links,
 cart_sidebar,
-right.reports.product.viewed,
 catalog.compare.sidebar,
 wishlist_sidebar,
 header.welcome]]></lazy_blocks>
