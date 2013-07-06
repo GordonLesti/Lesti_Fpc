@@ -1,10 +1,16 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 15.05.13
- * Time: 17:59
- * To change this template use File | Settings | File Templates.
+ * Lesti_Fpc
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * http://opensource.org/licenses/OSL-3.0
+ *
+ * @package      Lesti_Fpc
+ * @copyright    Copyright (c) 2013 Gordon Lesti (http://www.gordonlesti.com)
+ * @author       Gordon Lesti <info@gordonlesti.com>
+ * @license      http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
 class Lesti_Fpc_Core_Block_Messages extends Mage_Core_Block_Messages
 {
