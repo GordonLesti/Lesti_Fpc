@@ -48,8 +48,9 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
     protected function _getLazyBlocksValidHash()
     {
         $params = array();
-        $params['host'] = $_SERVER['HTTP_HOST'];
-        $params['port'] = $_SERVER['SERVER_PORT'];
+        $request = Mage::app()->getRequest();
+        $params['host'] = $request->getServer('HTTP_HOST');
+        $params['port'] = $request->getServer('SERVER_PORT');
         $storeCode = Mage::app()->getStore(true)->getCode();
         if ($storeCode) {
             $params['store'] = $storeCode;

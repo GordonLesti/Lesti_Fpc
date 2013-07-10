@@ -42,9 +42,10 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     protected function _getParams()
     {
         if (!Mage::registry(self::REGISTRY_KEY_PARAMS)) {
-            $params = array('host' => $_SERVER['HTTP_HOST'],
-                'port' => $_SERVER['SERVER_PORT'],
-                'uri' => $_SERVER['REQUEST_URI']);
+            $request = Mage::app()->getRequest();
+            $params = array('host' => $request->getServer('HTTP_HOST'),
+                'port' => $request->getServer('SERVER_PORT'),
+                'uri' => $request->getServer('REQUEST_URI'));
             $cookie = Mage::getSingleton('core/cookie');
             $storeCode = Mage::app()->getStore(true)->getCode();
             if ($storeCode) {
