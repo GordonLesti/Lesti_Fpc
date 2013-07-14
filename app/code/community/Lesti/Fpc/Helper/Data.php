@@ -12,6 +12,10 @@
  * @author       Gordon Lesti <info@gordonlesti.com>
  * @license      http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
+
+/**
+ * Class Lesti_Fpc_Helper_Data
+ */
 class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_CACHEABLE_ACTIONS = 'system/fpc/cache_actions';
@@ -22,23 +26,36 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 
     const REGISTRY_KEY_PARAMS = 'fpc_params';
 
+    /**
+     * @return array
+     */
     public function getCacheableActions()
     {
         $actions = Mage::getStoreConfig(self::XML_PATH_CACHEABLE_ACTIONS);
         return array_map('trim', explode(',', $actions));
     }
 
+    /**
+     * @return array
+     */
     public function getRefreshActions()
     {
         $actions = Mage::getStoreConfig(self::XML_PATH_REFRESH_ACTIONS);
         return array_map('trim', explode(',', $actions));
     }
 
+    /**
+     * @param string $postfix
+     * @return string
+     */
     public function getKey($postfix = '_page')
     {
         return sha1($this->_getParams()) . $postfix;
     }
 
+    /**
+     * @return mixed
+     */
     protected function _getParams()
     {
         if (!Mage::registry(self::REGISTRY_KEY_PARAMS)) {
@@ -75,12 +92,18 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::registry(self::REGISTRY_KEY_PARAMS);
     }
 
+    /**
+     * @return array
+     */
     protected function _getSessionParams()
     {
         $params = Mage::getStoreConfig(self::XML_PATH_SESSION_PARAMS);
         return array_map('trim', explode(',', $params));
     }
 
+    /**
+     * @return array
+     */
     public function getCacheTags()
     {
         $fullActionName = $this->getFullActionName();
@@ -124,6 +147,10 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         return $cacheTags;
     }
 
+    /**
+     * @param string $delimiter
+     * @return string
+     */
     public function getFullActionName($delimiter = '_')
     {
         $request = Mage::app()->getRequest();

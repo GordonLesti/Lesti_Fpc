@@ -12,6 +12,10 @@
  * @author       Gordon Lesti <info@gordonlesti.com>
  * @license      http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
+
+/**
+ * Class Lesti_Fpc_Helper_Block
+ */
 class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
 {
     const DYNAMIC_BLOCKS_XML_PATH = 'system/fpc/dynamic_blocks';
@@ -19,6 +23,9 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
     const LAZY_BLOCKS_VALID_SESSION_PARAM = 'fpc_lazy_blocks_valid';
     const USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH = 'system/fpc/use_recently_viewed_products';
 
+    /**
+     * @return array
+     */
     public function getDynamicBlocks()
     {
         $blocks = Mage::getStoreConfig(self::DYNAMIC_BLOCKS_XML_PATH);
@@ -26,6 +33,9 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         return $blocks;
     }
 
+    /**
+     * @return array
+     */
     public function getLazyBlocks()
     {
         $blocks = Mage::getStoreConfig(self::LAZY_BLOCKS_XML_PATH);
@@ -33,6 +43,9 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         return $blocks;
     }
 
+    /**
+     * @return bool
+     */
     public function areLazyBlocksValid()
     {
         $hash = $this->_getLazyBlocksValidHash();
@@ -45,6 +58,9 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         return true;
     }
 
+    /**
+     * @return string
+     */
     protected function _getLazyBlocksValidHash()
     {
         $params = array();
@@ -69,21 +85,36 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         return sha1(serialize($params));
     }
 
+    /**
+     * @param $blockName
+     * @return string
+     */
     public function getPlaceholderHtml($blockName)
     {
         return '<!-- fpc ' . sha1($blockName) . ' -->';
     }
 
+    /**
+     * @param $blockName
+     * @return string
+     */
     public function getKey($blockName)
     {
         return sha1($blockName) . '_block';
     }
 
+    /**
+     * @return mixed
+     */
     public function useRecentlyViewedProducts()
     {
         return Mage::getStoreConfig(self::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH);
     }
 
+    /**
+     * @param $block
+     * @return array
+     */
     public function getCacheTags($block)
     {
         $cacheTags = array();

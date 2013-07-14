@@ -12,6 +12,10 @@
  * @author       Gordon Lesti <info@gordonlesti.com>
  * @license      http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
+
+/**
+ * Class Lesti_Fpc_Model_Fpc
+ */
 class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
 {
     const CACHE_TAG = 'FPC';
@@ -27,6 +31,9 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         'file_name_prefix'          => 'fpc',
     );
 
+    /**
+     *
+     */
     public function __construct()
     {
         $node = Mage::getConfig()->getNode('global/fpc');
@@ -78,6 +85,9 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         return $res;
     }
 
+    /**
+     * @return bool
+     */
     public function isActive()
     {
         return Mage::app()->useCache('fpc');

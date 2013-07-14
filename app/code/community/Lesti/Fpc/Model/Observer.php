@@ -12,6 +12,10 @@
  * @author       Gordon Lesti <info@gordonlesti.com>
  * @license      http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
+
+/**
+ * Class Lesti_Fpc_Model_Observer
+ */
 class Lesti_Fpc_Model_Observer
 {
     const CACHE_TYPE = 'fpc';
@@ -23,6 +27,9 @@ class Lesti_Fpc_Model_Observer
     protected $_placeholder = array();
     protected $_cache_tags = array();
 
+    /**
+     * @param $observer
+     */
     public function controllerActionLayoutGenerateBlocksBefore($observer)
     {
         $fpc = $this->_getFpc();
@@ -84,6 +91,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @param $observer
+     */
     public function httpResponseSendBefore($observer)
     {
         $fpc = $this->_getFpc();
@@ -103,6 +113,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @param $observer
+     */
     public function coreBlockAbstractToHtmlAfter($observer)
     {
         $fpc = $this->_getFpc();
@@ -127,6 +140,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @param $observer
+     */
     public function controllerActionPostdispatch($observer)
     {
         $fpc = $this->_getFpc();
@@ -139,6 +155,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @param $observer
+     */
     public function salesOrderPlaceAfter($observer)
     {
         $fpc = $this->_getFpc();
@@ -156,6 +175,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @param $observer
+     */
     public function catalogProductSaveAfter($observer)
     {
         $fpc = $this->_getFpc();
@@ -167,6 +189,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @param $observer
+     */
     public function catalogCategorySaveAfter($observer)
     {
         $fpc = $this->_getFpc();
@@ -178,6 +203,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @param $observer
+     */
     public function cmsPageSaveAfter($observer)
     {
         $fpc = $this->_getFpc();
@@ -191,6 +219,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @param $observer
+     */
     public function modelSaveAfter($observer)
     {
         $fpc = $this->_getFpc();
@@ -202,6 +233,9 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
+    /**
+     * @return Mage_Core_Model_Abstract
+     */
     protected function _getFpc()
     {
         return Mage::getSingleton('fpc/fpc');
@@ -217,12 +251,18 @@ class Lesti_Fpc_Model_Observer
         $this->_getFpc()->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
     }
 
+    /**
+     * @param $observer
+     */
     public function applicationCleanCache($observer)
     {
         $tags = $observer->getEvent()->getTags();
         $this->_getFpc()->clean($tags);
     }
 
+    /**
+     * @param $observer
+     */
     public function controllerActionPredispatchAdminhtmlCacheMassRefresh($observer)
     {
         $types = Mage::app()->getRequest()->getParam('types');

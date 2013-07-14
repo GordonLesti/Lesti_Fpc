@@ -16,9 +16,16 @@
  * if you want the welcome-message to be dynamic please replace in
  * page/html/header.phtml <?php echo $this->getWelcome() ?> with <?php echo $this->getChildHtml('header.welcome') ?>
  */
+
+/**
+ * Class Lesti_Fpc_Block_Page_Html_Header_Welcome
+ */
 class Lesti_Fpc_Block_Page_Html_Header_Welcome extends Mage_Core_Block_Abstract
 {
 
+    /**
+     * @return string
+     */
     protected function _toHtml()
     {
         if (empty($this->_data['welcome'])) {
