@@ -27,16 +27,18 @@ class Lesti_Fpc_Helper_Block_Messages extends Mage_Core_Helper_Abstract
         $messagesStorage = array('catalog/session',
             'tag/session',
             'checkout/session');
-        foreach ($messagesStorage as $storageName) {
-            $storage = Mage::getSingleton($storageName);
-            if ($storage) {
-                $block = $layout->getMessagesBlock();
-                $block->addMessages($storage->getMessages(true));
-                $block->setEscapeMessageFlag($storage->getEscapeMessages(true));
-            } else {
-                Mage::throwException(
-                    Mage::helper('core')->__('Invalid messages storage "%s" for layout messages initialization', (string)$storageName)
-                );
+        $block = $layout->getMessagesBlock();
+        if ($block) {
+            foreach ($messagesStorage as $storageName) {
+                $storage = Mage::getSingleton($storageName);
+                if ($storage) {
+                    $block->addMessages($storage->getMessages(true));
+                    $block->setEscapeMessageFlag($storage->getEscapeMessages(true));
+                } else {
+                    Mage::throwException(
+                        Mage::helper('core')->__('Invalid messages storage "%s" for layout messages initialization', (string)$storageName)
+                    );
+                }
             }
         }
         return $layout;
