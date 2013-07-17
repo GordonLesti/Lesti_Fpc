@@ -215,12 +215,21 @@ wishlist_index_add,
 wishlist_index_remove,
 wishlist_index_update,
 wishlist_index_allcart,
-wishlist_index_configure]]></refresh_actions>
+wishlist_index_configure,
+checkout_onepage_success]]></refresh_actions>
                 <lazy_blocks><![CDATA[top.links,
 cart_sidebar,
 catalog.compare.sidebar,
 wishlist_sidebar,
 header.welcome]]></lazy_blocks>
+                <uri_params><![CDATA[id,
+category,
+page_id,
+p,
+limit,
+dir,
+order,
+mode]]></uri_params>
                 <session_params><![CDATA[limit_page,
 sort_order,
 sort_direction,

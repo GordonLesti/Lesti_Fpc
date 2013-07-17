@@ -20,6 +20,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_CACHEABLE_ACTIONS = 'system/fpc/cache_actions';
     const XML_PATH_SESSION_PARAMS = 'system/fpc/session_params';
+    const XML_PATH_URI_PARAMS = 'system/fpc/uri_params';
     const XML_PATH_CUSTOMER_GROUPS = 'system/fpc/customer_groups';
     const XML_PATH_REFRESH_ACTIONS = 'system/fpc/refresh_actions';
     const LAYOUT_ELEMENT_CLASS = 'Mage_Core_Model_Layout_Element';
@@ -62,7 +63,13 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             $request = Mage::app()->getRequest();
             $params = array('host' => $request->getServer('HTTP_HOST'),
                 'port' => $request->getServer('SERVER_PORT'),
-                'uri' => $request->getServer('REQUEST_URI'));
+                'full_action_name' => $this->getFullActionName());
+            $uriParams = $this->_getUriParams();
+            foreach ($uriParams as $uriParam) {
+                if ($data = $request->getParam($uriParam)) {
+                    $params['uri_' . $uriParam] = $data;
+                }
+            }
             $cookie = Mage::getSingleton('core/cookie');
             $storeCode = Mage::app()->getStore(true)->getCode();
             if ($storeCode) {
@@ -84,12 +91,21 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             $catalogSession = Mage::getSingleton('catalog/session');
             foreach ($sessionParams as $param) {
                 if ($data = $catalogSession->getData($param)) {
-                    $params[$param] = $data;
+                    $params['session_' . $param] = $data;
                 }
             }
             Mage::register(self::REGISTRY_KEY_PARAMS, serialize($params));
         }
         return Mage::registry(self::REGISTRY_KEY_PARAMS);
+    }
+
+    /**
+     * @return array
+     */
+    public function _getUriParams()
+    {
+        $params = Mage::getStoreConfig(self::XML_PATH_URI_PARAMS);
+        return array_map('trim', explode(',', $params));
     }
 
     /**
