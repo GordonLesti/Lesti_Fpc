@@ -70,20 +70,19 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     $params['uri_' . $uriParam] = $data;
                 }
             }
-            $cookie = Mage::getSingleton('core/cookie');
+            // store
             $storeCode = Mage::app()->getStore(true)->getCode();
             if ($storeCode) {
                 $params['store'] = $storeCode;
             }
-            if (defined('Mage_Core_Model_Store::COOKIE_CURRENCY')) {
-                $currencyCode = $cookie->get(Mage_Core_Model_Store::COOKIE_CURRENCY);
-                if ($currencyCode) {
-                    $params['currency'] = $currencyCode;
-                }
+            // currency
+            $currencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+            if ($currencyCode) {
+                $params['currency'] = $currencyCode;
             }
             $design = Mage::getDesign();
             $params['design'] = $design->getPackageName() . '_' . $design->getTheme('template');
-            if(Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
+            if (Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
                 $customerSession = Mage::getSingleton('customer/session');
                 $params['customer_group_id'] = $customerSession->getCustomerGroupId();
             }
@@ -142,10 +141,10 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 break;
             case 'catalog_product_view' :
                 $cacheTags[] = sha1('product');
-                $productId  = (int) $request->getParam('id');
+                $productId = (int)$request->getParam('id');
                 if ($productId) {
                     $cacheTags[] = sha1('product_' . $productId);
-                    $categoryId = (int) $request->getParam('category', false);
+                    $categoryId = (int)$request->getParam('category', false);
                     if ($categoryId) {
                         $cacheTags[] = sha1('category');
                         $cacheTags[] = sha1('category_' . $categoryId);
@@ -154,7 +153,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 break;
             case 'catalog_category_view' :
                 $cacheTags[] = sha1('category');
-                $categoryId = (int) $request->getParam('id', false);
+                $categoryId = (int)$request->getParam('id', false);
                 if ($categoryId) {
                     $cacheTags[] = sha1('category_' . $categoryId);
                 }
@@ -171,8 +170,8 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $request = Mage::app()->getRequest();
         return $request->getRequestedRouteName() . $delimiter .
-            $request->getRequestedControllerName() . $delimiter .
-            $request->getRequestedActionName();
+        $request->getRequestedControllerName() . $delimiter .
+        $request->getRequestedActionName();
     }
 
 }

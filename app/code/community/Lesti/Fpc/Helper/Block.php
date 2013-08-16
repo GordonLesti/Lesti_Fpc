@@ -67,16 +67,15 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         $request = Mage::app()->getRequest();
         $params['host'] = $request->getServer('HTTP_HOST');
         $params['port'] = $request->getServer('SERVER_PORT');
+        // store
         $storeCode = Mage::app()->getStore(true)->getCode();
         if ($storeCode) {
             $params['store'] = $storeCode;
         }
-        if (defined('Mage_Core_Model_Store::COOKIE_CURRENCY')) {
-            $cookie = Mage::getSingleton('core/cookie');
-            $currencyCode = $cookie->get(Mage_Core_Model_Store::COOKIE_CURRENCY);
-            if ($currencyCode) {
-                $params['currency'] = $currencyCode;
-            }
+        // currency
+        $currencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+        if ($currencyCode) {
+            $params['currency'] = $currencyCode;
         }
         $customerSession = Mage::getSingleton('customer/session');
         $params['customer_group_id'] = $customerSession->getCustomerGroupId();
@@ -121,7 +120,7 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         $blockName = $block->getNameInLayout();
         if ($blockName == 'product_list') {
             $cacheTags[] = sha1('product');
-            foreach($block->getLoadedProductCollection() as $product) {
+            foreach ($block->getLoadedProductCollection() as $product) {
                 $cacheTags[] = sha1('product_' . $product->getId());
             }
         } else if (get_class($block) == get_class(Mage::getBlockSingleton('cms/block'))) {
