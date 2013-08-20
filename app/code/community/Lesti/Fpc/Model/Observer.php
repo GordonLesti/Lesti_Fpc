@@ -97,7 +97,8 @@ class Lesti_Fpc_Model_Observer
     public function httpResponseSendBefore($observer)
     {
         $fpc = $this->_getFpc();
-        if ($fpc->isActive() && !$this->_cached) {
+        $response = $observer->getEvent()->getResponse();
+        if ($fpc->isActive() && !$this->_cached && $response->getHttpResponseCode() == 200) {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $cacheableActions = Mage::helper('fpc')->getCacheableActions();
             if (in_array($fullActionName, $cacheableActions)) {
