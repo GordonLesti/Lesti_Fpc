@@ -144,6 +144,18 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 $productId = (int)$request->getParam('id');
                 if ($productId) {
                     $cacheTags[] = sha1('product_' . $productId);
+                    $configurableProduct = Mage::getModel('catalog/product_type_configurable');
+                    // get all childs of this product and add the cache tag
+                    $childIds = $configurableProduct->getChildrenIds($productId);
+                    foreach ($childIds as $childIdGroup) {
+                        foreach ($childIdGroup as $childId) {
+                            $cacheTags[] = sha1('product_' . $childId);
+                        }
+                    }
+                    $parentIds = $configurableProduct->getParentIdsByChild($productId);
+                    foreach ($parentIds as $parentId) {
+                        $cacheTags[] = sha1('product_' . $parentId);
+                    }
                     $categoryId = (int)$request->getParam('category', false);
                     if ($categoryId) {
                         $cacheTags[] = sha1('category');
@@ -159,6 +171,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 }
                 break;
         }
+        Mage::dispatchEvent('fpc_helper_collect_cache_tags', array('chace_tags' => $cacheTags));
         return $cacheTags;
     }
 
