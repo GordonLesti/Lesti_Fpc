@@ -160,26 +160,6 @@ class Lesti_Fpc_Model_Observer
     /**
      * @param $observer
      */
-    public function salesOrderPlaceAfter($observer)
-    {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
-            $order = $observer->getEvent()->getOrder();
-            foreach ($order->getItemsCollection() as $item) {
-                $product = $item->getProduct();
-                $_model = Mage::getModel('catalog/product');
-                $_product = $_model->load($product->getId());
-
-                if (!$_product->isAvailable) {
-                    $fpc->clean(sha1('product_' . $product->getId()));
-                }
-            }
-        }
-    }
-
-    /**
-     * @param $observer
-     */
     public function catalogProductSaveAfter($observer)
     {
         $fpc = $this->_getFpc();
@@ -232,6 +212,18 @@ class Lesti_Fpc_Model_Observer
             if (get_class($object) == get_class(Mage::getModel('cms/block'))) {
                 $fpc->clean(sha1('cmsblock_' . $object->getIdentifier()));
             }
+        }
+    }
+
+    /**
+     * @param $observer
+     */
+    public function cataloginventoryStockItemSaveAfter($observer)
+    {
+        $item = $event = $observer->getEvent()->getItem();
+        if ($item->getStockStatusChangedAuto()) {
+            $fpc = $this->_getFpc();
+            $fpc->clean(sha1('product_' . $item->getProductId()));
         }
     }
 
