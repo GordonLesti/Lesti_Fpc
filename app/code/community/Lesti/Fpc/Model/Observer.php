@@ -34,7 +34,10 @@ class Lesti_Fpc_Model_Observer
     {
         $fpc = $this->_getFpc();
         $request = Mage::app()->getRequest();
-        if ($fpc->isActive() && !$this->_cached && $request->getParam('no_cache') !== '1') {
+        if ($fpc->isActive() &&
+            !$this->_cached &&
+            $request->getParam('no_cache') !== '1' &&
+            $request->getMethod() == 'GET') {
             $key = Mage::helper('fpc')->getKey();
             if ($object = $fpc->load($key)) {
                 $object = unserialize($object);
@@ -99,7 +102,11 @@ class Lesti_Fpc_Model_Observer
     {
         $fpc = $this->_getFpc();
         $response = $observer->getEvent()->getResponse();
-        if ($fpc->isActive() && !$this->_cached && $response->getHttpResponseCode() == 200) {
+        $request = Mage::app()->getRequest();
+        if ($fpc->isActive() &&
+            !$this->_cached &&
+            $response->getHttpResponseCode() == 200 &&
+            $request->getMethod() == 'GET') {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $cacheableActions = Mage::helper('fpc')->getCacheableActions();
             if (in_array($fullActionName, $cacheableActions)) {
