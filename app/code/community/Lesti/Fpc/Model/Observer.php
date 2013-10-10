@@ -105,6 +105,7 @@ class Lesti_Fpc_Model_Observer
         $request = Mage::app()->getRequest();
         if ($fpc->isActive() &&
             !$this->_cached &&
+            $request->getParam('no_cache') !== '1' &&
             $response->getHttpResponseCode() == 200 &&
             $request->getMethod() == 'GET') {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
@@ -128,7 +129,10 @@ class Lesti_Fpc_Model_Observer
     public function coreBlockAbstractToHtmlAfter($observer)
     {
         $fpc = $this->_getFpc();
-        if ($fpc->isActive() && !$this->_cached) {
+        if ($fpc->isActive() &&
+            !$this->_cached &&
+            $request->getParam('no_cache') !== '1' &&
+            $request->getMethod() == 'GET') {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $block = $observer->getEvent()->getBlock();
             $blockName = $block->getNameInLayout();
