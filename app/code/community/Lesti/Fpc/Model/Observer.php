@@ -129,6 +129,7 @@ class Lesti_Fpc_Model_Observer
     public function coreBlockAbstractToHtmlAfter($observer)
     {
         $fpc = $this->_getFpc();
+        $request = Mage::app()->getRequest();
         if ($fpc->isActive() &&
             !$this->_cached &&
             $request->getParam('no_cache') !== '1' &&
