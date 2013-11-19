@@ -20,6 +20,7 @@ class Lesti_Fpc_Model_Observer
 {
     const CACHE_TYPE = 'fpc';
     const CUSTOMER_SESSION_REGISTRY_KEY = 'fpc_customer_session';
+    const PRODUCT_IDS_MASS_ACTION_KEY = 'fpc_product_ids_mass_action';
     const SHOW_AGE_XML_PATH = 'system/fpc/show_age';
     const FORM_KEY_PLACEHOLDER = '<!-- fpc form_key_placeholder -->';
 
@@ -183,6 +184,42 @@ class Lesti_Fpc_Model_Observer
             if (in_array($fullActionName, Mage::helper('fpc')->getRefreshActions())) {
                 $session = Mage::getSingleton('customer/session');
                 $session->setData(Lesti_Fpc_Helper_Block::LAZY_BLOCKS_VALID_SESSION_PARAM, false);
+            }
+        }
+    }
+
+    /**
+     * @param $observer
+     */
+    public function catalogProductMassActionBefore($observer)
+    {
+        $fpc = $this->_getFpc();
+        if ($fpc->isActive()) {
+            $entities = $observer->getEvent()->getData();
+            $productIds = $entities['product_ids'];
+
+            $coreSession = Mage::getSingleton('core/session');
+            
+            $currentProductIds = $coreSession->getData(self::PRODUCT_IDS_MASS_ACTION_KEY);
+            if (!empty($currentProductIds)) {
+                $productIds = array_merge($currentProductIds, $productIds);
+            }
+            
+            $coreSession->setData(self::PRODUCT_IDS_MASS_ACTION_KEY, $productIds);
+        }
+    }
+
+    /**
+     * @param $observer
+     */
+    public function catalogProductMassActionAfter($observer)
+    {
+        $fpc = $this->_getFpc();
+        if ($fpc->isActive()) {
+            $productIds = Mage::getSingleton('core/session')->getData(self::PRODUCT_IDS_MASS_ACTION_KEY, true);
+
+            foreach($productIds as $productId) {
+                $fpc->clean(sha1('product_' . $productId));
             }
         }
     }
