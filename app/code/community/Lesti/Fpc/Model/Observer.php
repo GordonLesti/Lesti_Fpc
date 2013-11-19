@@ -23,6 +23,7 @@ class Lesti_Fpc_Model_Observer
     const PRODUCT_IDS_MASS_ACTION_KEY = 'fpc_product_ids_mass_action';
     const SHOW_AGE_XML_PATH = 'system/fpc/show_age';
     const FORM_KEY_PLACEHOLDER = '<!-- fpc form_key_placeholder -->';
+    const SESSION_ID_PLACEHOLDER = '<!-- fpc session_id_placeholder -->';
 
     protected $_cached = false;
     protected $_html = array();
@@ -84,11 +85,20 @@ class Lesti_Fpc_Model_Observer
                     }
                 }
                 $body = str_replace($this->_placeholder, $this->_html, $body);
-                $formKey = Mage::getSingleton('core/session')->getFormKey();
+                $coreSession = Mage::getSingleton('core/session');
+                $formKey = $coreSession->getFormKey();
                 if ($formKey) {
                     $body = str_replace(self::FORM_KEY_PLACEHOLDER,
                         $formKey,
                         $body);
+                }
+                $sid = $session->getSessionIdQueryParam() . '=' . $session->getEncryptedSessionId();
+                if ($sid != '=') {
+                    $body = str_replace(
+                        self::FORM_KEY_PLACEHOLDER,
+                        $sid,
+                        $body
+                    );
                 }
                 if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
                     Mage::app()->getResponse()->setHeader('Age', time()-$time = $object['time']);
@@ -121,11 +131,22 @@ class Lesti_Fpc_Model_Observer
             if (in_array($fullActionName, $cacheableActions)) {
                 $key = Mage::helper('fpc')->getKey();
                 $body = $observer->getEvent()->getResponse()->getBody();
-                $formKey = Mage::getSingleton('core/session')->getFormKey();
+                $session = Mage::getSingleton('core/session');
+                $formKey = $session->getFormKey();
                 if ($formKey) {
-                    $body = str_replace($formKey,
+                    $body = str_replace(
+                        $formKey,
                         self::FORM_KEY_PLACEHOLDER,
-                        $body);
+                        $body
+                    );
+                }
+                $sid = $session->getSessionIdQueryParam() . '=' . $session->getEncryptedSessionId();
+                if ($sid != '=') {
+                    $body = str_replace(
+                        $sid,
+                        self::SESSION_ID_PLACEHOLDER,
+                        $body
+                    );
                 }
                 $this->_cache_tags = array_merge(Mage::helper('fpc')->getCacheTags(), $this->_cache_tags);
                 $object = array('body' => $body, 'time' => time());
@@ -133,9 +154,18 @@ class Lesti_Fpc_Model_Observer
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 if ($formKey) {
-                    $body = str_replace(self::FORM_KEY_PLACEHOLDER,
+                    $body = str_replace(
+                        self::FORM_KEY_PLACEHOLDER,
                         $formKey,
-                        $body);
+                        $body
+                    );
+                }
+                if ($sid != '=') {
+                    $body = str_replace(
+                        self::FORM_KEY_PLACEHOLDER,
+                        $sid,
+                        $body
+                    );
                 }
                 $observer->getEvent()->getResponse()->setBody($body);
             }
