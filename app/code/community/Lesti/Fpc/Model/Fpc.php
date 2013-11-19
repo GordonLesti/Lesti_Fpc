@@ -61,6 +61,9 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         if (!in_array(Mage_Core_Model_Config::CACHE_TAG, $tags)) {
             $tags[] = self::CACHE_TAG;
         }
+        if ($lifeTime === null) {
+            $lifeTime = (int) $this->getFrontend()->getOption('lifetime');
+        }
         return $this->_frontend->save((string)$data, $this->_id($id), $this->_tags($tags), $lifeTime);
     }
 
