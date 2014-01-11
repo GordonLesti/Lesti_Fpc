@@ -71,6 +71,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </uri_params>
+                        <miss_uri_params>
+                            <label>Miss Uri Params</label>
+                            <frontend_type>textarea</frontend_type>
+                            <comment>Ignore Requests with this paramters. Seperated with comma.</comment>
+                            <sort_order>55</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </miss_uri_params>
                         <session_params>
                             <label>Session Params</label>
                             <frontend_type>textarea</frontend_type>
