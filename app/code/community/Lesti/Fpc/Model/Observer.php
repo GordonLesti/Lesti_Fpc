@@ -38,7 +38,7 @@ class Lesti_Fpc_Model_Observer
         $fpc = $this->_getFpc();
         if ($fpc->isActive() &&
             !$this->_cached &&
-            Mage::helper('fpc')->canCacheThisRequest()) {
+            Mage::helper('fpc')->canCacheRequest()) {
             $key = Mage::helper('fpc')->getKey();
             if ($object = $fpc->load($key)) {
                 $object = unserialize($object);
@@ -120,7 +120,7 @@ class Lesti_Fpc_Model_Observer
         $response = $observer->getEvent()->getResponse();
         if ($fpc->isActive() &&
             !$this->_cached &&
-            Mage::helper('fpc')->canCacheThisRequest() &&
+            Mage::helper('fpc')->canCacheRequest() &&
             $response->getHttpResponseCode() == 200) {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $cacheableActions = Mage::helper('fpc')->getCacheableActions();
@@ -176,7 +176,7 @@ class Lesti_Fpc_Model_Observer
         $fpc = $this->_getFpc();
         if ($fpc->isActive() &&
             !$this->_cached &&
-            Mage::helper('fpc')->canCacheThisRequest()) {
+            Mage::helper('fpc')->canCacheRequest()) {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $block = $observer->getEvent()->getBlock();
             $blockName = $block->getNameInLayout();

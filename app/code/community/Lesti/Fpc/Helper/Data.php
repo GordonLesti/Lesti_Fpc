@@ -123,7 +123,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         return array_map('trim', explode(',', $params));
     }
 
-    public function canCacheThisRequest()
+    public function canCacheRequest()
     {
         $request = Mage::app()->getRequest();
         $missParams = $this->_getMissUriParams();
@@ -131,7 +131,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             return false;
         }
         foreach ($missParams as $missParam) {
-            $pair = array_map('trim', explode('=', $missParams));
+            $pair = array_map('trim', explode('=', $missParam));
             $key = $pair[0];
             $regex = $pair[1];
             $param = $request->getParam($key);
