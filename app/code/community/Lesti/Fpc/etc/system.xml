@@ -74,7 +74,7 @@
                         <miss_uri_params>
                             <label>Miss Uri Params</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>Ignore Requests with this paramters. Seperated with comma.</comment>
+                            <comment>Ignore Requests with this paramters. Regex seperated with comma.</comment>
                             <sort_order>55</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

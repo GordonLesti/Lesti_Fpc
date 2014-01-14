@@ -36,11 +36,9 @@ class Lesti_Fpc_Model_Observer
     public function controllerActionLayoutGenerateBlocksBefore($observer)
     {
         $fpc = $this->_getFpc();
-        $request = Mage::app()->getRequest();
         if ($fpc->isActive() &&
             !$this->_cached &&
-            $request->getParam('no_cache') !== '1' &&
-            $request->getMethod() == 'GET') {
+            Mage::helper('fpc')->canCacheThisRequest()) {
             $key = Mage::helper('fpc')->getKey();
             if ($object = $fpc->load($key)) {
                 $object = unserialize($object);
@@ -120,12 +118,10 @@ class Lesti_Fpc_Model_Observer
     {
         $fpc = $this->_getFpc();
         $response = $observer->getEvent()->getResponse();
-        $request = Mage::app()->getRequest();
         if ($fpc->isActive() &&
             !$this->_cached &&
-            $request->getParam('no_cache') !== '1' &&
-            $response->getHttpResponseCode() == 200 &&
-            $request->getMethod() == 'GET') {
+            Mage::helper('fpc')->canCacheThisRequest() &&
+            $response->getHttpResponseCode() == 200) {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $cacheableActions = Mage::helper('fpc')->getCacheableActions();
             if (in_array($fullActionName, $cacheableActions)) {
@@ -178,11 +174,9 @@ class Lesti_Fpc_Model_Observer
     public function coreBlockAbstractToHtmlAfter($observer)
     {
         $fpc = $this->_getFpc();
-        $request = Mage::app()->getRequest();
         if ($fpc->isActive() &&
             !$this->_cached &&
-            $request->getParam('no_cache') !== '1' &&
-            $request->getMethod() == 'GET') {
+            Mage::helper('fpc')->canCacheThisRequest()) {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             $block = $observer->getEvent()->getBlock();
             $blockName = $block->getNameInLayout();

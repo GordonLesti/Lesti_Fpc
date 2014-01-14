@@ -248,6 +248,12 @@ limit,
 dir,
 order,
 mode]]></uri_params>
+                <miss_uri_params><![CDATA[no_cache=1,
+limit=/[0-9_]+/,
+dir=/[0-9a-z_]+/,
+order=/[0-9a-z_]+/,
+mode=/[0-9a-z_]+/,
+___store=/[a-z]{1}[0-9a-z_]*/]]></miss_uri_params>
                 <session_params><![CDATA[limit_page,
 sort_order,
 sort_direction,
