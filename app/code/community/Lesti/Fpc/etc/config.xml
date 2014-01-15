@@ -249,7 +249,7 @@ dir,
 order,
 mode]]></uri_params>
                 <miss_uri_params><![CDATA[no_cache=1,
-limit=/[0-9_]+/,
+limit=/[0-9]+/,
 dir=/[0-9a-z_]+/,
 order=/[0-9a-z_]+/,
 mode=/[0-9a-z_]+/,
