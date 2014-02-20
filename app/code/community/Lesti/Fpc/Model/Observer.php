@@ -82,22 +82,15 @@ class Lesti_Fpc_Model_Observer
                         $this->_html[] = $html;
                     }
                 }
-                $body = str_replace($this->_placeholder, $this->_html, $body);
+                $this->_placeholder[] = self::FORM_KEY_PLACEHOLDER;
+                $this->_html[] = $session->getSessionIdQueryParam() . '=' . $session->getEncryptedSessionId();
                 $coreSession = Mage::getSingleton('core/session');
                 $formKey = $coreSession->getFormKey();
                 if ($formKey) {
-                    $body = str_replace(self::FORM_KEY_PLACEHOLDER,
-                        $formKey,
-                        $body);
+                    $this->_placeholder[] = self::FORM_KEY_PLACEHOLDER;
+                    $this->_html[] = $formKey;
                 }
-                $sid = $session->getSessionIdQueryParam() . '=' . $session->getEncryptedSessionId();
-                if ($sid != '=') {
-                    $body = str_replace(
-                        self::FORM_KEY_PLACEHOLDER,
-                        $sid,
-                        $body
-                    );
-                }
+                $body = str_replace($this->_placeholder, $this->_html, $body);
                 if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
                     Mage::app()->getResponse()->setHeader('Age', time()-$time = $object['time']);
                 }
@@ -135,34 +128,24 @@ class Lesti_Fpc_Model_Observer
                         self::FORM_KEY_PLACEHOLDER,
                         $body
                     );
+                    $this->_placeholder[] = self::FORM_KEY_PLACEHOLDER;
+                    $this->_html[] = $formKey;
                 }
                 $sid = $session->getSessionIdQueryParam() . '=' . $session->getEncryptedSessionId();
-                if ($sid != '=') {
+                if ($session->getEncryptedSessionId()) {
                     $body = str_replace(
                         $sid,
                         self::SESSION_ID_PLACEHOLDER,
                         $body
                     );
+                    $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
+                    $this->_html[] = $sid;
                 }
                 $this->_cache_tags = array_merge(Mage::helper('fpc')->getCacheTags(), $this->_cache_tags);
                 $object = array('body' => $body, 'time' => time());
                 $fpc->save(serialize($object), $key, $this->_cache_tags);
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
-                if ($formKey) {
-                    $body = str_replace(
-                        self::FORM_KEY_PLACEHOLDER,
-                        $formKey,
-                        $body
-                    );
-                }
-                if ($sid != '=') {
-                    $body = str_replace(
-                        self::FORM_KEY_PLACEHOLDER,
-                        $sid,
-                        $body
-                    );
-                }
                 $observer->getEvent()->getResponse()->setBody($body);
             }
         }
