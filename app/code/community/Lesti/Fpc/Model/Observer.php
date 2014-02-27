@@ -82,7 +82,7 @@ class Lesti_Fpc_Model_Observer
                         $this->_html[] = $html;
                     }
                 }
-                $this->_placeholder[] = self::FORM_KEY_PLACEHOLDER;
+                $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
                 $this->_html[] = $session->getSessionIdQueryParam() . '=' . $session->getEncryptedSessionId();
                 $coreSession = Mage::getSingleton('core/session');
                 $formKey = $coreSession->getFormKey();
