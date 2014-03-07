@@ -30,7 +30,13 @@ class Lesti_Fpc_Block_Catalog_Product_View_Ajax extends Mage_Core_Block_Template
             Mage::helper('fpc/block')->useRecentlyViewedProducts() &&
             $id
         ) {
-            return $this->getUrl('fpc/catalog_product/view', array('id' => $id));
+            return $this->getUrl(
+                'fpc/catalog_product/view',
+                array(
+                    'id' => $id,
+                    '_secure' => Mage::app()->getStore()->isCurrentlySecure()
+                )
+            );
         }
         return false;
     }
