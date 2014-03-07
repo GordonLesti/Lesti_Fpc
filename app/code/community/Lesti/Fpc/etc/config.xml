@@ -17,7 +17,7 @@
 <config>
     <modules>
         <Lesti_Fpc>
-            <version>1.1.5</version>
+            <version>1.1.6</version>
         </Lesti_Fpc>
     </modules>
     <global>
@@ -114,15 +114,6 @@
                     </fpc_core_clean_cache>
                 </observers>
             </core_clean_cache>
-            <application_clean_cache>
-                <observers>
-                    <fpc_application_clean_cache>
-                        <class>fpc/observer</class>
-                        <type>singleton</type>
-                        <method>applicationCleanCache</method>
-                    </fpc_application_clean_cache>
-                </observers>
-            </application_clean_cache>
             <cataloginventory_stock_item_save_after>
                 <observers>
                     <fpc_cataloginventory_stock_item_save_after>

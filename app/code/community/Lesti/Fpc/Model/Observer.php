@@ -322,15 +322,6 @@ class Lesti_Fpc_Model_Observer
     /**
      * @param $observer
      */
-    public function applicationCleanCache($observer)
-    {
-        $tags = $observer->getEvent()->getTags();
-        $this->_getFpc()->clean($tags);
-    }
-
-    /**
-     * @param $observer
-     */
     public function controllerActionPredispatchAdminhtmlCacheMassRefresh($observer)
     {
         $types = Mage::app()->getRequest()->getParam('types');
