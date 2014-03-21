@@ -94,9 +94,18 @@ class Lesti_Fpc_Model_Observer
                 if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
                     Mage::app()->getResponse()->setHeader('Age', time()-$time = $object['time']);
                 }
+
+                if(Mage::getConfig()->getNode('global/fpc/debug') == 'true'
+                    || Mage::getConfig()->getNode('global/fpc/debug') == '1'){
+                    Mage::app()->getResponse()->setHeader('X-Lesti_FPC-Cache', 'HIT');
+                }
                 Mage::app()->getResponse()->setBody($body);
                 Mage::app()->getResponse()->sendResponse();
                 exit;
+            }
+            if(Mage::getConfig()->getNode('global/fpc/debug') == 'true'
+                || Mage::getConfig()->getNode('global/fpc/debug') == '1'){
+                Mage::app()->getResponse()->setHeader('X-Lesti_FPC-Cache', 'MISS');
             }
             if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
                 Mage::app()->getResponse()->setHeader('Age', 0);
