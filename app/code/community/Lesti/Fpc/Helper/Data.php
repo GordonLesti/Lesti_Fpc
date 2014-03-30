@@ -81,6 +81,10 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             if ($currencyCode) {
                 $params['currency'] = $currencyCode;
             }
+            // ajax
+            if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+                $params['ajax'] = 1;
+            }
             $design = Mage::getDesign();
             $params['design'] = $design->getPackageName() . '_' . $design->getTheme('template');
             if (Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
