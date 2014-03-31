@@ -92,7 +92,7 @@ class Lesti_Fpc_Model_Observer
                 }
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
-                    Mage::app()->getResponse()->setHeader('Age', time()-$time = $object['time']);
+                    Mage::app()->getResponse()->setHeader('Age', time() - $object['time']);
                 }
 
                 if(Mage::getConfig()->getNode('global/fpc/debug') == 'true'

@@ -239,7 +239,7 @@ limit,
 dir,
 order,
 mode]]></uri_params>
-                <miss_uri_params><![CDATA[no_cache=1,
+                <miss_uri_params><![CDATA[no_cache=/1/,
 limit=/[0-9]+/,
 dir=/[0-9a-z_]+/,
 order=/[0-9a-z_]+/,
