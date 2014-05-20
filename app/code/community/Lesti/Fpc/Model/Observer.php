@@ -321,7 +321,7 @@ class Lesti_Fpc_Model_Observer
     /**
      * Cron job method to clean old cache resources
      *
-     * @param Mage_Cron_Model_Schedule $schedule
+     * @param $observer
      */
     public function coreCleanCache($observer)
     {
