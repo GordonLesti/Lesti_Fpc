@@ -21,11 +21,23 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
     const CACHE_TAG = 'FPC';
 
     /**
-     * Default iotions for default backend
+     * Default options for default backend
      *
      * @var array
      */
     protected $_defaultBackendOptions = array(
+        'hashed_directory_level'    => 3,
+        'hashed_directory_perm'    => 0777,
+        'file_name_prefix'          => 'fpc',
+    );
+
+    /**
+     * Default options for default backend used by Zend Framework versions
+     * older than 1.12.0
+     *
+     * @var array
+     */
+    protected $_legacyDefaultBackendOptions = array(
         'hashed_directory_level'    => 3,
         'hashed_directory_umask'    => 0777,
         'file_name_prefix'          => 'fpc',
@@ -36,6 +48,13 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
      */
     public function __construct()
     {
+        /*
+         * If the version of Zend Framework is older than 1.12, fallback to the legacy
+         * cache settings. See http://framework.zend.com/issues/browse/ZF-12047
+         */
+        if (Zend_Version::compareVersion('1.12.0') > 0) {
+            $this->_defaultBackendOptions = $this->_legacyDefaultBackendOptions;
+        }
         $node = Mage::getConfig()->getNode('global/fpc');
         $options = array();
         if($node) {
