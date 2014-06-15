@@ -66,10 +66,21 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 'port' => $request->getServer('SERVER_PORT'),
                 'full_action_name' => $this->getFullActionName());
             $uriParams = $this->_getUriParams();
-            foreach ($uriParams as $uriParam) {
-                if ($data = $request->getParam($uriParam)) {
-                    $params['uri_' . $uriParam] = $data;
-                }
+            foreach ($request->getParams() as $requestParam => $requestParamValue) {
+            	if (!$requestParamValue) continue;
+            	foreach ($uriParams as $uriParam) {
+            		if (substr($uriParam, 0, 1) === '/' && substr($uriParam, -1, 1) === '/') {
+            			if (preg_match($uriParam, $requestParam)) {
+            				$params['uri_' . $requestParam] = $requestParamValue;
+            				break;
+            			}
+            		} else {
+            			if ($uriParam === $requestParam) {
+            				$params['uri_' . $requestParam] = $requestParamValue;
+            				break;
+            			}
+            		}
+            	}
             }
             // store
             $storeCode = Mage::app()->getStore(true)->getCode();
