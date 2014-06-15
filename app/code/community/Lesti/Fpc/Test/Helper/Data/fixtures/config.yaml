@@ -1,0 +1,2 @@
+config:
+    default/system/fpc/uri_params: id,/^filter_\w+/,order
