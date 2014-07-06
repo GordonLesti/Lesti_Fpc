@@ -250,6 +250,14 @@ class Lesti_Fpc_Model_Observer
             $product = $observer->getEvent()->getProduct();
             if ($product->getId()) {
                 $fpc->clean(sha1('product_' . $product->getId()));
+
+                $origData = $product->getOrigData();
+                if (empty($origData) || (!empty($origData) && $product->getStatus() != $origData['status'])) {
+                    $categories = $product->getCategoryIds();
+                    foreach($categories as $categoryId) {
+                        $fpc->clean(sha1('category_' . $categoryId));
+                    }
+                }
             }
         }
     }
