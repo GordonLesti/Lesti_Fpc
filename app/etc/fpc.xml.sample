@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <config>
     <global>
+    	<!-- use session_cache_limiter in this file, or local.xml to configure response headers. More informan here: http://www.magentocommerce.com/boards%20/viewthread/23696/ and http://php.net/manual/en/function.session-cache-limiter.php#82174 for possible values -->
+    	<session_cache_limiter><![CDATA[]]></session_cache_limiter> 
         <fpc>
             <lifetime>86400</lifetime>
 	    <debug>false</debug>
