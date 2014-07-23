@@ -1,0 +1,49 @@
+test_matched_param:
+  uri_params:
+    -
+      id: 1
+    -
+      id: 1
+      filter_1_attribute: filter_1_value_1
+    -
+      id: 1
+      filter_1_attribute: filter_1_value_2
+  expected_count: 3
+test_not_matched_param:
+  uri_params:
+    -
+      id: 1
+    -
+      id: 1
+      no_filter_1_attribute: filter_1_value_1
+    -
+      id: 1
+      no_filter_1_attribute: filter_1_value_2
+  expected_count: 1
+test_multiple_matched_params:
+  uri_params:
+    -
+      id: 1
+    -
+      id: 1
+      filter_1_attribute: filter_1_value_1
+    -
+      id: 1
+      filter_2_attribute: filter_2_value_1
+    -
+      id: 1
+      filter_1_attribute: filter_1_value_1
+      filter_2_attribute: filter_2_value_1
+    -
+      id: 1
+      filter_1_attribute: filter_1_value_1
+      filter_2_attribute: filter_2_value_2
+    -
+      id: 1
+      filter_1_attribute: filter_1_value_2
+      filter_2_attribute: filter_2_value_1
+    -
+      id: 1
+      filter_1_attribute: filter_1_value_2
+      filter_2_attribute: filter_2_value_2
+  expected_count: 7

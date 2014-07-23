@@ -66,9 +66,13 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 'port' => $request->getServer('SERVER_PORT'),
                 'full_action_name' => $this->getFullActionName());
             $uriParams = $this->_getUriParams();
-            foreach ($uriParams as $uriParam) {
-                if ($data = $request->getParam($uriParam)) {
-                    $params['uri_' . $uriParam] = $data;
+            foreach ($request->getParams() as $requestParam => $requestParamValue) {
+                if (!$requestParamValue) continue;
+                foreach ($uriParams as $uriParam) {
+                    if ($this->_matchUriParam($uriParam, $requestParam)) {
+                        $params['uri_' . $requestParam] = $requestParamValue;
+                        break;
+                    }
                 }
             }
             // store
@@ -97,6 +101,21 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             Mage::register(self::REGISTRY_KEY_PARAMS, serialize($params));
         }
         return Mage::registry(self::REGISTRY_KEY_PARAMS);
+    }
+    /**
+     * Matches URI param against expression (string comparison or regular expression)
+     * 
+     * @param string $expression
+     * @param string $param
+     * @return boolean
+     */
+    protected function _matchUriParam($expression, $param)
+    {
+        if (substr($expression, 0, 1) === '/' && substr($expression, -1, 1) === '/') {
+            return (bool) preg_match($expression, $param);
+        } else {
+            return $expression === $param;
+        }
     }
 
     /**
