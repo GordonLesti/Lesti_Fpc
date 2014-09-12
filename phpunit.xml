@@ -1,0 +1,18 @@
+<phpunit bootstrap="./tests/bootstrap.php"
+         backupGlobals="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         strict="false"
+         verbose="false">
+    <testsuites>
+        <testsuite name="Lesti_Fpc">
+            <directory>./tests/LestiTest</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
