@@ -78,18 +78,11 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 }
             }
             // store
-            $storeCode = Mage::app()->getStore(true)->getCode();
-            if ($storeCode) {
-                $params['store'] = $storeCode;
-            }
+            $params = $this->_addStoreParams($params);
             // currency
-            $currencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
-            if ($currencyCode) {
-                $params['currency'] = $currencyCode;
-            }
-            $design = Mage::getDesign();
-            $params['design'] = $design->getPackageName().'_'.
-                $design->getTheme('template');
+            $params = $this->_addCurrencyParams($params);
+            // design
+            $params = $this->_addDesignParams($params);
             if (Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
                 $customerSession = Mage::getSingleton('customer/session');
                 $params['customer_group_id'] = $customerSession
@@ -106,6 +99,45 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return Mage::registry(self::REGISTRY_KEY_PARAMS);
     }
+
+    /**
+     * @param $params
+     * @return mixed
+     */
+    protected function _addStoreParams($params)
+    {
+        $storeCode = Mage::app()->getStore(true)->getCode();
+        if ($storeCode) {
+            $params['store'] = $storeCode;
+        }
+        return $params;
+    }
+
+    /**
+     * @param $params
+     * @return mixed
+     */
+    protected function _addCurrencyParams($params)
+    {
+        $currencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+        if ($currencyCode) {
+            $params['currency'] = $currencyCode;
+        }
+        return $params;
+    }
+
+    /**
+     * @param $params
+     * @return mixed
+     */
+    protected function _addDesignParams($params)
+    {
+        $design = Mage::getDesign();
+        $params['design'] = $design->getPackageName().'_'.
+            $design->getTheme('template');
+        return $params;
+    }
+
     /**
      * Matches URI param against expression (string comparison or regular expression)
      * 
@@ -174,83 +206,25 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         $fullActionName = $this->getFullActionName();
         $cacheTags = array();
         $request = Mage::app()->getRequest();
+        /** @var Lesti_Fpc_Helper_Data_Tag $tagHelper */
+        $tagHelper = Mage::helper('fpc/data_tag');
         switch ($fullActionName) {
             case 'cms_index_index' :
-                $cacheTags[] = sha1('cms');
-                $pageId = Mage::getStoreConfig(
-                    Mage_Cms_Helper_Page::XML_PATH_HOME_PAGE
-                );
-                if ($pageId) {
-                    $cacheTags[] = sha1('cms_' . $pageId);
-                }
+                $cacheTags = $tagHelper::getCmsIndexIndexCacheTags();
                 break;
             case 'cms_page_view' :
-                $cacheTags[] = sha1('cms');
-                $pageId = $request->getParam(
-                    'page_id',
-                    $request->getParam('id', false)
-                );
-                if ($pageId) {
-                    $cacheTags[] = sha1('cms_' . $pageId);
-                }
+                $cacheTags = $tagHelper::getCmsPageViewCacheTags($request);
                 break;
             case 'catalog_product_view' :
-                $cacheTags[] = sha1('product');
-                $productId = (int)$request->getParam('id');
-                if ($productId) {
-                    $cacheTags[] = sha1('product_' . $productId);
-
-                    // configurable product
-                    $configurableProduct = Mage::getModel(
-                        'catalog/product_type_configurable'
-                    );
-                    // get all childs of this product and add the cache tag
-                    $childIds = $configurableProduct->getChildrenIds($productId);
-                    foreach ($childIds as $childIdGroup) {
-                        foreach ($childIdGroup as $childId) {
-                            $cacheTags[] = sha1('product_' . $childId);
-                        }
-                    }
-                    // get all parents of this product and add the cache tag
-                    $parentIds = $configurableProduct
-                        ->getParentIdsByChild($productId);
-                    foreach ($parentIds as $parentId) {
-                        $cacheTags[] = sha1('product_' . $parentId);
-                    }
-
-                    // grouped product
-                    $groupedProduct = Mage::getModel('catalog/product_type_grouped');
-                    // get all childs of this product and add the cache tag
-                    $childIds = $groupedProduct->getChildrenIds($productId);
-                    foreach ($childIds as $childIdGroup) {
-                        foreach ($childIdGroup as $childId) {
-                            $cacheTags[] = sha1('product_' . $childId);
-                        }
-                    }
-                    // get all parents of this product and add the cache tag
-                    $parentIds = $groupedProduct->getParentIdsByChild($productId);
-                    foreach ($parentIds as $parentId) {
-                        $cacheTags[] = sha1('product_' . $parentId);
-                    }
-
-                    $categoryId = (int)$request->getParam('category', false);
-                    if ($categoryId) {
-                        $cacheTags[] = sha1('category');
-                        $cacheTags[] = sha1('category_' . $categoryId);
-                    }
-                }
+                $cacheTags = $tagHelper::getCatalogProductViewCacheTags($request);
                 break;
             case 'catalog_category_view' :
-                $cacheTags[] = sha1('category');
-                $categoryId = (int)$request->getParam('id', false);
-                if ($categoryId) {
-                    $cacheTags[] = sha1('category_' . $categoryId);
-                }
+                $cacheTags = $tagHelper::getCatalogCategoryViewCacheTags($request);
                 break;
         }
         Mage::dispatchEvent(
             'fpc_helper_collect_cache_tags',
-            array('chace_tags' => $cacheTags)
+            array('cache_tags' => $cacheTags)
         );
         return $cacheTags;
     }
@@ -266,5 +240,4 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         $request->getRequestedControllerName() . $delimiter .
         $request->getRequestedActionName();
     }
-
 }
