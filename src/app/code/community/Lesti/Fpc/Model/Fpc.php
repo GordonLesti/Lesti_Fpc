@@ -49,8 +49,9 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
     public function __construct()
     {
         /*
-         * If the version of Zend Framework is older than 1.12, fallback to the legacy
-         * cache settings. See http://framework.zend.com/issues/browse/ZF-12047
+         * If the version of Zend Framework is older than 1.12, fallback to the
+         * legacy cache settings.
+         * See http://framework.zend.com/issues/browse/ZF-12047
          */
         if (Zend_Version::compareVersion('1.12.0') > 0) {
             $this->_defaultBackendOptions = $this->_legacyDefaultBackendOptions;
@@ -83,7 +84,12 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         if ($lifeTime === null) {
             $lifeTime = (int) $this->getFrontend()->getOption('lifetime');
         }
-        return $this->_frontend->save((string)$data, $this->_id($id), $this->_tags($tags), $lifeTime);
+        return $this->_frontend->save(
+            (string)$data,
+            $this->_id($id),
+            $this->_tags($tags),
+            $lifeTime
+        );
     }
 
     /**
@@ -102,7 +108,11 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
             $res = $this->_frontend->clean($mode, $this->_tags($tags));
         } else {
             $res = $this->_frontend->clean($mode, array(self::CACHE_TAG));
-            $res = $res && $this->_frontend->clean($mode, array(Mage_Core_Model_Config::CACHE_TAG));
+            $res = $res &&
+                $this->_frontend->clean(
+                    $mode,
+                    array(Mage_Core_Model_Config::CACHE_TAG)
+                );
         }
         return $res;
     }

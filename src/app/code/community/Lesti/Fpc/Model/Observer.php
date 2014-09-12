@@ -50,19 +50,29 @@ class Lesti_Fpc_Model_Observer
                 $blockHelper = Mage::helper('fpc/block');
                 if ($blockHelper->areLazyBlocksValid()) {
                     foreach($lazyBlocks as $blockName) {
-                        $this->_placeholder[] = $blockHelper->getPlaceholderHtml($blockName);
-                        $this->_html[] = $session->getData('fpc_lazy_block_' . $blockName);
+                        $this->_placeholder[] = $blockHelper
+                            ->getPlaceholderHtml($blockName);
+                        $this->_html[] = $session
+                            ->getData('fpc_lazy_block_' . $blockName);
                     }
                 } else {
                     $dynamicBlocks = array_merge($dynamicBlocks, $lazyBlocks);
                 }
                 $layout = $observer->getEvent()->getLayout();
-                $xml = simplexml_load_string($layout->getXmlString(), Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS);
-                $cleanXml = simplexml_load_string('<layout/>', Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS);
+                $xml = simplexml_load_string(
+                    $layout->getXmlString(),
+                    Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS
+                );
+                $cleanXml = simplexml_load_string(
+                    '<layout/>',
+                    Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS
+                );
                 $types = array('block', 'reference', 'action');
                 foreach ($dynamicBlocks as $blockName) {
                     foreach ($types as $type) {
-                        $xPath = $xml->xpath("//" . $type . "[@name='" . $blockName . "']");
+                        $xPath = $xml->xpath(
+                            "//" . $type . "[@name='" . $blockName . "']"
+                        );
                         foreach ($xPath as $child) {
                             $cleanXml->appendChild($child);
                         }
@@ -70,11 +80,13 @@ class Lesti_Fpc_Model_Observer
                 }
                 $layout->setXml($cleanXml);
                 $layout->generateBlocks();
-                $layout = Mage::helper('fpc/block_messages')->initLayoutMessages($layout);
+                $layout = Mage::helper('fpc/block_messages')
+                    ->initLayoutMessages($layout);
                 foreach ($dynamicBlocks as $blockName) {
                     $block = $layout->getBlock($blockName);
                     if ($block) {
-                        $this->_placeholder[] = $blockHelper->getPlaceholderHtml($blockName);
+                        $this->_placeholder[] = $blockHelper
+                            ->getPlaceholderHtml($blockName);
                         $html = $block->toHtml();
                         if(in_array($blockName, $lazyBlocks)) {
                             $session->setData('fpc_lazy_block_' . $blockName, $html);
@@ -83,7 +95,8 @@ class Lesti_Fpc_Model_Observer
                     }
                 }
                 $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
-                $this->_html[] = $session->getSessionIdQueryParam() . '=' . $session->getEncryptedSessionId();
+                $this->_html[] = $session->getSessionIdQueryParam().'='.
+                    $session->getEncryptedSessionId();
                 $coreSession = Mage::getSingleton('core/session');
                 $formKey = $coreSession->getFormKey();
                 if ($formKey) {
@@ -92,12 +105,14 @@ class Lesti_Fpc_Model_Observer
                 }
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
-                    Mage::app()->getResponse()->setHeader('Age', time() - $object['time']);
+                    Mage::app()->getResponse()
+                        ->setHeader('Age', time() - $object['time']);
                 }
 
                 if(Mage::getConfig()->getNode('global/fpc/debug') == 'true'
                     || Mage::getConfig()->getNode('global/fpc/debug') == '1'){
-                    Mage::app()->getResponse()->setHeader('X-Lesti_FPC-Cache', 'HIT');
+                    Mage::app()->getResponse()
+                        ->setHeader('X-Lesti_FPC-Cache', 'HIT');
                 }
                 Mage::app()->getResponse()->setBody($body);
                 Mage::app()->getResponse()->sendResponse();
@@ -140,7 +155,8 @@ class Lesti_Fpc_Model_Observer
                     $this->_placeholder[] = self::FORM_KEY_PLACEHOLDER;
                     $this->_html[] = $formKey;
                 }
-                $sid = $session->getSessionIdQueryParam() . '=' . $session->getEncryptedSessionId();
+                $sid = $session->getSessionIdQueryParam().'='.
+                    $session->getEncryptedSessionId();
                 if ($session->getEncryptedSessionId()) {
                     $body = str_replace(
                         $sid,
@@ -150,7 +166,10 @@ class Lesti_Fpc_Model_Observer
                     $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
                     $this->_html[] = $sid;
                 }
-                $this->_cache_tags = array_merge(Mage::helper('fpc')->getCacheTags(), $this->_cache_tags);
+                $this->_cache_tags = array_merge(
+                    Mage::helper('fpc')->getCacheTags(),
+                    $this->_cache_tags
+                );
                 $object = array('body' => $body, 'time' => time());
                 $fpc->save(serialize($object), $key, $this->_cache_tags);
                 $this->_cached = true;
@@ -177,9 +196,13 @@ class Lesti_Fpc_Model_Observer
             $dynamicBlocks = array_merge($dynamicBlocks, $lazyBlocks);
             $cacheableActions = Mage::helper('fpc')->getCacheableActions();
             if (in_array($fullActionName, $cacheableActions)) {
-                $this->_cache_tags = array_merge(Mage::helper('fpc/block')->getCacheTags($block), $this->_cache_tags);
+                $this->_cache_tags = array_merge(
+                    Mage::helper('fpc/block')->getCacheTags($block),
+                    $this->_cache_tags
+                );
                 if (in_array($blockName, $dynamicBlocks)) {
-                    $placeholder = Mage::helper('fpc/block')->getPlaceholderHtml($blockName);
+                    $placeholder = Mage::helper('fpc/block')
+                        ->getPlaceholderHtml($blockName);
                     $html = $observer->getTransport()->getHtml();
                     $this->_html[] = $html;
                     $this->_placeholder[] = $placeholder;
@@ -197,9 +220,15 @@ class Lesti_Fpc_Model_Observer
         $fpc = $this->_getFpc();
         if ($fpc->isActive()) {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
-            if (in_array($fullActionName, Mage::helper('fpc')->getRefreshActions())) {
+            if (in_array(
+                $fullActionName,
+                Mage::helper('fpc')->getRefreshActions()
+            )) {
                 $session = Mage::getSingleton('customer/session');
-                $session->setData(Lesti_Fpc_Helper_Block::LAZY_BLOCKS_VALID_SESSION_PARAM, false);
+                $session->setData(
+                    Lesti_Fpc_Helper_Block::LAZY_BLOCKS_VALID_SESSION_PARAM,
+                    false
+                );
             }
         }
     }
@@ -216,7 +245,8 @@ class Lesti_Fpc_Model_Observer
 
             $coreSession = Mage::getSingleton('core/session');
             
-            $currentProductIds = $coreSession->getData(self::PRODUCT_IDS_MASS_ACTION_KEY);
+            $currentProductIds = $coreSession
+                ->getData(self::PRODUCT_IDS_MASS_ACTION_KEY);
             if (!empty($currentProductIds)) {
                 $productIds = array_merge($currentProductIds, $productIds);
             }
@@ -232,7 +262,8 @@ class Lesti_Fpc_Model_Observer
     {
         $fpc = $this->_getFpc();
         if ($fpc->isActive()) {
-            $productIds = Mage::getSingleton('core/session')->getData(self::PRODUCT_IDS_MASS_ACTION_KEY, true);
+            $productIds = Mage::getSingleton('core/session')
+                ->getData(self::PRODUCT_IDS_MASS_ACTION_KEY, true);
 
             foreach($productIds as $productId) {
                 $fpc->clean(sha1('product_' . $productId));
@@ -252,7 +283,9 @@ class Lesti_Fpc_Model_Observer
                 $fpc->clean(sha1('product_' . $product->getId()));
 
                 $origData = $product->getOrigData();
-                if (empty($origData) || (!empty($origData) && $product->getStatus() != $origData['status'])) {
+                if (empty($origData) ||
+                    (!empty($origData) &&
+                        $product->getStatus() != $origData['status'])) {
                     $categories = $product->getCategoryIds();
                     foreach($categories as $categoryId) {
                         $fpc->clean(sha1('category_' . $categoryId));
@@ -344,7 +377,8 @@ class Lesti_Fpc_Model_Observer
         $types = Mage::app()->getRequest()->getParam('types');
         $fpc = $this->_getFpc();
         if ($fpc->isActive()) {
-            if ((is_array($types) && in_array(self::CACHE_TYPE, $types)) || $types == self::CACHE_TYPE) {
+            if ((is_array($types) && in_array(self::CACHE_TYPE, $types)) ||
+                $types == self::CACHE_TYPE) {
                 $fpc->clean();
             }
         }

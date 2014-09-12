@@ -230,7 +230,8 @@ checkout_onepage_success]]></refresh_actions>
 cart_sidebar,
 catalog.compare.sidebar,
 wishlist_sidebar,
-welcome]]></lazy_blocks>
+welcome,
+minicart_head]]></lazy_blocks>
                 <uri_params><![CDATA[id,
 category,
 page_id,

@@ -36,12 +36,15 @@ class Lesti_Fpc_Helper_Block_Messages extends Mage_Core_Helper_Abstract
                     $block->setEscapeMessageFlag($storage->getEscapeMessages(true));
                 } else {
                     Mage::throwException(
-                        Mage::helper('core')->__('Invalid messages storage "%s" for layout messages initialization', (string)$storageName)
+                        Mage::helper('core')->__(
+                            'Invalid messages storage "%s" for layout messages ini'.
+                            'tialization',
+                            (string)$storageName
+                        )
                     );
                 }
             }
         }
         return $layout;
     }
-
 }

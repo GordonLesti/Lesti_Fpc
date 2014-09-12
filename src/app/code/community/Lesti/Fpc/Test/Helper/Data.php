@@ -16,7 +16,8 @@
 /**
  * Test case for Lesti_Fpc_Helper_Data
  * 
- * It extends the controller test case because Lesti_Fpc_Helper_Data::getKeys() needs a session to work.
+ * It extends the controller test case because Lesti_Fpc_Helper_Data::getKeys()
+ * needs a session to work.
  */
 class Lesti_Fpc_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case_Controller
 {
@@ -47,7 +48,11 @@ class Lesti_Fpc_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case_Controller
             Mage::app()->getRequest()->setParams($uriParams);
             $actualKeys[] = $this->_helper->getKey();
         }
-        $this->assertCount($expectedCount, array_unique($actualKeys), sprintf('%d different keys expected', $expectedCount));
+        $this->assertCount(
+            $expectedCount,
+            array_unique($actualKeys),
+            sprintf('%d different keys expected', $expectedCount)
+        );
     }
     /**
      * Reset parameters in Magento request and FPC

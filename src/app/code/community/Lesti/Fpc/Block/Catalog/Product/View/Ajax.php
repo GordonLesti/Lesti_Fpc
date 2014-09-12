@@ -26,7 +26,10 @@ class Lesti_Fpc_Block_Catalog_Product_View_Ajax extends Mage_Core_Block_Template
         $fpc = Mage::getSingleton('fpc/fpc');
         $id = $this->_getProductId();
         if ($fpc->isActive() &&
-            in_array('catalog_product_view', Mage::helper('fpc')->getCacheableActions()) &&
+            in_array(
+                'catalog_product_view',
+                Mage::helper('fpc')->getCacheableActions()
+            ) &&
             Mage::helper('fpc/block')->useRecentlyViewedProducts() &&
             $id
         ) {

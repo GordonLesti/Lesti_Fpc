@@ -21,7 +21,8 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
     const DYNAMIC_BLOCKS_XML_PATH = 'system/fpc/dynamic_blocks';
     const LAZY_BLOCKS_XML_PATH = 'system/fpc/lazy_blocks';
     const LAZY_BLOCKS_VALID_SESSION_PARAM = 'fpc_lazy_blocks_valid';
-    const USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH = 'system/fpc/use_recently_viewed_products';
+    const USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH =
+        'system/fpc/use_recently_viewed_products';
 
     /**
      * @return array
@@ -80,7 +81,8 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         $customerSession = Mage::getSingleton('customer/session');
         $params['customer_group_id'] = $customerSession->getCustomerGroupId();
         $design = Mage::getDesign();
-        $params['design'] = $design->getPackageName() . '_' . $design->getTheme('template');
+        $params['design'] = $design->getPackageName().'_'.
+            $design->getTheme('template');
         return sha1(serialize($params));
     }
 
@@ -123,7 +125,8 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
             foreach ($block->getLoadedProductCollection() as $product) {
                 $cacheTags[] = sha1('product_' . $product->getId());
             }
-        } else if (get_class($block) == get_class(Mage::getBlockSingleton('cms/block'))) {
+        } else if (get_class($block) ==
+            get_class(Mage::getBlockSingleton('cms/block'))) {
             $cacheTags[] = sha1('cmsblock');
             $cacheTags[] = sha1('cmsblock_' . $block->getBlockId());
         }

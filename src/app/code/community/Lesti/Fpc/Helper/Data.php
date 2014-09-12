@@ -67,7 +67,9 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 'full_action_name' => $this->getFullActionName());
             $uriParams = $this->_getUriParams();
             foreach ($request->getParams() as $requestParam => $requestParamValue) {
-                if (!$requestParamValue) continue;
+                if (!$requestParamValue) {
+                    continue;
+                }
                 foreach ($uriParams as $uriParam) {
                     if ($this->_matchUriParam($uriParam, $requestParam)) {
                         $params['uri_' . $requestParam] = $requestParamValue;
@@ -86,10 +88,12 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 $params['currency'] = $currencyCode;
             }
             $design = Mage::getDesign();
-            $params['design'] = $design->getPackageName() . '_' . $design->getTheme('template');
+            $params['design'] = $design->getPackageName().'_'.
+                $design->getTheme('template');
             if (Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
                 $customerSession = Mage::getSingleton('customer/session');
-                $params['customer_group_id'] = $customerSession->getCustomerGroupId();
+                $params['customer_group_id'] = $customerSession
+                    ->getCustomerGroupId();
             }
             $sessionParams = $this->_getSessionParams();
             $catalogSession = Mage::getSingleton('catalog/session');
@@ -111,7 +115,8 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     protected function _matchUriParam($expression, $param)
     {
-        if (substr($expression, 0, 1) === '/' && substr($expression, -1, 1) === '/') {
+        if (substr($expression, 0, 1) === '/' &&
+            substr($expression, -1, 1) === '/') {
             return (bool) preg_match($expression, $param);
         } else {
             return $expression === $param;
@@ -172,14 +177,19 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         switch ($fullActionName) {
             case 'cms_index_index' :
                 $cacheTags[] = sha1('cms');
-                $pageId = Mage::getStoreConfig(Mage_Cms_Helper_Page::XML_PATH_HOME_PAGE);
+                $pageId = Mage::getStoreConfig(
+                    Mage_Cms_Helper_Page::XML_PATH_HOME_PAGE
+                );
                 if ($pageId) {
                     $cacheTags[] = sha1('cms_' . $pageId);
                 }
                 break;
             case 'cms_page_view' :
                 $cacheTags[] = sha1('cms');
-                $pageId = $request->getParam('page_id', $request->getParam('id', false));
+                $pageId = $request->getParam(
+                    'page_id',
+                    $request->getParam('id', false)
+                );
                 if ($pageId) {
                     $cacheTags[] = sha1('cms_' . $pageId);
                 }
@@ -191,7 +201,9 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     $cacheTags[] = sha1('product_' . $productId);
 
                     // configurable product
-                    $configurableProduct = Mage::getModel('catalog/product_type_configurable');
+                    $configurableProduct = Mage::getModel(
+                        'catalog/product_type_configurable'
+                    );
                     // get all childs of this product and add the cache tag
                     $childIds = $configurableProduct->getChildrenIds($productId);
                     foreach ($childIds as $childIdGroup) {
@@ -200,7 +212,8 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                         }
                     }
                     // get all parents of this product and add the cache tag
-                    $parentIds = $configurableProduct->getParentIdsByChild($productId);
+                    $parentIds = $configurableProduct
+                        ->getParentIdsByChild($productId);
                     foreach ($parentIds as $parentId) {
                         $cacheTags[] = sha1('product_' . $parentId);
                     }
@@ -235,7 +248,10 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 }
                 break;
         }
-        Mage::dispatchEvent('fpc_helper_collect_cache_tags', array('chace_tags' => $cacheTags));
+        Mage::dispatchEvent(
+            'fpc_helper_collect_cache_tags',
+            array('chace_tags' => $cacheTags)
+        );
         return $cacheTags;
     }
 
