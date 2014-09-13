@@ -103,7 +103,7 @@ class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_Te
             'http://localhost/fpc/catalog_product/view/id/5/',
             $catalogProductViewAjaxBlock->getAjaxUrl()
         );
-        // restore configs
+        // restore configs and unregister
         Mage::app()->getStore()
             ->setConfig(Lesti_Fpc_Helper_Data::XML_PATH_CACHEABLE_ACTIONS, $cacheAbleActionsConfig);
         Mage::app()->getStore()
@@ -113,5 +113,37 @@ class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_Te
             );
         Mage::unregister('current_product');
         Mage::app()->getStore()->setConfig('web/unsecure/base_url', $baseUrl);
+    }
+
+    public function test_GetProductId()
+    {
+        $catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
+        $reflector = new ReflectionClass('Lesti_Fpc_Block_Catalog_Product_View_Ajax');
+        $getProductIdMethod = $reflector->getMethod('_getProductId');
+        $getProductIdMethod->setAccessible(true);
+        // set current product
+        $product = new Mage_Catalog_Model_Product();
+        $product->setId(5);
+        Mage::register('current_product', $product);
+
+        $result = $getProductIdMethod->invokeArgs($catalogProductViewAjaxBlock, array());
+        $this->assertEquals(5, $result);
+        // unregister
+        Mage::unregister('current_product');
+    }
+
+    public function test_GetProductIdFals()
+    {
+        $catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
+        $reflector = new ReflectionClass('Lesti_Fpc_Block_Catalog_Product_View_Ajax');
+        $getProductIdMethod = $reflector->getMethod('_getProductId');
+        $getProductIdMethod->setAccessible(true);
+        // set current product
+        Mage::register('current_product', null);
+
+        $result = $getProductIdMethod->invokeArgs($catalogProductViewAjaxBlock, array());
+        $this->assertFalse($result);
+        // unregister
+        Mage::unregister('current_product');
     }
 }
