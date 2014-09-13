@@ -10,4 +10,4 @@ install:
   - composer install --dev --prefer-source
 
 script:
-  - php bin/phpcs src/
+  - php bin/phpcs --standard=pear src/
