@@ -30,7 +30,7 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
     public function getDynamicBlocks()
     {
         $blocks = Mage::getStoreConfig(self::DYNAMIC_BLOCKS_XML_PATH);
-        $blocks = array_map('trim', explode(',', $blocks));
+        $blocks = array_unique(array_map('trim', explode(',', $blocks)));
         return $blocks;
     }
 
@@ -40,7 +40,7 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
     public function getLazyBlocks()
     {
         $blocks = Mage::getStoreConfig(self::LAZY_BLOCKS_XML_PATH);
-        $blocks = array_map('trim', explode(',', $blocks));
+        $blocks = array_unique(array_map('trim', explode(',', $blocks)));
         return $blocks;
     }
 
@@ -109,7 +109,7 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
      */
     public function useRecentlyViewedProducts()
     {
-        return Mage::getStoreConfig(self::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH);
+        return (bool)Mage::getStoreConfig(self::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH);
     }
 
     /**
@@ -125,8 +125,8 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
             foreach ($block->getLoadedProductCollection() as $product) {
                 $cacheTags[] = sha1('product_' . $product->getId());
             }
-        } else if (get_class($block) ==
-            get_class(Mage::getBlockSingleton('cms/block'))) {
+        } else if ($block instanceof Mage_Cms_Block_Block ||
+        is_subclass_of($block, 'Mage_Cms_Block_Block')) {
             $cacheTags[] = sha1('cmsblock');
             $cacheTags[] = sha1('cmsblock_' . $block->getBlockId());
         }

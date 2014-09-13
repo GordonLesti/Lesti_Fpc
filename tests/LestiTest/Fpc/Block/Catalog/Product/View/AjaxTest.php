@@ -14,38 +14,26 @@
  */
 
 /**
- * Class LestiTest_Fpc_Block_Catalog_Product_View_Ajax
+ * Class LestiTest_Fpc_Block_Catalog_Product_View_AjaxTest
  */
-class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_TestCase
+class LestiTest_Fpc_Block_Catalog_Product_View_AjaxTest extends LestiTest_TestCase
 {
-    protected $_cacheOptions;
-
-    protected $_cache;
+    /**
+     * @var Lesti_Fpc_Block_Catalog_Product_View_Ajax
+     */
+    protected $catalogProductViewAjaxBlock;
 
     public function setUp()
     {
-        Mage::init();
-        $this->_cache = Mage::app()->getCacheInstance();
-        $this->_cache->flush();
-        $this->_cacheOptions = Mage::getResourceSingleton('core/cache')->getAllOptions();
-        $cacheOptions = $this->_cacheOptions;
-        foreach ($cacheOptions as $cache => $value) {
-            $cacheOptions[$cache] = $cache == 'fpc' ? 1 : 0;
-        }
-        $this->_cache->saveOptions($cacheOptions);
-    }
-
-    public function tearDown()
-    {
-        $this->_cache->saveOptions($this->_cacheOptions);
+        parent::setUp();
+        $this->catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
     }
 
     public function testGetAjaxUrlFpcInactive()
     {
         Mage::app()->getCacheInstance()->banUse('fpc');
         $this->assertFalse(Mage::getSingleton('fpc/fpc')->isActive());
-        $catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
-        $this->assertFalse($catalogProductViewAjaxBlock->getAjaxUrl());
+        $this->assertFalse($this->catalogProductViewAjaxBlock->getAjaxUrl());
     }
 
     public function testGetAjaxUrlMissCacheAbleAction()
@@ -54,8 +42,7 @@ class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_Te
         $cacheAbleActionsConfig = Mage::app()
             ->getStore()->setConfig(Lesti_Fpc_Helper_Data::XML_PATH_CACHEABLE_ACTIONS);
         Mage::app()->getStore()->setConfig(Lesti_Fpc_Helper_Data::XML_PATH_CACHEABLE_ACTIONS, '');
-        $catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
-        $this->assertFalse($catalogProductViewAjaxBlock->getAjaxUrl());
+        $this->assertFalse($this->catalogProductViewAjaxBlock->getAjaxUrl());
         Mage::app()->getStore()
             ->setConfig(Lesti_Fpc_Helper_Data::XML_PATH_CACHEABLE_ACTIONS, $cacheAbleActionsConfig);
     }
@@ -66,8 +53,7 @@ class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_Te
         $useRecentlyViewedProductsConfig = Mage::app()
             ->getStore()->setConfig(Lesti_Fpc_Helper_Block::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH);
         Mage::app()->getStore()->setConfig(Lesti_Fpc_Helper_Block::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH, false);
-        $catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
-        $this->assertFalse($catalogProductViewAjaxBlock->getAjaxUrl());
+        $this->assertFalse($this->catalogProductViewAjaxBlock->getAjaxUrl());
         Mage::app()->getStore()
             ->setConfig(
                 Lesti_Fpc_Helper_Block::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH,
@@ -98,10 +84,9 @@ class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_Te
         $baseUrl = Mage::app()->getStore()->setConfig('web/unsecure/base_url');
         Mage::app()->getStore()->setConfig('web/unsecure/base_url', 'http://localhost/');
 
-        $catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
         $this->assertEquals(
             'http://localhost/fpc/catalog_product/view/id/5/',
-            $catalogProductViewAjaxBlock->getAjaxUrl()
+            $this->catalogProductViewAjaxBlock->getAjaxUrl()
         );
         // restore configs and unregister
         Mage::app()->getStore()
@@ -117,7 +102,6 @@ class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_Te
 
     public function test_GetProductId()
     {
-        $catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
         $reflector = new ReflectionClass('Lesti_Fpc_Block_Catalog_Product_View_Ajax');
         $getProductIdMethod = $reflector->getMethod('_getProductId');
         $getProductIdMethod->setAccessible(true);
@@ -126,7 +110,7 @@ class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_Te
         $product->setId(5);
         Mage::register('current_product', $product);
 
-        $result = $getProductIdMethod->invokeArgs($catalogProductViewAjaxBlock, array());
+        $result = $getProductIdMethod->invokeArgs($this->catalogProductViewAjaxBlock, array());
         $this->assertEquals(5, $result);
         // unregister
         Mage::unregister('current_product');
@@ -134,14 +118,13 @@ class LestiTest_Fpc_Block_Catalog_Product_View_Ajax extends PHPUnit_Framework_Te
 
     public function test_GetProductIdFals()
     {
-        $catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
         $reflector = new ReflectionClass('Lesti_Fpc_Block_Catalog_Product_View_Ajax');
         $getProductIdMethod = $reflector->getMethod('_getProductId');
         $getProductIdMethod->setAccessible(true);
         // set current product
         Mage::register('current_product', null);
 
-        $result = $getProductIdMethod->invokeArgs($catalogProductViewAjaxBlock, array());
+        $result = $getProductIdMethod->invokeArgs($this->catalogProductViewAjaxBlock, array());
         $this->assertFalse($result);
         // unregister
         Mage::unregister('current_product');
