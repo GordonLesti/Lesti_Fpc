@@ -16,7 +16,7 @@
     <global>
         <fpc>
             <lifetime>86400</lifetime>
-	    <debug>false</debug>
+
             <!-- example for redis -->
             <!-- please read https://github.com/colinmollenhour/Cm_Cache_Backend_Redis for more informations -->
 

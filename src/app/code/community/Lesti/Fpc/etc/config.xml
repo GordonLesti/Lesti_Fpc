@@ -52,7 +52,7 @@
             <catalog_product_attribute_update_before>
                 <observers>
                     <fpc_catalog_product_mass_action_before>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_save</class>
                         <type>singleton</type>
                         <method>catalogProductMassActionBefore</method>
                     </fpc_catalog_product_mass_action_before>
@@ -61,7 +61,7 @@
             <end_process_event_catalog_product_mass_action>
                 <observers>
                     <fpc_catalog_product_mass_action_after>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_save</class>
                         <type>singleton</type>
                         <method>catalogProductMassActionAfter</method>
                     </fpc_catalog_product_mass_action_after>
@@ -70,7 +70,7 @@
             <catalog_product_save_after>
                 <observers>
                     <fpc_catalog_product_save_after>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_save</class>
                         <type>singleton</type>
                         <method>catalogProductSaveAfter</method>
                     </fpc_catalog_product_save_after>
@@ -79,7 +79,7 @@
             <catalog_category_save_after>
                 <observers>
                     <fpc_catalog_category_save_after>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_save</class>
                         <type>singleton</type>
                         <method>catalogCategorySaveAfter</method>
                     </fpc_catalog_category_save_after>
@@ -88,7 +88,7 @@
             <cms_page_save_after>
                 <observers>
                     <fpc_cms_page_save_after>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_save</class>
                         <type>singleton</type>
                         <method>cmsPageSaveAfter</method>
                     </fpc_cms_page_save_after>
@@ -97,7 +97,7 @@
             <model_save_after>
                 <observers>
                     <fpc_model_save_after>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_save</class>
                         <type>singleton</type>
                         <method>modelSaveAfter</method>
                     </fpc_model_save_after>
@@ -115,7 +115,7 @@
             <cataloginventory_stock_item_save_after>
                 <observers>
                     <fpc_cataloginventory_stock_item_save_after>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_save</class>
                         <type>singleton</type>
                         <method>cataloginventoryStockItemSaveAfter</method>
                     </fpc_cataloginventory_stock_item_save_after>
