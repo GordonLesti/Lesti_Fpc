@@ -47,7 +47,7 @@ class Lesti_Fpc_Model_Observer
                 $dynamicBlocks = Mage::helper('fpc/block')->getDynamicBlocks();
                 $blockHelper = Mage::helper('fpc/block');
                 if ($blockHelper->areLazyBlocksValid()) {
-                    foreach($lazyBlocks as $blockName) {
+                    foreach ($lazyBlocks as $blockName) {
                         $this->_placeholder[] = $blockHelper
                             ->getPlaceholderHtml($blockName);
                         $this->_html[] = $session
@@ -86,7 +86,7 @@ class Lesti_Fpc_Model_Observer
                         $this->_placeholder[] = $blockHelper
                             ->getPlaceholderHtml($blockName);
                         $html = $block->toHtml();
-                        if(in_array($blockName, $lazyBlocks)) {
+                        if (in_array($blockName, $lazyBlocks)) {
                             $session->setData('fpc_lazy_block_' . $blockName, $html);
                         }
                         $this->_html[] = $html;
@@ -102,13 +102,13 @@ class Lesti_Fpc_Model_Observer
                     $this->_html[] = $formKey;
                 }
                 $body = str_replace($this->_placeholder, $this->_html, $body);
-                if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
+                if (Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
                     Mage::app()->getResponse()
                         ->setHeader('Age', time() - $object['time']);
                 }
 
-                if(Mage::getConfig()->getNode('global/fpc/debug') == 'true'
-                    || Mage::getConfig()->getNode('global/fpc/debug') == '1'){
+                if (Mage::getConfig()->getNode('global/fpc/debug') == 'true'
+                    || Mage::getConfig()->getNode('global/fpc/debug') == '1') {
                     Mage::app()->getResponse()
                         ->setHeader('X-Lesti_FPC-Cache', 'HIT');
                 }
@@ -116,11 +116,11 @@ class Lesti_Fpc_Model_Observer
                 Mage::app()->getResponse()->sendResponse();
                 exit;
             }
-            if(Mage::getConfig()->getNode('global/fpc/debug') == 'true'
-                || Mage::getConfig()->getNode('global/fpc/debug') == '1'){
+            if (Mage::getConfig()->getNode('global/fpc/debug') == 'true'
+                || Mage::getConfig()->getNode('global/fpc/debug') == '1') {
                 Mage::app()->getResponse()->setHeader('X-Lesti_FPC-Cache', 'MISS');
             }
-            if(Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
+            if (Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
                 Mage::app()->getResponse()->setHeader('Age', 0);
             }
         }
@@ -263,7 +263,7 @@ class Lesti_Fpc_Model_Observer
             $productIds = Mage::getSingleton('core/session')
                 ->getData(self::PRODUCT_IDS_MASS_ACTION_KEY, true);
 
-            foreach($productIds as $productId) {
+            foreach ($productIds as $productId) {
                 $fpc->clean(sha1('product_' . $productId));
             }
         }
@@ -285,7 +285,7 @@ class Lesti_Fpc_Model_Observer
                     (!empty($origData) &&
                         $product->getStatus() != $origData['status'])) {
                     $categories = $product->getCategoryIds();
-                    foreach($categories as $categoryId) {
+                    foreach ($categories as $categoryId) {
                         $fpc->clean(sha1('category_' . $categoryId));
                     }
                 }

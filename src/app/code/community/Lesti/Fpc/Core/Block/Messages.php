@@ -32,8 +32,10 @@ class Lesti_Fpc_Core_Block_Messages extends Mage_Core_Block_Messages
 
         $_transportObject = new Varien_Object;
         $_transportObject->setHtml($html);
-        Mage::dispatchEvent('core_block_messages_get_grouped_html_after',
-            array('block' => $this, 'transport' => $_transportObject));
+        Mage::dispatchEvent(
+            'core_block_messages_get_grouped_html_after',
+            array('block' => $this, 'transport' => $_transportObject)
+        );
         $html = $_transportObject->getHtml();
 
         return $html;

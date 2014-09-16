@@ -10,4 +10,4 @@ install:
   - composer install --dev --prefer-source
 
 script:
-  - php bin/phpcs --standard=Zend src/ tests/
+  - php bin/phpcs --standard=Zend -n src/ tests/
