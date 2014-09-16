@@ -19,12 +19,12 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
     /**
      * @var Lesti_Fpc_Helper_Block
      */
-    protected $blockHelper;
+    protected $_blockHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->blockHelper = new Lesti_Fpc_Helper_Block();
+        $this->_blockHelper = new Lesti_Fpc_Helper_Block();
     }
 
     public function testGetDynamicBlocks()
@@ -37,7 +37,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
             $dynamicBlocks
         );
         $expectedResult = array('foo', 'bar', 'foobar');
-        $this->assertEquals($expectedResult, $this->blockHelper->getDynamicBlocks());
+        $this->assertEquals($expectedResult, $this->_blockHelper->getDynamicBlocks());
         // restore configs
         Mage::app()->getStore()->setConfig(
             Lesti_Fpc_Helper_Block::DYNAMIC_BLOCKS_XML_PATH,
@@ -55,7 +55,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
             $lazyBlocks
         );
         $expectedResult = array('foo', 'bar', 'foobar');
-        $this->assertEquals($expectedResult, $this->blockHelper->getLazyBlocks());
+        $this->assertEquals($expectedResult, $this->_blockHelper->getLazyBlocks());
         // restore configs
         Mage::app()->getStore()->setConfig(
             Lesti_Fpc_Helper_Block::LAZY_BLOCKS_XML_PATH,
@@ -81,7 +81,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
     {
         $this->assertEquals(
             '<!-- fpc 0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33 -->',
-            $this->blockHelper->getPlaceholderHtml('foo')
+            $this->_blockHelper->getPlaceholderHtml('foo')
         );
     }
 
@@ -89,7 +89,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
     {
         $this->assertEquals(
             '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33_block',
-            $this->blockHelper->getKey('foo')
+            $this->_blockHelper->getKey('foo')
         );
     }
 
@@ -99,7 +99,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
         $useRecentlyViewedProductsConfig = Mage::app()
             ->getStore()->setConfig(Lesti_Fpc_Helper_Block::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH);
         Mage::app()->getStore()->setConfig(Lesti_Fpc_Helper_Block::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH, true);
-        $this->assertTrue($this->blockHelper->useRecentlyViewedProducts());
+        $this->assertTrue($this->_blockHelper->useRecentlyViewedProducts());
         // restore configs
         Mage::app()->getStore()
             ->setConfig(
@@ -114,7 +114,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
         $useRecentlyViewedProductsConfig = Mage::app()
             ->getStore()->setConfig(Lesti_Fpc_Helper_Block::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH);
         Mage::app()->getStore()->setConfig(Lesti_Fpc_Helper_Block::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH, false);
-        $this->assertFalse($this->blockHelper->useRecentlyViewedProducts());
+        $this->assertFalse($this->_blockHelper->useRecentlyViewedProducts());
         // restore configs
         Mage::app()->getStore()
             ->setConfig(
@@ -127,7 +127,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
     {
         $block = new Mage_Core_Block_Template();
         $block->setNameInLayout('foo');
-        $this->assertEquals(array(), $this->blockHelper->getCacheTags($block));
+        $this->assertEquals(array(), $this->_blockHelper->getCacheTags($block));
     }
 
     public function testGetCacheTagsProductList()
@@ -145,7 +145,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
                 '65dd4967fe508e9ebad619a8c976beabf46588fe', // sha1('product_1')
                 '499ed21cb19c984d31e23b94a60730520afa8181'  // sha1('product_2')
             ),
-            $this->blockHelper->getCacheTags($block)
+            $this->_blockHelper->getCacheTags($block)
         );
     }
 
@@ -159,7 +159,7 @@ class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
                 '74709cfbbdffe24885db05ff5d08ea9c13663422',
                 'ba750b74090c01fda30a383d301af7e15b340928'
             ),
-            $this->blockHelper->getCacheTags($block)
+            $this->_blockHelper->getCacheTags($block)
         );
     }
 }

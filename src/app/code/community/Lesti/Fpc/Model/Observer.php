@@ -26,7 +26,7 @@ class Lesti_Fpc_Model_Observer
     protected $_cached = false;
     protected $_html = array();
     protected $_placeholder = array();
-    protected $_cache_tags = array();
+    protected $_cacheTags = array();
 
     /**
      * @param $observer
@@ -164,12 +164,12 @@ class Lesti_Fpc_Model_Observer
                     $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
                     $this->_html[] = $sid;
                 }
-                $this->_cache_tags = array_merge(
+                $this->_cacheTags = array_merge(
                     Mage::helper('fpc')->getCacheTags(),
-                    $this->_cache_tags
+                    $this->_cacheTags
                 );
                 $object = array('body' => $body, 'time' => time());
-                $fpc->save(serialize($object), $key, $this->_cache_tags);
+                $fpc->save(serialize($object), $key, $this->_cacheTags);
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 $observer->getEvent()->getResponse()->setBody($body);
@@ -194,9 +194,9 @@ class Lesti_Fpc_Model_Observer
             $dynamicBlocks = array_merge($dynamicBlocks, $lazyBlocks);
             $cacheableActions = Mage::helper('fpc')->getCacheableActions();
             if (in_array($fullActionName, $cacheableActions)) {
-                $this->_cache_tags = array_merge(
+                $this->_cacheTags = array_merge(
                     Mage::helper('fpc/block')->getCacheTags($block),
-                    $this->_cache_tags
+                    $this->_cacheTags
                 );
                 if (in_array($blockName, $dynamicBlocks)) {
                     $placeholder = Mage::helper('fpc/block')
