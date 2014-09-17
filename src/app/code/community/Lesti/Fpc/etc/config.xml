@@ -106,7 +106,7 @@
             <core_clean_cache>
                 <observers>
                     <fpc_core_clean_cache>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_clean</class>
                         <type>singleton</type>
                         <method>coreCleanCache</method>
                     </fpc_core_clean_cache>
@@ -193,7 +193,7 @@
             <controller_action_predispatch_adminhtml_cache_massRefresh>
                 <observers>
                     <fpc_controller_action_predispatch_adminhtml_cache_massRefresh>
-                        <class>fpc/observer</class>
+                        <class>fpc/observer_clean</class>
                         <type>singleton</type>
                         <method>controllerActionPredispatchAdminhtmlCacheMassRefresh</method>
                     </fpc_controller_action_predispatch_adminhtml_cache_massRefresh>

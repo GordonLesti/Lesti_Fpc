@@ -16,7 +16,6 @@
  */
 class Lesti_Fpc_Model_Observer
 {
-    const CACHE_TYPE = 'fpc';
     const CUSTOMER_SESSION_REGISTRY_KEY = 'fpc_customer_session';
     const SHOW_AGE_XML_PATH = 'system/fpc/show_age';
     const FORM_KEY_PLACEHOLDER = '<!-- fpc form_key_placeholder -->';
@@ -61,19 +60,8 @@ class Lesti_Fpc_Model_Observer
                     $observer->getEvent()->getLayout(),
                     $dynamicBlocks
                 );
-
-                foreach ($dynamicBlocks as $blockName) {
-                    $block = $layout->getBlock($blockName);
-                    if ($block) {
-                        $this->_placeholder[] = $blockHelper
-                            ->getPlaceholderHtml($blockName);
-                        $html = $block->toHtml();
-                        if (in_array($blockName, $lazyBlocks)) {
-                            $session->setData('fpc_lazy_block_' . $blockName, $html);
-                        }
-                        $this->_html[] = $html;
-                    }
-                }
+                // insert dynamic blocks
+                $this->_insertDynamicBlocks($layout, $session, $dynamicBlocks, $lazyBlocks);
                 $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
                 $this->_html[] = $session->getSessionIdQueryParam().'='.
                     $session->getEncryptedSessionId();
@@ -204,29 +192,6 @@ class Lesti_Fpc_Model_Observer
     }
 
     /**
-     * Cron job method to clean old cache resources
-     */
-    public function coreCleanCache()
-    {
-        $this->_getFpc()->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
-    }
-
-    /**
-     * @param $observer
-     */
-    public function controllerActionPredispatchAdminhtmlCacheMassRefresh()
-    {
-        $types = Mage::app()->getRequest()->getParam('types');
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
-            if ((is_array($types) && in_array(self::CACHE_TYPE, $types)) ||
-                $types == self::CACHE_TYPE) {
-                $fpc->clean();
-            }
-        }
-    }
-
-    /**
      * @param Mage_Core_Model_Layout $layout
      * @param array $dynamicBlocks
      * @return Mage_Core_Model_Layout
@@ -265,6 +230,32 @@ class Lesti_Fpc_Model_Observer
         if ($formKey) {
             $this->_placeholder[] = self::FORM_KEY_PLACEHOLDER;
             $this->_html[] = $formKey;
+        }
+    }
+
+    /**
+     * @param Mage_Core_Model_Layout $layout
+     * @param Mage_Customer_Model_Session $session
+     * @param array $dynamicBlocks
+     * @param array $lazyBlocks
+     */
+    protected function _insertDynamicBlocks(
+        Mage_Core_Model_Layout &$layout,
+        Mage_Customer_Model_Session &$session,
+        array &$dynamicBlocks,
+        array &$lazyBlocks
+    ) {
+        foreach ($dynamicBlocks as $blockName) {
+            $block = $layout->getBlock($blockName);
+            if ($block) {
+                $this->_placeholder[] = Mage::helper('fpc/block')
+                    ->getPlaceholderHtml($blockName);
+                $html = $block->toHtml();
+                if (in_array($blockName, $lazyBlocks)) {
+                    $session->setData('fpc_lazy_block_' . $blockName, $html);
+                }
+                $this->_html[] = $html;
+            }
         }
     }
 }
