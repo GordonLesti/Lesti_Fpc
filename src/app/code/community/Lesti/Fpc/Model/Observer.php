@@ -244,7 +244,8 @@ class Lesti_Fpc_Model_Observer
         Mage_Customer_Model_Session &$session,
         array &$dynamicBlocks,
         array &$lazyBlocks
-    ) {
+    )
+    {
         foreach ($dynamicBlocks as $blockName) {
             $block = $layout->getBlock($blockName);
             if ($block) {
