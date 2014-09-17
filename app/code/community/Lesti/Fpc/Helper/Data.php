@@ -152,7 +152,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         foreach ($missParams as $missParam) {
             $pair = array_map('trim', explode('=', $missParam));
             $key = $pair[0];
-            $regex = $pair[1];
+            $regex = (isset($pair[1])) ? $pair[1] : '';
             $param = $request->getParam($key);
             if ($param && preg_match($regex, $param)) {
                 return false;
