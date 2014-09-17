@@ -177,10 +177,7 @@ class Lesti_Fpc_Model_Observer
         }
     }
 
-    /**
-     * @param $observer
-     */
-    public function controllerActionPostdispatch($observer)
+    public function controllerActionPostdispatch()
     {
         $fpc = $this->_getFpc();
         if ($fpc->isActive()) {
@@ -208,10 +205,8 @@ class Lesti_Fpc_Model_Observer
 
     /**
      * Cron job method to clean old cache resources
-     *
-     * @param $observer
      */
-    public function coreCleanCache($observer)
+    public function coreCleanCache()
     {
         $this->_getFpc()->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
     }
@@ -219,7 +214,7 @@ class Lesti_Fpc_Model_Observer
     /**
      * @param $observer
      */
-    public function controllerActionPredispatchAdminhtmlCacheMassRefresh($observer)
+    public function controllerActionPredispatchAdminhtmlCacheMassRefresh()
     {
         $types = Mage::app()->getRequest()->getParam('types');
         $fpc = $this->_getFpc();

@@ -91,7 +91,7 @@ class Lesti_Fpc_Model_Observer_Save
      */
     public function cataloginventoryStockItemSaveAfter($observer)
     {
-        $item = $event = $observer->getEvent()->getItem();
+        $item = $observer->getEvent()->getItem();
         if ($item->getStockStatusChangedAuto()) {
             $fpc = $this->_getFpc();
             $fpc->clean(sha1('product_' . $item->getProductId()));
@@ -131,9 +131,8 @@ class Lesti_Fpc_Model_Observer_Save
 
     /**
      * @todo I guess there is a easier solution
-     * @param $observer
      */
-    public function catalogProductMassActionAfter($observer)
+    public function catalogProductMassActionAfter()
     {
         $fpc = $this->_getFpc();
         if ($fpc->isActive()) {

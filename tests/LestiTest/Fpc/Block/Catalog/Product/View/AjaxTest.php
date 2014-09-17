@@ -77,10 +77,12 @@ class LestiTest_Fpc_Block_Catalog_Product_View_AjaxTest extends LestiTest_TestCa
         // set current product
         $product = new Mage_Catalog_Model_Product();
         $product->setId(5);
+        $currentProduct = Mage::registry('current_product');
+        Mage::unregister('current_product');
         Mage::register('current_product', $product);
         // set baseUrl
-        $baseUrl = Mage::app()->getStore()->setConfig('web/unsecure/base_url');
-        Mage::app()->getStore()->setConfig('web/unsecure/base_url', 'http://localhost/');
+        $baseUrl = Mage::app()->getStore()->setConfig('web/unsecure/base_link_url');
+        Mage::app()->getStore()->setConfig('web/unsecure/base_link_url', 'http://localhost/');
 
         $this->assertEquals(
             'http://localhost/fpc/catalog_product/view/id/5/',
@@ -95,7 +97,8 @@ class LestiTest_Fpc_Block_Catalog_Product_View_AjaxTest extends LestiTest_TestCa
                 $useRecentlyViewedProductsConfig
             );
         Mage::unregister('current_product');
-        Mage::app()->getStore()->setConfig('web/unsecure/base_url', $baseUrl);
+        Mage::register('current_product', $currentProduct);
+        Mage::app()->getStore()->setConfig('web/unsecure/base_link_url', $baseUrl);
     }
 
     public function test_GetProductId()
@@ -106,25 +109,30 @@ class LestiTest_Fpc_Block_Catalog_Product_View_AjaxTest extends LestiTest_TestCa
         // set current product
         $product = new Mage_Catalog_Model_Product();
         $product->setId(5);
+        $currentProduct = Mage::registry('current_product');
+        Mage::unregister('current_product');
         Mage::register('current_product', $product);
 
         $result = $getProductIdMethod->invokeArgs($this->_catalogProductViewAjaxBlock, array());
         $this->assertEquals(5, $result);
         // unregister
         Mage::unregister('current_product');
+        Mage::register('current_product', $currentProduct);
     }
 
-    public function test_GetProductIdFals()
+    public function test_GetProductIdFalse()
     {
         $reflector = new ReflectionClass('Lesti_Fpc_Block_Catalog_Product_View_Ajax');
         $getProductIdMethod = $reflector->getMethod('_getProductId');
         $getProductIdMethod->setAccessible(true);
         // set current product
-        Mage::register('current_product', null);
+        $currentProduct = Mage::registry('current_product');
+        Mage::unregister('current_product');
 
         $result = $getProductIdMethod->invokeArgs($this->_catalogProductViewAjaxBlock, array());
         $this->assertFalse($result);
         // unregister
         Mage::unregister('current_product');
+        Mage::register('current_product', $currentProduct);
     }
 }
