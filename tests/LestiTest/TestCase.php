@@ -27,7 +27,7 @@ abstract class LestiTest_TestCase extends PHPUnit_Framework_TestCase
         $this->_cache->flush();
         $this->_cacheOptions = Mage::getResourceSingleton('core/cache')->getAllOptions();
         $cacheOptions = $this->_cacheOptions;
-        foreach ($cacheOptions as $cache => $value) {
+        foreach (array_keys($cacheOptions) as $cache) {
             $cacheOptions[$cache] = $cache == 'fpc' ? 1 : 0;
         }
         $this->_cache->saveOptions($cacheOptions);
