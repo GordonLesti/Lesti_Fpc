@@ -13,6 +13,7 @@
 
 /**
  * Class LestiTest_Fpc_Helper_BlockTest
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class LestiTest_Fpc_Helper_BlockTest extends LestiTest_TestCase
 {
