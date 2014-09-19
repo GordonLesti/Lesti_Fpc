@@ -15,4 +15,4 @@ Install manually:
 
 * Download latest version [here](https://github.com/GordonLesti/Lesti_Fpc/archive/master.zip)
 * Unzip
-* copy `src/app` directory over Magento
+* Copy `src/app` directory into Magento
