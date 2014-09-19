@@ -9,14 +9,16 @@ php:
 install:
   - composer install --dev --prefer-source
   - bash < <(curl -s https://raw.github.com/colinmollenhour/modman/master/modman-installer)
+  - source ~/.profile
   - curl https://gordonlesti.com/magento-1-9-0-1.tar.gz | tar xz
+  - mv magento-1-9-0-1 magento
 
 before_script:
   - mysql -e 'create database `magento-1-9-0-1`;'
-  - mysql -utravis magento-1-9-0-1 < magento-1-9-0-1/magento-1-9-0-1.sql
-  - cd magento-1-9-0-1
-  - pwd
+  - mysql -utravis magento-1-9-0-1 < magento/magento-1-9-0-1.sql
+  - cd magento
   - modman init
+  - modman link ./../
 
 script:
   - php bin/phpcs --standard=Zend -n src/ tests/
