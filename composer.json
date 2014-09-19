@@ -1,12 +1,26 @@
 {
-   "name": "lesti/fpc",
-   "type": "magento-module",
-   "description": "Magento Fullpagecache without Ajax",
-   "homepage": "https://github.com/GordonLesti/Lesti_Fpc",
-   "authors": [
+    "name": "lesti/fpc",
+    "type": "magento-module",
+    "description": "Magento Fullpagecache without Ajax",
+    "homepage": "https://github.com/GordonLesti/Lesti_Fpc",
+    "authors": [
         {
             "name": "Gordon Lesti",
             "email": "info@gordonlesti.com"
         }
-   ]
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "phpmd/phpmd" : "*",
+        "squizlabs/php_codesniffer": "*"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "autoload": {
+        "classmap": [
+            "src/",
+            "tests/"
+        ]
+    }
 }

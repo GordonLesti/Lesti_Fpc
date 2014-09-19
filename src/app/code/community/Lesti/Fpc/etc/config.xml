@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Lesti_Fpc (http:gordonlesti.com/lestifpc)
+ *
+ * PHP version 5
+ *
+ * @link      https://github.com/GordonLesti/Lesti_Fpc
+ * @package   Lesti_Fpc
+ * @author    Gordon Lesti <info@gordonlesti.com>
+ * @copyright Copyright (c) 2013-2014 Gordon Lesti (http://gordonlesti.com)
+ * @license   http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Lesti_Fpc>
+            <version>1.2.0</version>
+        </Lesti_Fpc>
+    </modules>
+    <global>
+        <blocks>
+            <fpc>
+                <class>Lesti_Fpc_Block</class>
+            </fpc>
+            <core>
+                <rewrite>
+                    <messages>Lesti_Fpc_Core_Block_Messages</messages>
+                </rewrite>
+            </core>
+        </blocks>
+        <helpers>
+            <fpc>
+                <class>Lesti_Fpc_Helper</class>
+            </fpc>
+        </helpers>
+        <models>
+            <fpc>
+                <class>Lesti_Fpc_Model</class>
+            </fpc>
+        </models>
+        <cache>
+            <types>
+                <fpc translate="label,description" module="fpc">
+                    <label><![CDATA[Fpc]]></label>
+                    <description><![CDATA[Full Page Cache]]></description>
+                    <tags><![CDATA[FPC]]></tags>
+                </fpc>
+            </types>
+        </cache>
+        <events>
+            <catalog_product_attribute_update_before>
+                <observers>
+                    <fpc_catalog_product_mass_action_before>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>catalogProductMassActionBefore</method>
+                    </fpc_catalog_product_mass_action_before>
+                </observers>
+            </catalog_product_attribute_update_before>
+            <end_process_event_catalog_product_mass_action>
+                <observers>
+                    <fpc_catalog_product_mass_action_after>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>catalogProductMassActionAfter</method>
+                    </fpc_catalog_product_mass_action_after>
+                </observers>
+            </end_process_event_catalog_product_mass_action>
+            <catalog_product_save_after>
+                <observers>
+                    <fpc_catalog_product_save_after>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>catalogProductSaveAfter</method>
+                    </fpc_catalog_product_save_after>
+                </observers>
+            </catalog_product_save_after>
+            <catalog_category_save_after>
+                <observers>
+                    <fpc_catalog_category_save_after>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>catalogCategorySaveAfter</method>
+                    </fpc_catalog_category_save_after>
+                </observers>
+            </catalog_category_save_after>
+            <cms_page_save_after>
+                <observers>
+                    <fpc_cms_page_save_after>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>cmsPageSaveAfter</method>
+                    </fpc_cms_page_save_after>
+                </observers>
+            </cms_page_save_after>
+            <model_save_after>
+                <observers>
+                    <fpc_model_save_after>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>modelSaveAfter</method>
+                    </fpc_model_save_after>
+                </observers>
+            </model_save_after>
+            <core_clean_cache>
+                <observers>
+                    <fpc_core_clean_cache>
+                        <class>fpc/observer_clean</class>
+                        <type>singleton</type>
+                        <method>coreCleanCache</method>
+                    </fpc_core_clean_cache>
+                </observers>
+            </core_clean_cache>
+            <cataloginventory_stock_item_save_after>
+                <observers>
+                    <fpc_cataloginventory_stock_item_save_after>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>cataloginventoryStockItemSaveAfter</method>
+                    </fpc_cataloginventory_stock_item_save_after>
+                </observers>
+            </cataloginventory_stock_item_save_after>
+        </events>
+    </global>
+    <frontend>
+        <routers>
+            <fpc>
+                <use>standard</use>
+                <args>
+                    <module>Lesti_Fpc</module>
+                    <frontName>fpc</frontName>
+                </args>
+            </fpc>
+        </routers>
+        <events>
+            <controller_action_postdispatch>
+                <observers>
+                    <fpc_controller_action_postdispatch>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>controllerActionPostdispatch</method>
+                    </fpc_controller_action_postdispatch>
+                </observers>
+            </controller_action_postdispatch>
+            <controller_action_layout_generate_blocks_before>
+                <observers>
+                    <fpc_controller_action_layout_generate_blocks_before>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>controllerActionLayoutGenerateBlocksBefore</method>
+                    </fpc_controller_action_layout_generate_blocks_before>
+                </observers>
+            </controller_action_layout_generate_blocks_before>
+            <http_response_send_before>
+                <observers>
+                    <fpc_http_response_send_before>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>httpResponseSendBefore</method>
+                    </fpc_http_response_send_before>
+                </observers>
+            </http_response_send_before>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <fpc_core_block_abstract_to_html_after>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>coreBlockAbstractToHtmlAfter</method>
+                    </fpc_core_block_abstract_to_html_after>
+                </observers>
+            </core_block_abstract_to_html_after>
+            <core_block_messages_get_grouped_html_after>
+                <observers>
+                    <fpc_core_block_messages_get_grouped_html_after>
+                        <class>fpc/observer</class>
+                        <type>singleton</type>
+                        <method>coreBlockAbstractToHtmlAfter</method>
+                    </fpc_core_block_messages_get_grouped_html_after>
+                </observers>
+            </core_block_messages_get_grouped_html_after>
+        </events>
+        <layout>
+            <updates>
+                <fpc>
+                    <file>fpc.xml</file>
+                </fpc>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <events>
+            <controller_action_predispatch_adminhtml_cache_massRefresh>
+                <observers>
+                    <fpc_controller_action_predispatch_adminhtml_cache_massRefresh>
+                        <class>fpc/observer_clean</class>
+                        <type>singleton</type>
+                        <method>controllerActionPredispatchAdminhtmlCacheMassRefresh</method>
+                    </fpc_controller_action_predispatch_adminhtml_cache_massRefresh>
+                </observers>
+            </controller_action_predispatch_adminhtml_cache_massRefresh>
+        </events>
+    </adminhtml>
+    <default>
+        <system>
+            <fpc>
+                <cache_actions><![CDATA[cms_index_index,
+cms_page_view,
+catalog_product_view,
+catalog_category_view]]></cache_actions>
+                <dynamic_blocks><![CDATA[messages,
+global_messages,
+global_notices,
+right.reports.product.viewed]]></dynamic_blocks>
+                <refresh_actions><![CDATA[checkout_cart_add,
+checkout_cart_delete,
+checkout_cart_updatePost,
+catalog_product_compare_add,
+catalog_product_compare_clear,
+catalog_product_compare_remove,
+wishlist_index_add,
+wishlist_index_remove,
+wishlist_index_update,
+wishlist_index_allcart,
+wishlist_index_configure,
+checkout_onepage_success]]></refresh_actions>
+                <lazy_blocks><![CDATA[top.links,
+cart_sidebar,
+catalog.compare.sidebar,
+wishlist_sidebar,
+welcome,
+minicart_head]]></lazy_blocks>
+                <uri_params><![CDATA[id,
+category,
+page_id,
+p,
+limit,
+dir,
+order,
+mode]]></uri_params>
+                <miss_uri_params><![CDATA[no_cache=/1/,
+limit=/[0-9]+/,
+dir=/[0-9a-z_]+/,
+order=/[0-9a-z_]+/,
+mode=/[0-9a-z_]+/,
+___store=/[a-z]{1}[0-9a-z_]*/]]></miss_uri_params>
+                <session_params><![CDATA[limit_page,
+sort_order,
+sort_direction,
+display_mode]]></session_params>
+                <customer_groups>0</customer_groups>
+                <use_recently_viewed_products>0</use_recently_viewed_products>
+                <show_age>1</show_age>
+            </fpc>
+        </system>
+    </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <Lesti_Fpc/>
+            </modules>
+        </suite>
+    </phpunit>
+</config>

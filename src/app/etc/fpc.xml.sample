@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Lesti_Fpc (http:gordonlesti.com/lestifpc)
+ *
+ * PHP version 5
+ *
+ * @link      https://github.com/GordonLesti/Lesti_Fpc
+ * @package   Lesti_Fpc
+ * @author    Gordon Lesti <info@gordonlesti.com>
+ * @copyright Copyright (c) 2013-2014 Gordon Lesti (http://gordonlesti.com)
+ * @license   http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <global>
+        <fpc>
+            <lifetime>86400</lifetime>
+
+            <!-- example for redis -->
+            <!-- please read https://github.com/colinmollenhour/Cm_Cache_Backend_Redis for more informations -->
+
+            <!--backend>Cm_Cache_Backend_Redis</backend>
+            <backend_options>
+                <server>127.0.0.1</server>
+                <port>6379</port>
+                <persistent>cache-fpc</persistent>
+                <database>1</database>
+                <password></password>
+                <force_standalone>1</force_standalone>
+                <connect_retries>1</connect_retries>
+                <lifetimelimit>86400</lifetimelimit>
+                <read_timeout>10</read_timeout>
+                <compress_data>1</compress_data>
+                <compress_tags>1</compress_tags>
+                <compress_data>gzip</compress_data>
+            </backend_options-->
+
+            <!-- example for apc -->
+
+            <!--backend>apc</backend>
+            <prefix>LESTI_FPC_</prefix-->
+
+            <!-- example for memcached -->
+
+            <!--backend>memcached</backend>
+            <memcached>
+                <servers>
+                    <server>
+                        <host><![CDATA[127.0.0.1]]></host>
+                        <port><![CDATA[11211]]></port>
+                        <persistent><![CDATA[1]]></persistent>
+                    </server>
+                </servers>
+                <compression><![CDATA[0]]></compression>
+                <cache_dir><![CDATA[]]></cache_dir>
+                <hashed_directory_level><![CDATA[]]></hashed_directory_level>
+                <hashed_directory_umask><![CDATA[]]></hashed_directory_umask>
+                <file_name_prefix><![CDATA[]]></file_name_prefix>
+            </memcached-->
+        </fpc>
+    </global>
+</config>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Lesti_Fpc (http:gordonlesti.com/lestifpc)
+ *
+ * PHP version 5
+ *
+ * @link      https://github.com/GordonLesti/Lesti_Fpc
+ * @package   Lesti_Fpc
+ * @author    Gordon Lesti <info@gordonlesti.com>
+ * @copyright Copyright (c) 2013-2014 Gordon Lesti (http://gordonlesti.com)
+ * @license   http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ */
+-->
+<layout version="0.1.0">
+    <catalog_product_view>
+        <reference name="after_body_start">
+            <block type="fpc/catalog_product_view_ajax" name="fpc.catalog.product.view.ajax" template="fpc/catalog/product/view/ajax.phtml"/>
+        </reference>
+    </catalog_product_view>
+</layout>
