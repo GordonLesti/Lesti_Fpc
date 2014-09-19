@@ -30,7 +30,14 @@ abstract class LestiTest_TestCase extends PHPUnit_Framework_TestCase
         foreach (array_keys($cacheOptions) as $cache) {
             $cacheOptions[$cache] = $cache == 'fpc' ? 1 : 0;
         }
+        if (!array_key_exists('fpc', $cacheOptions)) {
+            $cacheOptions['fpc'] = 1;
+        }
         $this->_cache->saveOptions($cacheOptions);
+        $reflector = new ReflectionClass('Mage_Core_Model_Cache');
+        $initOptionsMethod = $reflector->getMethod('_initOptions');
+        $initOptionsMethod->setAccessible(true);
+        $initOptionsMethod->invokeArgs($this->_cache, array());
     }
 
     public function tearDown()

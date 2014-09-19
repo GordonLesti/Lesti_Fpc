@@ -120,7 +120,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
      */
     public function isActive()
     {
-        return $this->canUse('fpc');
+        return Mage::app()->useCache('fpc');
     }
 
 }
