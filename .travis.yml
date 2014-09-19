@@ -13,14 +13,14 @@ install:
   - cd magento
   - wget https://raw.githubusercontent.com/colinmollenhour/modman/master/modman
   - chmod +x modman
-  - modman init
+  - ./modman init
   - cd ..
 
 before_script:
   - mysql -e 'create database `magento-1-9-0-1`;'
   - mysql -utravis magento-1-9-0-1 < magento/magento-1-9-0-1.sql
   - cd magento
-  - modman link ./../
+  - ./modman link ./../
   - cd ..
 
 script:
