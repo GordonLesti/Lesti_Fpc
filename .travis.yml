@@ -26,4 +26,4 @@ before_script:
 script:
   - php bin/phpcs --standard=Zend -n src/ tests/
   - php bin/phpmd src/,tests/  text codesize,design,unusedcode
-  - php bin/phpunit --bootstrap=tests/bootstrap-ci.php
+  - php bin/phpunit --bootstrap=tests/bootstrap-ci.php --coverage-text
