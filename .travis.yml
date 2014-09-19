@@ -8,6 +8,7 @@ php:
 
 install:
   - composer install --dev --prefer-source
+  - curl https://ordonlesti.com/magento-1-9-0-1.tar.gz | tar xvz
 
 script:
   - php bin/phpcs --standard=Zend -n src/ tests/
