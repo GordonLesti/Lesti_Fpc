@@ -20,7 +20,7 @@ before_script:
   - mysql -e 'create database `magento-1-9-0-1`;'
   - mysql -utravis magento-1-9-0-1 < magento/magento-1-9-0-1.sql
   - cd magento
-  - ./modman link ./../
+  - ./modman link ./../../Lesti_Fpc
   - cd ..
 
 script:
