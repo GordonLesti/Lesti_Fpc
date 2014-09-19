@@ -29,7 +29,7 @@ class LestiTest_Fpc_Block_Catalog_Product_View_AjaxTest extends LestiTest_TestCa
 
     public function testGetAjaxUrlFpcInactive()
     {
-        Mage::app()->getCacheInstance()->banUse('fpc');
+        Mage::getSingleton('fpc/fpc')->banUse('fpc');
         $this->assertFalse(Mage::getSingleton('fpc/fpc')->isActive());
         $this->assertFalse($this->_catalogProductViewAjaxBlock->getAjaxUrl());
     }

@@ -17,3 +17,4 @@ require __DIR__.'/../vendor/autoload.php';
  * in the dir .modman/Lesti_Fpc/tests
  */
 require __DIR__.'/../../../app/Mage.php';
+Mage::init();

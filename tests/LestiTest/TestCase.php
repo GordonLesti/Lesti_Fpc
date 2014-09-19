@@ -22,7 +22,6 @@ abstract class LestiTest_TestCase extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        Mage::init();
         Mage::unregister('_singleton/fpc/fpc');
         $this->_cache = Mage::app()->getCacheInstance();
         $this->_cache->flush();
