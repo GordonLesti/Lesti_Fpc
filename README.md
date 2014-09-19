@@ -1,16 +1,18 @@
 Lesti_Fpc
 =========
 
-Simple Magento Fullpagecache. The offical website http://gordonlesti.com/lestifpc/.
+[![Build Status](https://travis-ci.org/GordonLesti/Lesti_Fpc.svg?branch=master)](https://travis-ci.org/GordonLesti/Lesti_Fpc)
 
-Can cache:
-- Product-View
-- Category-View
-- CMS-Pages
-- all other Pages if you want to
+Simple Magento Fullpagecache.
 
-Can handle with:
-- Dynamic Block like Minicart and Toplinks
-- all other Block if you want to
-- Multistores, Multicurrency and Customergroups
-- Session Parameters like limit and order
+## Installation
+
+Install with [modman](https://github.com/colinmollenhour/modman):
+
+    $ modman clone git@github.com:GordonLesti/Lesti_Fpc.git
+
+Install manually:
+
+* Download latest version [here](https://github.com/GordonLesti/Lesti_Fpc/archive/master.zip)
+* Unzip
+* copy `src/app` directory over Magento
