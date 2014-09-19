@@ -16,4 +16,4 @@ require __DIR__.'/../vendor/autoload.php';
  * I'm testing the Extension via modman and expect, that this file is
  * in the dir .modman/Lesti_Fpc/tests
  */
-require __DIR__.'/../../app/Mage.php';
+require __DIR__.'/../magento/app/Mage.php';
