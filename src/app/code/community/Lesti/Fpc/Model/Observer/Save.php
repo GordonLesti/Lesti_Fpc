@@ -23,11 +23,10 @@ class Lesti_Fpc_Model_Observer_Save
      */
     public function catalogProductSaveAfter($observer)
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
+        if ($this->_getFpc()->isActive()) {
             $product = $observer->getEvent()->getProduct();
             if ($product->getId()) {
-                $fpc->clean(sha1('product_' . $product->getId()));
+                $this->_getFpc()->clean(sha1('product_' . $product->getId()));
 
                 $origData = $product->getOrigData();
                 if (empty($origData) ||
@@ -35,7 +34,7 @@ class Lesti_Fpc_Model_Observer_Save
                         $product->getStatus() != $origData['status'])) {
                     $categories = $product->getCategoryIds();
                     foreach ($categories as $categoryId) {
-                        $fpc->clean(sha1('category_' . $categoryId));
+                        $this->_getFpc()->clean(sha1('category_' . $categoryId));
                     }
                 }
             }
@@ -47,11 +46,10 @@ class Lesti_Fpc_Model_Observer_Save
      */
     public function catalogCategorySaveAfter($observer)
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
+        if ($this->_getFpc()->isActive()) {
             $category = $observer->getEvent()->getCategory();
             if ($category->getId()) {
-                $fpc->clean(sha1('category_' . $category->getId()));
+                $this->_getFpc()->clean(sha1('category_' . $category->getId()));
             }
         }
     }
@@ -61,13 +59,12 @@ class Lesti_Fpc_Model_Observer_Save
      */
     public function cmsPageSaveAfter($observer)
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
+        if ($this->_getFpc()->isActive()) {
             $page = $observer->getEvent()->getObject();
             if ($page->getId()) {
                 $tags = array(sha1('cms_' . $page->getId()),
                     sha1('cms_' . $page->getIdentifier()));
-                $fpc->clean($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
+                $this->_getFpc()->clean($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
             }
         }
     }
@@ -77,11 +74,10 @@ class Lesti_Fpc_Model_Observer_Save
      */
     public function modelSaveAfter($observer)
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
+        if ($this->_getFpc()->isActive()) {
             $object = $observer->getEvent()->getObject();
             if (get_class($object) == get_class(Mage::getModel('cms/block'))) {
-                $fpc->clean(sha1('cmsblock_' . $object->getIdentifier()));
+                $this->_getFpc()->clean(sha1('cmsblock_' . $object->getIdentifier()));
             }
         }
     }
@@ -93,13 +89,12 @@ class Lesti_Fpc_Model_Observer_Save
     {
         $item = $observer->getEvent()->getItem();
         if ($item->getStockStatusChangedAuto()) {
-            $fpc = $this->_getFpc();
-            $fpc->clean(sha1('product_' . $item->getProductId()));
+            $this->_getFpc()->clean(sha1('product_' . $item->getProductId()));
         }
     }
 
     /**
-     * @return Mage_Core_Model_Abstract
+     * @return Lesti_Fpc_Model_Fpc
      */
     protected function _getFpc()
     {
@@ -112,8 +107,7 @@ class Lesti_Fpc_Model_Observer_Save
      */
     public function catalogProductMassActionBefore($observer)
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
+        if ($this->_getFpc()->isActive()) {
             $entities = $observer->getEvent()->getData();
             $productIds = $entities['product_ids'];
 
@@ -134,13 +128,12 @@ class Lesti_Fpc_Model_Observer_Save
      */
     public function catalogProductMassActionAfter()
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
+        if ($this->_getFpc()->isActive()) {
             $productIds = Mage::getSingleton('core/session')
                 ->getData(self::PRODUCT_IDS_MASS_ACTION_KEY, true);
 
             foreach ($productIds as $productId) {
-                $fpc->clean(sha1('product_' . $productId));
+                $this->_getFpc()->clean(sha1('product_' . $productId));
             }
         }
     }
