@@ -26,17 +26,16 @@ class Lesti_Fpc_Model_Observer_Clean
     public function controllerActionPredispatchAdminhtmlCacheMassRefresh()
     {
         $types = Mage::app()->getRequest()->getParam('types');
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
+        if ($this->_getFpc()->isActive()) {
             if ((is_array($types) && in_array(self::CACHE_TYPE, $types)) ||
                 $types == self::CACHE_TYPE) {
-                $fpc->clean();
+                $this->_getFpc()->clean();
             }
         }
     }
 
     /**
-     * @return Mage_Core_Model_Abstract
+     * @return Lesti_Fpc_Model_Fpc
      */
     protected function _getFpc()
     {

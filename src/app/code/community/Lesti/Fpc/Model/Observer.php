@@ -32,14 +32,13 @@ class Lesti_Fpc_Model_Observer
      */
     public function controllerActionLayoutGenerateBlocksBefore($observer)
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive() &&
+        if ($this->_getFpc()->isActive() &&
             !$this->_cached &&
             Mage::helper('fpc')->canCacheRequest()) {
             $key = Mage::helper('fpc')->getKey();
-            if ($object = $fpc->load($key)) {
-                $object = unserialize($object);
-                $body = $object['body'];
+            if ($object = $this->_getFpc()->load($key)) {
+                $time = (int)substr($object, 0, 10);
+                $body = substr($object, 10);
                 $this->_cached = true;
                 $session = Mage::getSingleton('customer/session');
                 $lazyBlocks = Mage::helper('fpc/block')->getLazyBlocks();
@@ -69,7 +68,7 @@ class Lesti_Fpc_Model_Observer
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 if (Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
                     Mage::app()->getResponse()
-                        ->setHeader('Age', time() - $object['time']);
+                        ->setHeader('Age', time() - $time);
                 }
                 Mage::app()->getResponse()->setBody($body);
                 Mage::app()->getResponse()->sendResponse();
@@ -86,9 +85,8 @@ class Lesti_Fpc_Model_Observer
      */
     public function httpResponseSendBefore($observer)
     {
-        $fpc = $this->_getFpc();
         $response = $observer->getEvent()->getResponse();
-        if ($fpc->isActive() &&
+        if ($this->_getFpc()->isActive() &&
             !$this->_cached &&
             Mage::helper('fpc')->canCacheRequest() &&
             $response->getHttpResponseCode() == 200) {
@@ -123,8 +121,7 @@ class Lesti_Fpc_Model_Observer
                     Mage::helper('fpc')->getCacheTags(),
                     $this->_cacheTags
                 );
-                $object = array('body' => $body, 'time' => time());
-                $fpc->save(serialize($object), $key, $this->_cacheTags);
+                $this->_getFpc()->save(time() . $body, $key, $this->_cacheTags);
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 $observer->getEvent()->getResponse()->setBody($body);
@@ -137,8 +134,7 @@ class Lesti_Fpc_Model_Observer
      */
     public function coreBlockAbstractToHtmlAfter($observer)
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive() &&
+        if ($this->_getFpc()->isActive() &&
             !$this->_cached &&
             Mage::helper('fpc')->canCacheRequest()) {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
@@ -167,8 +163,7 @@ class Lesti_Fpc_Model_Observer
 
     public function controllerActionPostdispatch()
     {
-        $fpc = $this->_getFpc();
-        if ($fpc->isActive()) {
+        if ($this->_getFpc()->isActive()) {
             $fullActionName = Mage::helper('fpc')->getFullActionName();
             if (in_array(
                 $fullActionName,
@@ -184,7 +179,7 @@ class Lesti_Fpc_Model_Observer
     }
 
     /**
-     * @return Mage_Core_Model_Abstract
+     * @return Lesti_Fpc_Model_Fpc
      */
     protected function _getFpc()
     {

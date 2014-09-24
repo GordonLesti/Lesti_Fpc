@@ -21,9 +21,8 @@ class Lesti_Fpc_Block_Catalog_Product_View_Ajax extends Mage_Core_Block_Template
      */
     public function getAjaxUrl()
     {
-        $fpc = Mage::getSingleton('fpc/fpc');
         $id = $this->_getProductId();
-        if ($fpc->isActive() &&
+        if (Mage::getSingleton('fpc/fpc')->isActive() &&
             in_array(
                 'catalog_product_view',
                 Mage::helper('fpc')->getCacheableActions()
