@@ -208,16 +208,16 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         $tagHelper = Mage::helper('fpc/data_tag');
         switch ($fullActionName) {
             case 'cms_index_index' :
-                $cacheTags = $tagHelper::getCmsIndexIndexCacheTags();
+                $cacheTags = $tagHelper->getCmsIndexIndexCacheTags();
                 break;
             case 'cms_page_view' :
-                $cacheTags = $tagHelper::getCmsPageViewCacheTags($request);
+                $cacheTags = $tagHelper->getCmsPageViewCacheTags($request);
                 break;
             case 'catalog_product_view' :
-                $cacheTags = $tagHelper::getCatalogProductViewCacheTags($request);
+                $cacheTags = $tagHelper->getCatalogProductViewCacheTags($request);
                 break;
             case 'catalog_category_view' :
-                $cacheTags = $tagHelper::getCatalogCategoryViewCacheTags($request);
+                $cacheTags = $tagHelper->getCatalogCategoryViewCacheTags($request);
                 break;
         }
         Mage::dispatchEvent(

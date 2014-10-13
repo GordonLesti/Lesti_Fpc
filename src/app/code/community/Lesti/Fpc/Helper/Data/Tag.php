@@ -19,7 +19,7 @@ class Lesti_Fpc_Helper_Data_Tag extends Mage_Core_Helper_Abstract
     /**
      * @return array
      */
-    public static function getCmsIndexIndexCacheTags()
+    public function getCmsIndexIndexCacheTags()
     {
         $cacheTags = array();
         $cacheTags[] = sha1('cms');
@@ -36,7 +36,7 @@ class Lesti_Fpc_Helper_Data_Tag extends Mage_Core_Helper_Abstract
      * @param Mage_Core_Controller_Request_Http $request
      * @return array
      */
-    public static function getCmsPageViewCacheTags(Mage_Core_Controller_Request_Http $request)
+    public function getCmsPageViewCacheTags(Mage_Core_Controller_Request_Http $request)
     {
         $cacheTags = array();
         $cacheTags[] = sha1('cms');
@@ -54,7 +54,7 @@ class Lesti_Fpc_Helper_Data_Tag extends Mage_Core_Helper_Abstract
      * @param Mage_Core_Controller_Request_Http $request
      * @return array
      */
-    public static function getCatalogProductViewCacheTags(Mage_Core_Controller_Request_Http $request)
+    public function getCatalogProductViewCacheTags(Mage_Core_Controller_Request_Http $request)
     {
         $cacheTags = array();
         $cacheTags[] = sha1('product');
@@ -108,7 +108,7 @@ class Lesti_Fpc_Helper_Data_Tag extends Mage_Core_Helper_Abstract
      * @param Mage_Core_Controller_Request_Http $request
      * @return array
      */
-    public static function getCatalogCategoryViewCacheTags(Mage_Core_Controller_Request_Http $request)
+    public function getCatalogCategoryViewCacheTags(Mage_Core_Controller_Request_Http $request)
     {
         $cacheTags = array();
         $cacheTags[] = sha1('category');
