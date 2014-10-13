@@ -70,6 +70,7 @@ class Lesti_Fpc_Model_Observer
                     Mage::app()->getResponse()
                         ->setHeader('Age', time() - $time);
                 }
+                Mage::dispatchEvent('fpc_postdispatch');
                 Mage::app()->getResponse()->setBody($body);
                 Mage::app()->getResponse()->sendResponse();
                 exit;
