@@ -71,6 +71,9 @@ class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax extends Lesti_Fpc_Test_Test
      */
     public function testGetAjaxUrl()
     {
+        // clean baseUrlCache of Model/Store
+        $this->clearBaseUrlProperty();
+
         $this->assertEquals(
             'http://localhost/fpc/catalog_product/view/id/5/',
             $this->_catalogProductViewAjaxBlock->getAjaxUrl()

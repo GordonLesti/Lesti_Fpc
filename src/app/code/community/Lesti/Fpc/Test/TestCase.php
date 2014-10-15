@@ -40,17 +40,19 @@ class Lesti_Fpc_Test_TestCase extends EcomDev_PHPUnit_Test_Case_Controller
         $initOptionsMethod = $cacheReflector->getMethod('_initOptions');
         $initOptionsMethod->setAccessible(true);
         $initOptionsMethod->invokeArgs($this->_cache, array());
-
-        // clean baseUrlCache of Model/Store
-        $storeReflector = new ReflectionClass('Mage_Core_Model_Store');
-        $baseUrlCacheProperty = $storeReflector->getProperty('_baseUrlCache');
-        $baseUrlCacheProperty->setAccessible(true);
-        $baseUrlCacheProperty->setValue(Mage::app()->getStore(), array());
     }
 
     public function tearDown()
     {
         parent::tearDown();
         $this->_cache->saveOptions($this->_cacheOptions);
+    }
+
+    protected function clearBaseUrlProperty()
+    {
+        $storeReflector = new ReflectionClass('Mage_Core_Model_Store');
+        $baseUrlCacheProperty = $storeReflector->getProperty('_baseUrlCache');
+        $baseUrlCacheProperty->setAccessible(true);
+        $baseUrlCacheProperty->setValue(Mage::app()->getStore(), array());
     }
 }
