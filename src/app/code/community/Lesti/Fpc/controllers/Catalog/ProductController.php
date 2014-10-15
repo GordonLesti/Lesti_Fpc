@@ -27,5 +27,4 @@ class Lesti_Fpc_Catalog_ProductController extends Mage_Core_Controller_Front_Act
             );
         }
     }
-
 }
