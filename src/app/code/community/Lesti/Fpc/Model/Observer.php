@@ -70,8 +70,10 @@ class Lesti_Fpc_Model_Observer
                     Mage::app()->getResponse()
                         ->setHeader('Age', time() - $time);
                 }
-                Mage::app()->getResponse()->setBody($body);
-                Mage::app()->getResponse()->sendResponse();
+                $response = Mage::app()->getResponse();
+                $response->setBody($body);
+                Mage::dispatchEvent('fpc_http_response_send_before', array('response'=>$response));
+                $response->sendResponse();
                 exit;
             }
             if (Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
