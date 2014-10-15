@@ -67,6 +67,16 @@ class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax extends Lesti_Fpc_Test_Test
 
     /**
      * @test
+     * @loadFixture get_ajax_url_no_current_product.yaml
+     */
+    public function testGetAjaxUrlNoCurrentProduct()
+    {
+        Mage::unregister('current_product');
+        $this->assertFalse($this->_catalogProductViewAjaxBlock->getAjaxUrl());
+    }
+
+    /**
+     * @test
      * @loadFixture get_ajax_url.yaml
      */
     public function testGetAjaxUrl()
