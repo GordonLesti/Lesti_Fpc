@@ -20,7 +20,7 @@ before_script:
   - mysql -utravis magento-1-9-0-1 < magento/var/test.sql
   - cd magento
   - ./modman link ./../../Lesti_Fpc
-  - ./modman clone git@github.com:EcomDev/EcomDev_PHPUnit.git
+  - ./modman clone https://github.com/EcomDev/EcomDev_PHPUnit.git
   - cd ..
 
 script:
