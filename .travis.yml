@@ -17,7 +17,9 @@ install:
 
 before_script:
   - mysql -e 'create database `magento-1-9-0-1`;'
-  - mysql -utravis magento-1-9-0-1 < magento/var/test.sql
+  - mysql -utravis magento-1-9-0-1 < magento/var/magento-1-9-0-1.sql
+  - mysql -e 'create database `magento-1-9-0-1-test`;'
+  - mysql -utravis magento-1-9-0-1-test < magento/var/magento-1-9-0-1-test.sql
   - cd magento
   - ./modman link ./../../Lesti_Fpc
   - ./modman clone https://github.com/EcomDev/EcomDev_PHPUnit.git
