@@ -38,7 +38,10 @@ class Lesti_Fpc_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case_Controller
      * @loadFixture config.yaml
      * @dataProvider dataProvider
      */
-    public function testRegexUriParams($uriParamSets = array(), $expectedCount = 0)
+    public function testRegexUriParams(
+        $uriParamSets = array(),
+        $expectedCount = 0
+    )
     {
         $actualKeys = array();
         foreach ($uriParamSets as $uriParams) {

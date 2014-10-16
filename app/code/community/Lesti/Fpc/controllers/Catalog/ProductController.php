@@ -14,7 +14,8 @@
 /**
  * Class Lesti_Fpc_Catalog_ProductController
  */
-class Lesti_Fpc_Catalog_ProductController extends Mage_Core_Controller_Front_Action
+class Lesti_Fpc_Catalog_ProductController extends
+    Mage_Core_Controller_Front_Action
 {
     public function viewAction()
     {

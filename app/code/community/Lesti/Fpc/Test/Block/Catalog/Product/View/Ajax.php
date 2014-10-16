@@ -14,7 +14,8 @@
 /**
  * Class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax
  */
-class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax extends Lesti_Fpc_Test_TestCase
+class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax extends
+    Lesti_Fpc_Test_TestCase
 {
     /**
      * @var Lesti_Fpc_Block_Catalog_Product_View_Ajax
@@ -24,7 +25,8 @@ class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax extends Lesti_Fpc_Test_Test
     public function setUp()
     {
         parent::setUp();
-        $this->_catalogProductViewAjaxBlock = new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
+        $this->_catalogProductViewAjaxBlock =
+            new Lesti_Fpc_Block_Catalog_Product_View_Ajax();
         // register a product
         $product = new Mage_Catalog_Model_Product();
         $product->setId(5);

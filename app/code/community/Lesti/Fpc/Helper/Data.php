@@ -64,7 +64,8 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 'port' => $request->getServer('SERVER_PORT'),
                 'full_action_name' => $this->getFullActionName());
             $uriParams = $this->_getUriParams();
-            foreach ($request->getParams() as $requestParam => $requestParamValue) {
+            foreach ($request->getParams() as $requestParam =>
+                     $requestParamValue) {
                 if (!$requestParamValue) {
                     continue;
                 }
@@ -137,7 +138,8 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Matches URI param against expression (string comparison or regular expression)
+     * Matches URI param against expression
+     * (string comparison or regular expression)
      * 
      * @param string $expression
      * @param string $param
@@ -214,10 +216,12 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 $cacheTags = $tagHelper->getCmsPageViewCacheTags($request);
                 break;
             case 'catalog_product_view' :
-                $cacheTags = $tagHelper->getCatalogProductViewCacheTags($request);
+                $cacheTags = $tagHelper
+                    ->getCatalogProductViewCacheTags($request);
                 break;
             case 'catalog_category_view' :
-                $cacheTags = $tagHelper->getCatalogCategoryViewCacheTags($request);
+                $cacheTags = $tagHelper
+                    ->getCatalogCategoryViewCacheTags($request);
                 break;
         }
         Mage::dispatchEvent(

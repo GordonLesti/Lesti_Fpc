@@ -27,7 +27,8 @@ class Lesti_Fpc_Test_TestCase extends EcomDev_PHPUnit_Test_Case_Controller
         Mage::unregister('_singleton/fpc/fpc');
         // disable all caches expected fpc
         $this->_cache = Mage::app()->getCacheInstance();
-        $this->_cacheOptions = Mage::getResourceSingleton('core/cache')->getAllOptions();
+        $this->_cacheOptions = Mage::getResourceSingleton('core/cache')
+            ->getAllOptions();
         $cacheOptions = $this->_cacheOptions;
         foreach (array_keys($cacheOptions) as $cache) {
             $cacheOptions[$cache] = $cache == 'fpc' ? 1 : 0;

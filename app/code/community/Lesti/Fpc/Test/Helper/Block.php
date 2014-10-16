@@ -33,8 +33,10 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
      */
     public function testGetDynamicBlocks()
     {
-        $expectedResult = array('foo', 'bar', 'foobar');
-        $this->assertEquals($expectedResult, $this->_blockHelper->getDynamicBlocks());
+        $this->assertEquals(
+            array('foo', 'bar', 'foobar'),
+            $this->_blockHelper->getDynamicBlocks()
+        );
     }
 
     /**
@@ -43,8 +45,10 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
      */
     public function testGetLazyBlocks()
     {
-        $expectedResult = array('foo', 'bar', 'foobar');
-        $this->assertEquals($expectedResult, $this->_blockHelper->getLazyBlocks());
+        $this->assertEquals(
+            array('foo', 'bar', 'foobar'),
+            $this->_blockHelper->getLazyBlocks()
+        );
     }
 
     /**
@@ -112,13 +116,13 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
      */
     public function testGetCacheTagsProductList()
     {
-        $product1 = new Mage_Catalog_Model_Product();
-        $product1->setId(1);
-        $product2 = new Mage_Catalog_Model_Product();
-        $product2->setId(2);
+        $productOne = new Mage_Catalog_Model_Product();
+        $productOne->setId(1);
+        $productTwo = new Mage_Catalog_Model_Product();
+        $productTwo->setId(2);
         $block = new Mage_Core_Block_Template();
         $block->setNameInLayout('product_list');
-        $block->setLoadedProductCollection(array($product1, $product2));
+        $block->setLoadedProductCollection(array($productOne, $productTwo));
         $this->assertEquals(
             array(
                 '38a007151abe87cc01a5b6e9cc418e85286e2087', // sha1('product')

@@ -60,7 +60,12 @@ class Lesti_Fpc_Model_Observer
                     $dynamicBlocks
                 );
                 // insert dynamic blocks
-                $this->_insertDynamicBlocks($layout, $session, $dynamicBlocks, $lazyBlocks);
+                $this->_insertDynamicBlocks(
+                    $layout,
+                    $session,
+                    $dynamicBlocks,
+                    $lazyBlocks
+                );
                 $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
                 $this->_html[] = $session->getSessionIdQueryParam().'='.
                     $session->getEncryptedSessionId();
@@ -72,7 +77,10 @@ class Lesti_Fpc_Model_Observer
                 }
                 $response = Mage::app()->getResponse();
                 $response->setBody($body);
-                Mage::dispatchEvent('fpc_http_response_send_before', array('response'=>$response));
+                Mage::dispatchEvent(
+                    'fpc_http_response_send_before',
+                    array('response' => $response)
+                );
                 $response->sendResponse();
                 exit;
             }
@@ -193,7 +201,10 @@ class Lesti_Fpc_Model_Observer
      * @param array $dynamicBlocks
      * @return Mage_Core_Model_Layout
      */
-    protected function _prepareLayout(Mage_Core_Model_Layout $layout, array $dynamicBlocks)
+    protected function _prepareLayout(
+        Mage_Core_Model_Layout $layout,
+        array $dynamicBlocks
+    )
     {
         $xml = simplexml_load_string(
             $layout->getXmlString(),

@@ -107,7 +107,9 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
      */
     public function useRecentlyViewedProducts()
     {
-        return (bool)Mage::getStoreConfig(self::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH);
+        return (bool)Mage::getStoreConfig(
+            self::USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH
+        );
     }
 
     /**

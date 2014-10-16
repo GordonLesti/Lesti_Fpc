@@ -34,7 +34,9 @@ class Lesti_Fpc_Model_Observer_Save
                         $product->getStatus() != $origData['status'])) {
                     $categories = $product->getCategoryIds();
                     foreach ($categories as $categoryId) {
-                        $this->_getFpc()->clean(sha1('category_' . $categoryId));
+                        $this->_getFpc()->clean(
+                            sha1('category_' . $categoryId)
+                        );
                     }
                 }
             }
@@ -64,7 +66,8 @@ class Lesti_Fpc_Model_Observer_Save
             if ($page->getId()) {
                 $tags = array(sha1('cms_' . $page->getId()),
                     sha1('cms_' . $page->getIdentifier()));
-                $this->_getFpc()->clean($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
+                $this->_getFpc()
+                    ->clean($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
             }
         }
     }
@@ -77,7 +80,8 @@ class Lesti_Fpc_Model_Observer_Save
         if ($this->_getFpc()->isActive()) {
             $object = $observer->getEvent()->getObject();
             if (get_class($object) == get_class(Mage::getModel('cms/block'))) {
-                $this->_getFpc()->clean(sha1('cmsblock_' . $object->getIdentifier()));
+                $this->_getFpc()
+                    ->clean(sha1('cmsblock_' . $object->getIdentifier()));
             }
         }
     }
@@ -119,7 +123,10 @@ class Lesti_Fpc_Model_Observer_Save
                 $productIds = array_merge($currentProductIds, $productIds);
             }
 
-            $coreSession->setData(self::PRODUCT_IDS_MASS_ACTION_KEY, $productIds);
+            $coreSession->setData(
+                self::PRODUCT_IDS_MASS_ACTION_KEY,
+                $productIds
+            );
         }
     }
 
