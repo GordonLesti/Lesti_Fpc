@@ -56,9 +56,47 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
      */
     public function testAreLazyBlocksValid()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        // initial should return false
+        $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
+        // hash should be set and return true
+        $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
+
+        // edit host
+        $_SERVER['HTTP_HOST'] = 'fpc.dev';
+        $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
+        $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
+
+        // edit port
+        $_SERVER['SERVER_PORT'] = '80';
+        $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
+        $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
+
+        // edit store code
+        $storeCode = Mage::app()->getStore()->getCode();
+        Mage::app()->getStore()->setCode('fpc');
+        $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
+        $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
+        Mage::app()->getStore()->setCode($storeCode);
+
+        // edit currency
+        Mage::app()->getStore()->setCurrentCurrencyCode('FPC');
+        $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
+        $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
+
+        // edit customer session
+        Mage::getSingleton('customer/session')->setCustomerGroupId(78);
+        $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
+        $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
+
+        // edit design package name
+        Mage::getDesign()->setPackageName('FPC');
+        $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
+        $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
+
+        // edit design theme
+        Mage::getDesign()->setTheme('template', 'FPC');
+        $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
+        $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
     }
 
     /**

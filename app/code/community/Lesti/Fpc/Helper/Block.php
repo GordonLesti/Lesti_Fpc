@@ -67,7 +67,7 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         $params['host'] = $request->getServer('HTTP_HOST');
         $params['port'] = $request->getServer('SERVER_PORT');
         // store
-        $storeCode = Mage::app()->getStore(true)->getCode();
+        $storeCode = Mage::app()->getStore()->getCode();
         if ($storeCode) {
             $params['store'] = $storeCode;
         }
