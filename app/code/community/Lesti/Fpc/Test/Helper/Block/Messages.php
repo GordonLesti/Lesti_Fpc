@@ -103,7 +103,8 @@ class Lesti_Fpc_Test_Helper_Block_Messages extends Lesti_Fpc_Test_TestCase
     /**
      * @test
      * @expectedException Mage_Core_exception
-     * @expectedExceptionMessage Invalid messages storage "fpc/session" for layout messages initialization
+     * @expectedExceptionMessage Invalid messages storage "fpc/session"
+     * for layout messages initialization
      */
     public function testInitLayoutInvalidStorage()
     {
