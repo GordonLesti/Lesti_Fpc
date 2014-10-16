@@ -7,6 +7,7 @@ php:
   - 5.6
 
 install:
+  - composer install --dev --prefer-source
   - curl https://gordonlesti.com/magento-1-9-0-1.tar.gz | tar xz
   - mv magento-1-9-0-1 magento
   - cd magento
@@ -26,5 +27,6 @@ before_script:
   - cd ..
 
 script:
-  - cd magento
-  - phpunit
+  - php vendor/bin/phpcs --standard=Zend -n app/
+  - php vendor/bin/phpmd app/ text codesize,design,unusedcode
+  - cd magento && php vendor/bin/phpunit --coverage-text && cd ..

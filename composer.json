@@ -8,5 +8,10 @@
             "name": "Gordon Lesti",
             "email": "info@gordonlesti.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "phpmd/phpmd" : "*",
+        "squizlabs/php_codesniffer": "*"
+    }
 }
