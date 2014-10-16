@@ -7,7 +7,6 @@ php:
   - 5.6
 
 install:
-  - composer install --dev --prefer-source
   - curl https://gordonlesti.com/magento-1-9-0-1.tar.gz | tar xz
   - mv magento-1-9-0-1 magento
   - cd magento
@@ -18,12 +17,12 @@ install:
 
 before_script:
   - mysql -e 'create database `magento-1-9-0-1`;'
-  - mysql -utravis magento-1-9-0-1 < magento/magento-1-9-0-1.sql
+  - mysql -utravis magento-1-9-0-1 < magento/var/test.sql
   - cd magento
   - ./modman link ./../../Lesti_Fpc
+  - ./modman clone git@github.com:EcomDev/EcomDev_PHPUnit.git
   - cd ..
 
 script:
-  - php bin/phpcs --standard=Zend -n src/ tests/
-  - php bin/phpmd src/,tests/  text codesize,design,unusedcode
-  - php bin/phpunit --bootstrap=tests/bootstrap-ci.php --coverage-text
+  - cd magento
+  - phpunit

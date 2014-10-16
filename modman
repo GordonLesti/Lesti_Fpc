@@ -1,5 +1,5 @@
-src/app/code/community/Lesti/Fpc app/code/community/Lesti/Fpc
-src/app/design/frontend/base/default/layout/fpc.xml app/design/frontend/base/default/layout/fpc.xml
-src/app/design/frontend/base/default/template/fpc app/design/frontend/base/default/template/fpc
-src/app/etc/modules/Lesti_Fpc.xml app/etc/modules/Lesti_Fpc.xml
-src/app/etc/fpc.xml.sample app/etc/fpc.xml.sample
+app/code/community/Lesti/Fpc app/code/community/Lesti/Fpc
+app/design/frontend/base/default/layout/fpc.xml app/design/frontend/base/default/layout/fpc.xml
+app/design/frontend/base/default/template/fpc app/design/frontend/base/default/template/fpc
+app/etc/modules/Lesti_Fpc.xml app/etc/modules/Lesti_Fpc.xml
+app/etc/fpc.xml.sample app/etc/fpc.xml.sample
