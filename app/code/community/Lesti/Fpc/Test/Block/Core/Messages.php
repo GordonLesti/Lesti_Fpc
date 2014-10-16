@@ -24,7 +24,8 @@ class Lesti_Fpc_Test_Block_Core_Messages extends Lesti_Fpc_Test_TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->_messagesBlock = Mage::app()->getLayout()->createBlock('core/messages');
+        $this->_messagesBlock = Mage::app()->getLayout()
+            ->createBlock('core/messages');
     }
 
     /**
@@ -32,13 +33,24 @@ class Lesti_Fpc_Test_Block_Core_Messages extends Lesti_Fpc_Test_TestCase
      */
     public function testGetGroupedHtml()
     {
-        $this->assertInstanceOf('Lesti_Fpc_Core_Block_Messages', $this->_messagesBlock);
+        $this->assertInstanceOf(
+            'Lesti_Fpc_Core_Block_Messages',
+            $this->_messagesBlock
+        );
         $parentClass = get_parent_class($this->_messagesBlock);
         /** @var Mage_Core_Block_Messages $coreMessagesBlock */
         $coreMessagesBlock = new $parentClass;
-        $this->assertInstanceOf('Mage_Core_Block_Messages', $coreMessagesBlock);
+        $this->assertInstanceOf(
+            'Mage_Core_Block_Messages',
+            $coreMessagesBlock
+        );
         $expectedGroupHtml = $coreMessagesBlock->getGroupedHtml();
-        $this->assertEquals($expectedGroupHtml, $this->_messagesBlock->getGroupedHtml());
-        $this->assertEventDispatched('core_block_messages_get_grouped_html_after');
+        $this->assertEquals(
+            $expectedGroupHtml,
+            $this->_messagesBlock->getGroupedHtml()
+        );
+        $this->assertEventDispatched(
+            'core_block_messages_get_grouped_html_after'
+        );
     }
 }
