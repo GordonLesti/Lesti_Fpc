@@ -108,6 +108,7 @@ class Lesti_Fpc_Test_Helper_Block_Messages extends Lesti_Fpc_Test_TestCase
     public function testInitLayoutInvalidStorage()
     {
         $layout = Mage::app()->getLayout();
-        $this->_messagesHelper->initLayoutMessages($layout, array('fpc/session'));
+        $this->_messagesHelper
+            ->initLayoutMessages($layout, array('fpc/session'));
     }
 }
