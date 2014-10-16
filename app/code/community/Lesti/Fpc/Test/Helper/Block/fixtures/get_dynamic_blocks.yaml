@@ -1,0 +1,5 @@
+config:
+    default/system/fpc/dynamic_blocks: >
+     foo,
+     bar, foobar
+      , bar

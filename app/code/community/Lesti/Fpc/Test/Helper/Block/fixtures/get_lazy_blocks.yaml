@@ -1,0 +1,5 @@
+config:
+    default/system/fpc/lazy_blocks: >
+     foo,
+     bar, foobar
+      , bar

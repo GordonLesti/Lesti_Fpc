@@ -1,0 +1,2 @@
+config:
+    default/system/fpc/use_recently_viewed_products: 1
