@@ -85,9 +85,15 @@ class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax extends
     {
         // clean baseUrlCache of Model/Store
         $this->clearBaseUrlProperty();
+        $session = Mage::getSingleton('core/session');
+        $sid = $session->getEncryptedSessionId();
+        $expectedUrl = 'http://localhost/fpc/catalog_product/view/id/5/';
+        if ($sid) {
+            $expectedUrl .= '?'.$session->getSessionIdQueryParam().'='.$sid;
+        }
 
         $this->assertEquals(
-            'http://localhost/fpc/catalog_product/view/id/5/',
+            $expectedUrl,
             $this->_catalogProductViewAjaxBlock->getAjaxUrl()
         );
     }
