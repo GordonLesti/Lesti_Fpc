@@ -9,9 +9,13 @@
             "email": "info@gordonlesti.com"
         }
     ],
+    "require": {
+        "php": ">=5.3.23"
+    },
     "require-dev": {
         "phpunit/phpunit": "*",
         "phpmd/phpmd" : "*",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "satooshi/php-coveralls": "dev-master"
     }
 }

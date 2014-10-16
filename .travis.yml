@@ -17,6 +17,7 @@ install:
   - cd ..
 
 before_script:
+  - mkdir -p build/logs
   - mysql -e 'create database `magento-1-9-0-1`;'
   - mysql -utravis magento-1-9-0-1 < magento/var/magento-1-9-0-1.sql
   - mysql -e 'create database `magento-1-9-0-1-test`;'
@@ -29,4 +30,7 @@ before_script:
 script:
   - php vendor/bin/phpcs --standard=Zend app/
   - php vendor/bin/phpmd app/ text codesize,design,unusedcode
-  - cd magento && php ../vendor/bin/phpunit --coverage-text && cd ..
+  - cd magento && php ../vendor/bin/phpunit --coverage-clover build/logs/clover.xml && cd ..
+
+after_script:
+  - php vendor/bin/coveralls
