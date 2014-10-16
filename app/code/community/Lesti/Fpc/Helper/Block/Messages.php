@@ -20,11 +20,12 @@ class Lesti_Fpc_Helper_Block_Messages extends Mage_Core_Helper_Abstract
      * @param $layout
      * @return mixed
      */
-    public function initLayoutMessages($layout)
+    public function initLayoutMessages(
+        Mage_Core_Model_Layout $layout,
+        $messagesStorage =
+        array('catalog/session', 'tag/session', 'checkout/session')
+    )
     {
-        $messagesStorage = array('catalog/session',
-            'tag/session',
-            'checkout/session');
         $block = $layout->getMessagesBlock();
         if ($block) {
             foreach ($messagesStorage as $storageName) {
