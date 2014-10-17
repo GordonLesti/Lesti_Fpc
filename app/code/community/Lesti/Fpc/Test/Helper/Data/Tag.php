@@ -64,6 +64,7 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
     public function testGetCmsPageViewCacheTagsEmpty()
     {
         $request = Mage::app()->getRequest();
+
         $expectedCacheTags = array(
             '293ae992f45cff1d17d3e83eefd2285d47f7c997', // sha1('cms')
         );
@@ -79,6 +80,7 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
     public function testGetCmsPageViewCacheTagsPageId()
     {
         $request = Mage::app()->getRequest();
+
         $request->setParam('page_id', 5);
         $expectedCacheTags = array(
             '293ae992f45cff1d17d3e83eefd2285d47f7c997', // sha1('cms')
@@ -96,6 +98,7 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
     public function testGetCmsPageViewCacheTagsId()
     {
         $request = Mage::app()->getRequest();
+
         $request->setParam('id', 5);
         $expectedCacheTags = array(
             '293ae992f45cff1d17d3e83eefd2285d47f7c997', // sha1('cms')
@@ -113,6 +116,7 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
     public function testGetCatalogProductViewCacheTagsZero()
     {
         $request = Mage::app()->getRequest();
+
         $expectedCacheTags = array(
             '38a007151abe87cc01a5b6e9cc418e85286e2087', // sha1('product')
         );
@@ -128,6 +132,7 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
     public function testGetCatalogProductViewCacheTagsSimpleProduct()
     {
         $request = Mage::app()->getRequest();
+
         $request->setParam('id', 5);
         $expectedCacheTags = array(
             '38a007151abe87cc01a5b6e9cc418e85286e2087', // sha1('product')
@@ -145,6 +150,7 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
     public function testGetCatalogProductViewCacheTagsWithCategory()
     {
         $request = Mage::app()->getRequest();
+
         $request->setParam('id', 5);
         $request->setParam('category', 7);
         $expectedCacheTags = array(
@@ -187,6 +193,71 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
         $this->assertEquals(
             $expectedCacheTags,
             $this->_tagHelper->getCatalogProductViewCacheTags($request)
+        );
+    }
+
+    /**
+     * @test
+     * @loadFixture get_catalog_product_view_cache_tags_grouped_product.yaml
+     */
+    public function testGetCatalogProductViewCacheTagsGroupedProduct()
+    {
+        $request = Mage::app()->getRequest();
+
+        $request->setParam('id', 5);
+        $expectedCacheTags = array(
+            '38a007151abe87cc01a5b6e9cc418e85286e2087', // sha1('product')
+            '01337f5c00647634e8cef67064d9c4fd4fa0290e', // sha1('product_5')
+            'cfe471971355a3a3d4311e12813f7fa689cf5199', // sha1('product_6')
+        );
+        $this->assertEquals(
+            $expectedCacheTags,
+            $this->_tagHelper->getCatalogProductViewCacheTags($request)
+        );
+
+        $request->setParam('id', 6);
+        $expectedCacheTags = array(
+            '38a007151abe87cc01a5b6e9cc418e85286e2087', // sha1('product')
+            'cfe471971355a3a3d4311e12813f7fa689cf5199', // sha1('product_6')
+            '01337f5c00647634e8cef67064d9c4fd4fa0290e', // sha1('product_5')
+        );
+        $this->assertEquals(
+            $expectedCacheTags,
+            $this->_tagHelper->getCatalogProductViewCacheTags($request)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testGetCatalogCategoryViewCacheTagsEmpty()
+    {
+        $request = Mage::app()->getRequest();
+
+        $expectedCacheTags = array(
+            '5ccbf9c9c5fc1bc34df8238a97094968f38f5165', // sha1('category')
+        );
+        $this->assertEquals(
+            $expectedCacheTags,
+            $this->_tagHelper->getCatalogCategoryViewCacheTags($request)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testGetCatalogCategoryViewCacheTags()
+    {
+        $request = Mage::app()->getRequest();
+
+        $request->setParam('id', 7);
+        $expectedCacheTags = array(
+            '5ccbf9c9c5fc1bc34df8238a97094968f38f5165', // sha1('category')
+            '48ce6d1a1ef87339c758621f81e33b02f9d1cb72', // sha1('category_7')
+        );
+        $this->assertEquals(
+            $expectedCacheTags,
+            $this->_tagHelper->getCatalogCategoryViewCacheTags($request)
         );
     }
 }
