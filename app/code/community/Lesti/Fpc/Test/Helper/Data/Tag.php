@@ -161,7 +161,7 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
 
     /**
      * @test
-     * @loadFixture get_catalog_product_view_cache_tags_configurable_product.yaml
+     * @loadFixture get_catalog_product_view_cache_tags_configurable_prod.yaml
      */
     public function testGetCatalogProductViewCacheTagsConfigurableProduct()
     {
