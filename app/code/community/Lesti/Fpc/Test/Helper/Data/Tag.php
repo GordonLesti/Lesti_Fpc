@@ -13,6 +13,8 @@
 
 /**
  * Class Lesti_Fpc_Test_Helper_Data_Tag
+ *
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
 {
