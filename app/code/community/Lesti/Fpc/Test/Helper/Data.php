@@ -85,7 +85,13 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
      * @loadFixture get_cache_tags.yaml
      * @dataProvider dataProvider
      */
-    public function testGetCacheTags($routeName, $controllerName, $actionName, $expectedCacheTags, $params = array())
+    public function testGetCacheTags(
+        $routeName,
+        $controllerName,
+        $actionName,
+        $expectedCacheTags,
+        $params = array()
+    )
     {
         Mage::app()->getRequest()->setRouteName($routeName);
         Mage::app()->getRequest()->setControllerName($controllerName);
