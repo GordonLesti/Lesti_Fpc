@@ -107,9 +107,8 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
     {
         Mage::app()->getRequest()->setRouteName('f');
         Mage::app()->getRequest()->setControllerName('p');
-        Mage::app()->getRequest()->setActionName('f');
+        Mage::app()->getRequest()->setActionName('c');
         $this->assertEquals('f_p_c', $this->_helper->getFullActionName());
-        $this->assertEquals('f:p:c', $this->_helper->getFullActionName(':'));
     }
 
     /**

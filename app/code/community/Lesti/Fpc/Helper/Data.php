@@ -232,11 +232,11 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @param string $delimiter
      * @return string
      */
-    public function getFullActionName($delimiter = '_')
+    public function getFullActionName()
     {
+        $delimiter = '_';
         $request = Mage::app()->getRequest();
         return $request->getRequestedRouteName() . $delimiter .
         $request->getRequestedControllerName() . $delimiter .
