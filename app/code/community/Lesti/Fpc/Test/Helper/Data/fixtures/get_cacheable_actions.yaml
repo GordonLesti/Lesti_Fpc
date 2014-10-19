@@ -1,0 +1,5 @@
+config:
+    default/system/fpc/cache_actions: >
+     cms_index_index,
+     cms_page_view, catalog_product_view
+      , cms_page_view

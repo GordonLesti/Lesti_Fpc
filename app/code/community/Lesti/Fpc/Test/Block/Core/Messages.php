@@ -21,7 +21,7 @@ class Lesti_Fpc_Test_Block_Core_Messages extends Lesti_Fpc_Test_TestCase
      */
     protected $_messagesBlock;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->_messagesBlock = Mage::app()->getLayout()

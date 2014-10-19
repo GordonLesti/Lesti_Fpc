@@ -1,5 +1,5 @@
 config:
     default/system/fpc/lazy_blocks: >
-     foo,
-     bar, foobar
-      , bar
+     top.links,
+     cart_sidebar, catalog.compare.sidebar
+      , cart_sidebar

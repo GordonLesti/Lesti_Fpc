@@ -1,0 +1,43 @@
+test_cms_index_index:
+  route_name: cms
+  controller_name: index
+  action_name: index
+  expected_cache_tags:
+    # sha1('cms')
+    293ae992f45cff1d17d3e83eefd2285d47f7c997
+    # sha1('cms_5')
+    133a307e26568a3c9c93e60b0e314945b91d446f
+test_cms_page_view:
+  route_name: cms
+  controller_name: page
+  action_name: view
+  expected_cache_tags:
+    # sha1('cms')
+    293ae992f45cff1d17d3e83eefd2285d47f7c997
+    # sha1('cms_5')
+    133a307e26568a3c9c93e60b0e314945b91d446f
+  params:
+    id: 5
+
+test_catalog_product_view:
+  route_name: catalog
+  controller_name: product
+  action_name: view
+  expected_cache_tags:
+    # sha1('product')
+    38a007151abe87cc01a5b6e9cc418e85286e2087
+    # sha1('product_5')
+    01337f5c00647634e8cef67064d9c4fd4fa0290e
+  params:
+    id: 5
+test_catalog_category_view:
+  route_name: catalog
+  controller_name: category
+  action_name: view
+  expected_cache_tags:
+    # sha1('category')
+    5ccbf9c9c5fc1bc34df8238a97094968f38f5165
+    # sha1('category_5')
+    813322a624dfadc4b560f8ebdf2215e6a32c338c
+  params:
+    id: 5

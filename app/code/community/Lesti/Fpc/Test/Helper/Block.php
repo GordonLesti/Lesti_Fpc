@@ -21,7 +21,7 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
      */
     protected $_blockHelper;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->_blockHelper = Mage::helper('fpc/block');
@@ -34,7 +34,7 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
     public function testGetDynamicBlocks()
     {
         $this->assertEquals(
-            array('foo', 'bar', 'foobar'),
+            array('messages', 'global_messages', 'global_notices'),
             $this->_blockHelper->getDynamicBlocks()
         );
     }
@@ -46,7 +46,7 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
     public function testGetLazyBlocks()
     {
         $this->assertEquals(
-            array('foo', 'bar', 'foobar'),
+            array('top.links', 'cart_sidebar', 'catalog.compare.sidebar'),
             $this->_blockHelper->getLazyBlocks()
         );
     }

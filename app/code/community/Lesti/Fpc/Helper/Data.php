@@ -32,7 +32,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     public function getCacheableActions()
     {
         $actions = Mage::getStoreConfig(self::XML_PATH_CACHEABLE_ACTIONS);
-        return array_map('trim', explode(',', $actions));
+        return array_unique(array_map('trim', explode(',', $actions)));
     }
 
     /**
@@ -41,7 +41,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     public function getRefreshActions()
     {
         $actions = Mage::getStoreConfig(self::XML_PATH_REFRESH_ACTIONS);
-        return array_map('trim', explode(',', $actions));
+        return array_unique(array_map('trim', explode(',', $actions)));
     }
 
     /**

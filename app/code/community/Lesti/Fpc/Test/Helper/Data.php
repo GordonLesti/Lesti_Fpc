@@ -13,15 +13,10 @@
 
 /**
  * Test case for Lesti_Fpc_Helper_Data
- * 
- * It extends the controller test case because Lesti_Fpc_Helper_Data::getKeys()
- * needs a session to work.
  */
-class Lesti_Fpc_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case_Controller
+class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
 {
     /**
-     * Test subject
-     * 
      * @var Lesti_Fpc_Helper_Data
      */
     protected $_helper;
@@ -31,11 +26,40 @@ class Lesti_Fpc_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case_Controller
         parent::setUp();
         $this->_helper = Mage::helper('fpc');
     }
+
+    /**
+     * @test
+     * @loadFixture get_cacheable_actions.yaml
+     */
+    public function testGetCacheableActions()
+    {
+        $this->assertEquals(
+            array('cms_index_index', 'cms_page_view', 'catalog_product_view'),
+            $this->_helper->getCacheableActions()
+        );
+    }
+
+    /**
+     * @test
+     * @loadFixture get_refresh_actions.yaml
+     */
+    public function testGetRefreshActions()
+    {
+        $this->assertEquals(
+            array(
+                'checkout_cart_add',
+                'checkout_cart_delete',
+                'checkout_cart_updatePost'
+            ),
+            $this->_helper->getRefreshActions()
+        );
+    }
+
     /**
      * Test that URI params can be matched by RegEx
      * 
      * @test
-     * @loadFixture config.yaml
+     * @loadFixture regex_uri_params.yaml
      * @dataProvider dataProvider
      */
     public function testRegexUriParams(
@@ -55,6 +79,33 @@ class Lesti_Fpc_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case_Controller
             sprintf('%d different keys expected', $expectedCount)
         );
     }
+
+    /**
+     * @test
+     * @loadFixture get_cache_tags.yaml
+     * @dataProvider dataProvider
+     */
+    public function testGetCacheTags($routeName, $controllerName, $actionName, $expectedCacheTags, $params = array())
+    {
+        Mage::app()->getRequest()->setRouteName($routeName);
+        Mage::app()->getRequest()->setControllerName($controllerName);
+        Mage::app()->getRequest()->setActionName($actionName);
+        Mage::app()->getRequest()->setParams($params);
+        $this->assertEquals($expectedCacheTags, $this->_helper->getCacheTags());
+    }
+
+    /**
+     * @test
+     */
+    public function getFullActionName()
+    {
+        Mage::app()->getRequest()->setRouteName('f');
+        Mage::app()->getRequest()->setControllerName('p');
+        Mage::app()->getRequest()->setActionName('f');
+        $this->assertEquals('f_p_c', $this->_helper->getFullActionName());
+        $this->assertEquals('f:p:c', $this->_helper->getFullActionName(':'));
+    }
+
     /**
      * Reset parameters in Magento request and FPC
      */

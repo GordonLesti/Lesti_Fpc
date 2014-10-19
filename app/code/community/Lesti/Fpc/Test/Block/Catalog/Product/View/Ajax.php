@@ -22,7 +22,7 @@ class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax extends
      */
     protected $_catalogProductViewAjaxBlock;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->_catalogProductViewAjaxBlock =
@@ -33,7 +33,7 @@ class Lesti_Fpc_Test_Block_Catalog_Product_View_Ajax extends
         Mage::register('current_product', $product);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
         Mage::unregister('current_product');

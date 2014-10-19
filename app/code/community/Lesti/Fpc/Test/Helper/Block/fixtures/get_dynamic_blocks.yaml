@@ -1,5 +1,5 @@
 config:
     default/system/fpc/dynamic_blocks: >
-     foo,
-     bar, foobar
-      , bar
+     messages,
+     global_messages, global_notices
+      , global_messages

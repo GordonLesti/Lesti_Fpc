@@ -1,0 +1,5 @@
+config:
+    default/system/fpc/refresh_actions: >
+     checkout_cart_add,
+     checkout_cart_delete, checkout_cart_updatePost
+      , checkout_cart_delete

@@ -21,7 +21,7 @@ class Lesti_Fpc_Test_Helper_Block_Messages extends Lesti_Fpc_Test_TestCase
      */
     protected $_messagesHelper;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->_messagesHelper = Mage::helper('fpc/block_messages');

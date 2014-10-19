@@ -21,7 +21,7 @@ abstract class Lesti_Fpc_Test_TestCase extends
 
     protected $_cache;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         // unregister fpc
@@ -44,7 +44,7 @@ abstract class Lesti_Fpc_Test_TestCase extends
         $initOptionsMethod->invokeArgs($this->_cache, array());
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
         $this->_cache->saveOptions($this->_cacheOptions);

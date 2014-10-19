@@ -23,7 +23,7 @@ class Lesti_Fpc_Test_Helper_Data_Tag extends Lesti_Fpc_Test_TestCase
      */
     protected $_tagHelper;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->_tagHelper = Mage::helper('fpc/data_tag');
