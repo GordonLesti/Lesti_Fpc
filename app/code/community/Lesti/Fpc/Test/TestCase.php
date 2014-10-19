@@ -14,7 +14,8 @@
 /**
  * Class Lesti_Fpc_Test_TestCase
  */
-abstract class Lesti_Fpc_Test_TestCase extends EcomDev_PHPUnit_Test_Case_Controller
+abstract class Lesti_Fpc_Test_TestCase extends
+    EcomDev_PHPUnit_Test_Case_Controller
 {
     protected $_cacheOptions;
 
