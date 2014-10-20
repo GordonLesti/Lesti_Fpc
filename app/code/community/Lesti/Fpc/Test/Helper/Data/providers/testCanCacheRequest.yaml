@@ -1,0 +1,25 @@
+test_post:
+  method: POST
+  expected: 0
+test_no_cache_1:
+  method: GET
+  expected: 0
+  params:
+    no_cache: 1
+test_limit_digit:
+  method: GET
+  expected: 0
+  params:
+    limit: 55
+test_limit_all:
+  method: GET
+  expected: 0
+  params:
+    limit: all
+test_success:
+  method: get
+  expected: 1
+  params:
+    no_cache: 12
+    order: 4
+    limit: Fpc

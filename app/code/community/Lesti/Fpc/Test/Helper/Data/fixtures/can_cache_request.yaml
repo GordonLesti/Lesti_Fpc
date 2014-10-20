@@ -1,0 +1,6 @@
+config:
+    default/system/fpc/miss_uri_params: >
+     no_cache=/^1$/,
+     limit=/^([0-9]+)|(all)$/, dir=/^[0-9a-z_]+$/
+      , limit=/^([0-9]+)|(all)$/,
+     order

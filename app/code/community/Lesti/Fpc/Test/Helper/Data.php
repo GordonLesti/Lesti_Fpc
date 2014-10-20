@@ -82,6 +82,22 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
 
     /**
      * @test
+     * @loadFixture can_cache_request.yaml
+     * @dataProvider dataProvider
+     */
+    public function testCanCacheRequest($method, $expected, $params = array())
+    {
+        Mage::app()->getRequest()->clearParams();
+        Mage::app()->getRequest()->setMethod($method);
+        Mage::app()->getRequest()->setParams($params);
+        $this->assertEquals(
+            (bool) $expected,
+            $this->_helper->canCacheRequest()
+        );
+    }
+
+    /**
+     * @test
      * @loadFixture get_cache_tags.yaml
      * @dataProvider dataProvider
      */

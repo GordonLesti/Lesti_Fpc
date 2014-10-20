@@ -173,25 +173,30 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
         return array_map('trim', explode(',', $params));
     }
 
+    /**
+     * @return array
+     */
     protected function _getMissUriParams()
     {
         $params = Mage::getStoreConfig(self::XML_PATH_MISS_URI_PARAMS);
-        return array_map('trim', explode(',', $params));
+        return array_unique(array_map('trim', explode(',', $params)));
     }
 
+    /**
+     * @return bool
+     */
     public function canCacheRequest()
     {
         $request = Mage::app()->getRequest();
-        $missParams = $this->_getMissUriParams();
-        if ($request->getMethod() != 'GET') {
+        if (strtoupper($request->getMethod()) != 'GET') {
             return false;
         }
+        $missParams = $this->_getMissUriParams();
         foreach ($missParams as $missParam) {
             $pair = array_map('trim', explode('=', $missParam));
             $key = $pair[0];
-            $regex = (isset($pair[1])) ? $pair[1] : '';
             $param = $request->getParam($key);
-            if ($param && preg_match($regex, $param)) {
+            if ($param && isset($pair[1]) && preg_match($pair[1], $param)) {
                 return false;
             }
         }
