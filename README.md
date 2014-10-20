@@ -1,10 +1,18 @@
 Lesti_Fpc
 =========
 
+Master:
 [![Build Status](https://travis-ci.org/GordonLesti/Lesti_Fpc.svg?branch=master)](https://travis-ci.org/GordonLesti/Lesti_Fpc)
 [![Coverage Status](https://coveralls.io/repos/GordonLesti/Lesti_Fpc/badge.png?branch=master)](https://coveralls.io/r/GordonLesti/Lesti_Fpc?branch=master)
+Develop:
+[![Build Status](https://travis-ci.org/GordonLesti/Lesti_Fpc.svg?branch=develop)](https://travis-ci.org/GordonLesti/Lesti_Fpc)
+[![Coverage Status](https://coveralls.io/repos/GordonLesti/Lesti_Fpc/badge.png?branch=develop)](https://coveralls.io/r/GordonLesti/Lesti_Fpc?branch=develop)
 
 Simple Magento Fullpagecache.
+
+## RELEASE INFORMATION
+
+*Lesti_fpc 1.2.0*
 
 ## Installation
 
