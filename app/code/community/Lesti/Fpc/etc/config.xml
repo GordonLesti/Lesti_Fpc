@@ -15,7 +15,7 @@
 <config>
     <modules>
         <Lesti_Fpc>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
         </Lesti_Fpc>
     </modules>
     <global>
@@ -241,7 +241,7 @@ dir,
 order,
 mode]]></uri_params>
                 <miss_uri_params><![CDATA[no_cache=/^1$/,
-limit=/^[0-9]+$/,
+limit=/^([0-9]+)|(all)$/,
 dir=/^[0-9a-z_]+$/,
 order=/^[0-9a-z_]+$/,
 mode=/^[0-9a-z_]+$/,
