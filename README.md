@@ -10,7 +10,7 @@ Develop:
 
 ## RELEASE INFORMATION
 
-*Lesti_fpc 1.2.1*
+*Lesti_Fpc 1.2.1*
 
 ## Installation
 
