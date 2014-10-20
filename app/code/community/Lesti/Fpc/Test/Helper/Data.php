@@ -114,6 +114,7 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
         Mage::app()->getRequest()->setActionName($actionName);
         Mage::app()->getRequest()->setParams($params);
         $this->assertEquals($expectedCacheTags, $this->_helper->getCacheTags());
+        $this->assertEventDispatched('fpc_helper_collect_cache_tags');
     }
 
     /**
