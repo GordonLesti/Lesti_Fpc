@@ -70,10 +70,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
      */
     public function save($data, $id, $tags=array(), $lifeTime=null)
     {
-        /**
-         * Add global magento cache tag to all cached data exclude config cache
-         */
-        if (!in_array(Mage_Core_Model_Config::CACHE_TAG, $tags)) {
+        if (!in_array(self::CACHE_TAG, $tags)) {
             $tags[] = self::CACHE_TAG;
         }
         if ($lifeTime === null) {

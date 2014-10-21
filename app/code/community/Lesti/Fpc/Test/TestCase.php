@@ -17,6 +17,11 @@
 abstract class Lesti_Fpc_Test_TestCase extends
     EcomDev_PHPUnit_Test_Case_Controller
 {
+    /**
+     * @var Lesti_Fpc_Model_Fpc
+     */
+    protected $_fpc;
+
     protected $_cacheOptions;
 
     protected $_cache;
@@ -24,8 +29,8 @@ abstract class Lesti_Fpc_Test_TestCase extends
     protected function setUp()
     {
         parent::setUp();
-        // unregister fpc
-        Mage::unregister('_singleton/fpc/fpc');
+        $this->_fpc = Mage::getSingleton('fpc/fpc');
+        $this->_fpc->clean();
         // disable all caches expected fpc
         $this->_cache = Mage::app()->getCacheInstance();
         $this->_cacheOptions = Mage::getResourceSingleton('core/cache')
@@ -48,6 +53,8 @@ abstract class Lesti_Fpc_Test_TestCase extends
     {
         parent::tearDown();
         $this->_cache->saveOptions($this->_cacheOptions);
+        // unregister fpc
+        Mage::unregister('_singleton/fpc/fpc');
     }
 
     protected function clearBaseUrlProperty()
