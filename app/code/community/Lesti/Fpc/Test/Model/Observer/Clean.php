@@ -47,10 +47,10 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
     /**
      * @test
      */
-    public function testControllerActionPredispatchACMRefresh()
+    public function testControllerActionPredispatchAdminhtmlCacheMassRefresh()
     {
         $this->_fpc->save('test_data', 'test_id');
-        Mage::app()->getRequest()->setParam('types', ['core']);
+        Mage::app()->getRequest()->setParam('types', array('core'));
         $this->_cleanObserver->
             controllerActionPredispatchAdminhtmlCacheMassRefresh();
         $this->assertEquals('test_data', $this->_fpc->load('test_id'));
@@ -59,7 +59,7 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
         $this->_fpc->save('test_data', 'test_id');
         Mage::app()->getRequest()->setParam(
             'types',
-            ['core', Lesti_Fpc_Model_Observer_Clean::CACHE_TYPE]
+            array('core', Lesti_Fpc_Model_Observer_Clean::CACHE_TYPE)
         );
         $this->_cleanObserver->
             controllerActionPredispatchAdminhtmlCacheMassRefresh();
@@ -69,7 +69,7 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
         $this->_fpc->save('test_data', 'test_id');
         Mage::app()->getRequest()->setParam(
             'types',
-            ['core', Lesti_Fpc_Model_Observer_Clean::CACHE_TYPE]
+            array('core', Lesti_Fpc_Model_Observer_Clean::CACHE_TYPE)
         );
         Mage::app()->getCacheInstance()->banUse('fpc');
         $this->_cleanObserver->
