@@ -98,14 +98,6 @@ class Lesti_Fpc_Model_Observer_Save
     }
 
     /**
-     * @return Lesti_Fpc_Model_Fpc
-     */
-    protected function _getFpc()
-    {
-        return Mage::getSingleton('fpc/fpc');
-    }
-
-    /**
      * @todo I guess there is a easier solution
      * @param $observer
      */
@@ -143,5 +135,13 @@ class Lesti_Fpc_Model_Observer_Save
                 $this->_getFpc()->clean(sha1('product_' . $productId));
             }
         }
+    }
+
+    /**
+     * @return Lesti_Fpc_Model_Fpc
+     */
+    protected function _getFpc()
+    {
+        return Mage::getSingleton('fpc/fpc');
     }
 }
