@@ -30,9 +30,7 @@ before_script:
 script:
   - php vendor/bin/phpcs --standard=Zend app/
   - php vendor/bin/phpmd app/ text codesize,design,unusedcode
-  - cd magento
-  - php ../vendor/bin/phpunit --coverage-clover ../build/logs/clover.xml
-  - cd ..
+  - cd magento && php ../vendor/bin/phpunit --coverage-clover ../build/logs/clover.xml && cd ..
 
 after_script:
   - php vendor/bin/coveralls
