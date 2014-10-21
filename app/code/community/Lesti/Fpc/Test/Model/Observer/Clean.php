@@ -47,7 +47,7 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
     /**
      * @test
      */
-    public function testControllerActionPredispatchAdminhtmlCacheMassRefresh()
+    public function testControllerActionPredispatchACMRefresh()
     {
         $this->_fpc->save('test_data', 'test_id');
         Mage::app()->getRequest()->setParam('types', ['core']);
