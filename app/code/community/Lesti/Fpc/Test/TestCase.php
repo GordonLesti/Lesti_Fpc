@@ -30,6 +30,7 @@ abstract class Lesti_Fpc_Test_TestCase extends
     {
         parent::setUp();
         $this->_fpc = Mage::getSingleton('fpc/fpc');
+        $this->_fpc->clean();
         // disable all caches expected fpc
         $this->_cache = Mage::app()->getCacheInstance();
         $this->_cacheOptions = Mage::getResourceSingleton('core/cache')
