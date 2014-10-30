@@ -126,4 +126,35 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
         $this->assertFalse($this->_fpc->load('page1_cache_id'));
         $this->assertEquals('page2', $this->_fpc->load('page2_cache_id'));
     }
+
+    /**
+     * @test
+     */
+    public function testCataloginventoryStockItemSaveAfter()
+    {
+        $this->_fpc->save(
+            'product1',
+            'product1_cache_id',
+            array(sha1('product_1'))
+        );
+        $this->_fpc->save(
+            'product2',
+            'product2_cache_id',
+            array(sha1('product_2'))
+        );
+
+        $item = new Mage_CatalogInventory_Model_Stock_Item();
+        $item->setStockStatusChangedAuto(true);
+        $item->setProductId(1);
+        Mage::dispatchEvent(
+            'cataloginventory_stock_item_save_after',
+            array('item' => $item)
+        );
+
+        $this->assertFalse($this->_fpc->load('product1_cache_id'));
+        $this->assertEquals(
+            'product2',
+            $this->_fpc->load('product2_cache_id')
+        );
+    }
 }
