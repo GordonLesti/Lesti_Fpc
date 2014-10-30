@@ -21,19 +21,37 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testCalaogProductSaveAfter()
     {
-        $this->_fpc->save('product1', 'product1_cache_id', array(sha1('product_1')));
-        $this->_fpc->save('category1', 'category1_cache_id', array(sha1('category_1')));
-        $this->_fpc->save('category2', 'category2_cache_id', array(sha1('category_2')));
+        $this->_fpc->save(
+            'product1',
+            'product1_cache_id',
+            array(sha1('product_1'))
+        );
+        $this->_fpc->save(
+            'category1',
+            'category1_cache_id',
+            array(sha1('category_1'))
+        );
+        $this->_fpc->save(
+            'category2',
+            'category2_cache_id',
+            array(sha1('category_2'))
+        );
 
         $product = new Mage_Catalog_Model_Product();
         $product->setOrigData(array());
         $product->setCategoryIds(array(1));
         $product->setId(1);
-        Mage::dispatchEvent('catalog_product_save_after', array('product' => $product));
+        Mage::dispatchEvent(
+            'catalog_product_save_after',
+            array('product' => $product)
+        );
 
         $this->assertFalse($this->_fpc->load('product1_cache_id'));
         $this->assertFalse($this->_fpc->load('category1_cache_id'));
-        $this->assertEquals('category2', $this->_fpc->load('category2_cache_id'));
+        $this->assertEquals(
+            'category2',
+            $this->_fpc->load('category2_cache_id')
+        );
     }
 
     /**
@@ -41,15 +59,29 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testCatalogCategorySaveAfter()
     {
-        $this->_fpc->save('category1', 'category1_cache_id', array(sha1('category_1')));
-        $this->_fpc->save('category2', 'category2_cache_id', array(sha1('category_2')));
+        $this->_fpc->save(
+            'category1',
+            'category1_cache_id',
+            array(sha1('category_1'))
+        );
+        $this->_fpc->save(
+            'category2',
+            'category2_cache_id',
+            array(sha1('category_2'))
+        );
 
         $category = new Mage_Catalog_Model_Category();
         $category->setId(1);
-        Mage::dispatchEvent('catalog_category_save_after', array('category' => $category));
+        Mage::dispatchEvent(
+            'catalog_category_save_after',
+            array('category' => $category)
+        );
 
         $this->assertFalse($this->_fpc->load('category1_cache_id'));
-        $this->assertEquals('category2', $this->_fpc->load('category2_cache_id'));
+        $this->assertEquals(
+            'category2',
+            $this->_fpc->load('category2_cache_id')
+        );
     }
 
     /**
@@ -76,8 +108,16 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testModelSaveAfter()
     {
-        $this->_fpc->save('page1', 'page1_cache_id', array(sha1('cmsblock_1')));
-        $this->_fpc->save('page2', 'page2_cache_id', array(sha1('cmsblock_2')));
+        $this->_fpc->save(
+            'page1',
+            'page1_cache_id',
+            array(sha1('cmsblock_1'))
+        );
+        $this->_fpc->save(
+            'page2',
+            'page2_cache_id',
+            array(sha1('cmsblock_2'))
+        );
 
         $cmsBlock = new Mage_Cms_Model_Block();
         $cmsBlock->setIdentifier('1');
