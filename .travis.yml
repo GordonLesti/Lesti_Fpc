@@ -3,8 +3,6 @@ language: php
 php:
   - 5.3
   - 5.4
-  - 5.5
-  - 5.6
 
 env:
   - MAGE=magento-1-9-0-1
@@ -29,6 +27,7 @@ before_script:
   - cd magento
   - ./modman link ./../../Lesti_Fpc
   - ./modman clone https://github.com/EcomDev/EcomDev_PHPUnit.git
+  - mkdir -p app/design/frontend/base/FPC
   - cd ..
 
 script:
