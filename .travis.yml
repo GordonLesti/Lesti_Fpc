@@ -27,7 +27,6 @@ before_script:
   - cd magento
   - ./modman link ./../../Lesti_Fpc
   - ./modman clone https://github.com/EcomDev/EcomDev_PHPUnit.git
-  - mkdir -p app/design/frontend/base/FPC
   - cd ..
 
 script:

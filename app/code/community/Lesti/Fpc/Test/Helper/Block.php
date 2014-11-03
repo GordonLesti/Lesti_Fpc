@@ -89,7 +89,7 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
         $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
 
         // edit design package name
-        Mage::getDesign()->setPackageName('FPC');
+        Mage::getDesign()->setPackageName('base');
         $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
         $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
 
