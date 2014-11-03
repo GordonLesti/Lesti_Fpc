@@ -1,4 +1,4 @@
 config:
     default/system/fpc/cache_actions: catalog_product_view
     default/system/fpc/use_recently_viewed_products: 1
-    default/web/unsecure/base_link_url: http://localhost/
+    default/web/unsecure/base_link_url: http://magento.dev/
