@@ -11,8 +11,8 @@ env:
 
 install:
   - composer install --dev --prefer-source
-  - curl https://gordonlesti.com/"MAGE".tar.gz | tar xz
-  - mv "MAGE" magento
+  - curl https://gordonlesti.com/"$MAGE".tar.gz | tar xz
+  - mv $MAGE magento
   - cd magento
   - wget https://raw.githubusercontent.com/colinmollenhour/modman/master/modman
   - chmod +x modman
