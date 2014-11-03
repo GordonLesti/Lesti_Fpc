@@ -6,10 +6,13 @@ php:
   - 5.5
   - 5.6
 
+env:
+  - MAGE=magento-1-9-0-1
+
 install:
   - composer install --dev --prefer-source
-  - curl https://gordonlesti.com/magento-1-9-0-1.tar.gz | tar xz
-  - mv magento-1-9-0-1 magento
+  - curl https://gordonlesti.com/"MAGE".tar.gz | tar xz
+  - mv "MAGE" magento
   - cd magento
   - wget https://raw.githubusercontent.com/colinmollenhour/modman/master/modman
   - chmod +x modman
@@ -18,10 +21,10 @@ install:
 
 before_script:
   - mkdir -p build/logs
-  - mysql -e 'create database `magento-1-9-0-1`;'
-  - mysql -utravis magento-1-9-0-1 < magento/var/magento-1-9-0-1.sql
-  - mysql -e 'create database `magento-1-9-0-1-test`;'
-  - mysql -utravis magento-1-9-0-1-test < magento/var/magento-1-9-0-1-test.sql
+  - mysql -e 'create database `magento`;'
+  - mysql -utravis magento < magento/var/magento.sql
+  - mysql -e 'create database `magento_test`;'
+  - mysql -utravis magento_test < magento/var/magento_test.sql
   - cd magento
   - ./modman link ./../../Lesti_Fpc
   - ./modman clone https://github.com/EcomDev/EcomDev_PHPUnit.git
