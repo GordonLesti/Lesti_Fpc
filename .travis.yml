@@ -8,6 +8,7 @@ env:
   - MAGE=magento-1-9-0-1
   - MAGE=magento-1-8-1-0
   - MAGE=magento-1-7-0-2
+  - MAGE=magento-1-6-2-0
 
 install:
   - composer install --dev --prefer-source
