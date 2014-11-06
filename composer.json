@@ -1,7 +1,7 @@
 {
     "name": "lesti/fpc",
     "type": "magento-module",
-    "description": "Magento Fullpagecache without Ajax",
+    "description": "Simple Magento Fullpagecache",
     "homepage": "https://github.com/GordonLesti/Lesti_Fpc",
     "authors": [
         {
