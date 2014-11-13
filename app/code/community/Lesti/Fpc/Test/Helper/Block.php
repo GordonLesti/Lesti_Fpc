@@ -87,8 +87,12 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
         // edit customer session
         /** @var Mage_Customer_Model_Session $customerSession */
         $customerSession = Mage::getSingleton('customer/session');
-        $customer = Mage::getModel('customer/customer')->load(1);
-        $customerSession->setCustomerAsLoggedIn($customer);
+        if (version_compare(Mage::getVersion(), '1.6.0.0', '<')) {
+            $customer = Mage::getModel('customer/customer')->load(1);
+            $customerSession->setCustomerAsLoggedIn($customer);
+        } else {
+            $customerSession->setCustomerGroupId(78);
+        }
         $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
         $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
 
