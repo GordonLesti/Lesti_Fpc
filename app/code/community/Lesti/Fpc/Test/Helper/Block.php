@@ -53,6 +53,7 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
 
     /**
      * @test
+     * @loadFixture are_lazy_blocks_valid.yaml
      */
     public function testAreLazyBlocksValid()
     {
@@ -84,7 +85,14 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
         $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
 
         // edit customer session
-        Mage::getSingleton('customer/session')->setCustomerGroupId(78);
+        /** @var Mage_Customer_Model_Session $customerSession */
+        $customerSession = Mage::getSingleton('customer/session');
+        if (version_compare(Mage::getVersion(), '1.6.0.0', '<')) {
+            $customer = Mage::getModel('customer/customer')->load(1);
+            $customerSession->setCustomerAsLoggedIn($customer);
+        } else {
+            $customerSession->setCustomerGroupId(78);
+        }
         $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
         $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
 

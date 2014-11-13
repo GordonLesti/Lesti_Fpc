@@ -55,6 +55,7 @@ abstract class Lesti_Fpc_Test_TestCase extends
         $this->_cache->saveOptions($this->_cacheOptions);
         // unregister fpc
         Mage::unregister('_singleton/fpc/fpc');
+        Mage::getSingleton('customer/session')->logout();
     }
 
     protected function clearBaseUrlProperty()
