@@ -47,7 +47,7 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
     {
         $this->assertEquals(
             array('some_handle', 'logged_in', 'CATEGORY_25'),
-            $this->_helper->getCacheableActions()
+            $this->_helper->getBypassHandles()
         );
     }
 
