@@ -81,6 +81,9 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         $design = Mage::getDesign();
         $params['design'] = $design->getPackageName().'_'.
             $design->getTheme('template');
+        
+        $params['blocks'] = implode(',', $this->getLazyBlocks());
+        
         return sha1(serialize($params));
     }
 
