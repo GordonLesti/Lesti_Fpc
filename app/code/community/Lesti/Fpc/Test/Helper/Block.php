@@ -93,7 +93,7 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
                 ->getProperty('_customer');
             $customerProperty->setAccessible(true);
             $customer = new Mage_Customer_Model_Customer();
-            $customer->setGroupId();
+            $customer->setData('group_id', 78);
             $customerProperty->setValue($customerSession, $customer);
             $customerSession->setId(78);
         } else {
