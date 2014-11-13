@@ -89,7 +89,8 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
             $customerSessionReflection = new ReflectionClass(
                 get_class($customerSession)
             );
-            $customerProperty = $customerSessionReflection->getProperty('_customer');
+            $customerProperty = $customerSessionReflection
+                ->getProperty('_customer');
             $customerProperty->setAccessible(true);
             $customer = new Mage_Customer_Model_Customer();
             $customer->setGroupId();
