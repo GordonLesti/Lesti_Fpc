@@ -84,7 +84,20 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
         $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
 
         // edit customer session
-        Mage::getSingleton('customer/session')->setCustomerGroupId(78);
+        if (version_compare(Mage::getVersion(), '1.6.0.0', '<')) {
+            $customerSession = Mage::getSingleton('customer/session');
+            $customerSessionReflection = new ReflectionClass(
+                get_class($customerSession)
+            );
+            $customerProperty = $customerSessionReflection->getProperty('_customer');
+            $customerProperty->setAccessible(true);
+            $customer = new Mage_Customer_Model_Customer();
+            $customer->setGroupId();
+            $customerProperty->setValue($customerSession, $customer);
+            $customerSession->setId(78);
+        } else {
+            Mage::getSingleton('customer/session')->setCustomerGroupId(78);
+        }
         $this->assertFalse($this->_blockHelper->areLazyBlocksValid());
         $this->assertTrue($this->_blockHelper->areLazyBlocksValid());
 
