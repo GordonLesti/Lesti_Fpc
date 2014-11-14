@@ -41,6 +41,18 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
 
     /**
      * @test
+     * @loadFixture get_bypass_handles.yaml
+     */
+    public function testGetBypassHandles()
+    {
+        $this->assertEquals(
+            array('some_handle', 'logged_in', 'CATEGORY_25'),
+            $this->_helper->getBypassHandles()
+        );
+    }
+
+    /**
+     * @test
      * @loadFixture get_refresh_actions.yaml
      */
     public function testGetRefreshActions()

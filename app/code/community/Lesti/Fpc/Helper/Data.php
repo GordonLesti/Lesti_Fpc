@@ -17,6 +17,7 @@
 class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_CACHEABLE_ACTIONS = 'system/fpc/cache_actions';
+    const XML_PATH_BYPASS_HANDLES = 'system/fpc/bypass_handles';
     const XML_PATH_SESSION_PARAMS = 'system/fpc/session_params';
     const XML_PATH_URI_PARAMS = 'system/fpc/uri_params';
     const XML_PATH_CUSTOMER_GROUPS = 'system/fpc/customer_groups';
@@ -33,6 +34,15 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $actions = Mage::getStoreConfig(self::XML_PATH_CACHEABLE_ACTIONS);
         return array_unique(array_map('trim', explode(',', $actions)));
+    }
+
+    /**
+     * @return array
+     */
+    public function getBypassHandles()
+    {
+        $handles = Mage::getStoreConfig(self::XML_PATH_BYPASS_HANDLES);
+        return array_unique(array_map('trim', explode(',', $handles)));
     }
 
     /**
@@ -200,6 +210,14 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                 return false;
             }
         }
+
+        $handles = Mage::app()->getLayout()->getUpdate()->getHandles();
+        foreach ($this->getBypassHandles() as $handle) {
+            if (in_array($handle, $handles)) {
+                return false;
+            }
+        }
+
         return true;
     }
 
