@@ -3,7 +3,7 @@ test_false:
   controller: cart
   action: add
   expected: 0
-test_false:
+test_true:
   route: catalog
   controller: product
   action: view
