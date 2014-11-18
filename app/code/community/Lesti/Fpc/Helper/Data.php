@@ -86,12 +86,6 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     }
                 }
             }
-            // store
-            $params = $this->_addStoreParams($params);
-            // currency
-            $params = $this->_addCurrencyParams($params);
-            // design
-            $params = $this->_addDesignParams($params);
             if (Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
                 $customerSession = Mage::getSingleton('customer/session');
                 $params['customer_group_id'] = $customerSession
@@ -104,6 +98,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     $params['session_' . $param] = $data;
                 }
             }
+            // add additional parameters via event
             $additional = new Varien_Object();
             $additional->setParams(array());
             Mage::dispatchEvent(
@@ -117,44 +112,6 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             Mage::register(self::REGISTRY_KEY_PARAMS, serialize($params));
         }
         return Mage::registry(self::REGISTRY_KEY_PARAMS);
-    }
-
-    /**
-     * @param $params
-     * @return mixed
-     */
-    protected function _addStoreParams($params)
-    {
-        $storeCode = Mage::app()->getStore(true)->getCode();
-        if ($storeCode) {
-            $params['store'] = $storeCode;
-        }
-        return $params;
-    }
-
-    /**
-     * @param $params
-     * @return mixed
-     */
-    protected function _addCurrencyParams($params)
-    {
-        $currencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
-        if ($currencyCode) {
-            $params['currency'] = $currencyCode;
-        }
-        return $params;
-    }
-
-    /**
-     * @param $params
-     * @return mixed
-     */
-    protected function _addDesignParams($params)
-    {
-        $design = Mage::getDesign();
-        $params['design'] = $design->getPackageName().'_'.
-            $design->getTheme('template');
-        return $params;
     }
 
     /**

@@ -103,6 +103,15 @@
                     </fpc_cataloginventory_stock_item_save_after>
                 </observers>
             </cataloginventory_stock_item_save_after>
+            <fpc_helper_collect_params>
+                <observers>
+                    <fpc_fpc_helper_collect_params>
+                        <class>fpc/observer_helper</class>
+                        <type>singleton</type>
+                        <method>fpcHelperCollectParams</method>
+                    </fpc_fpc_helper_collect_params>
+                </observers>
+            </fpc_helper_collect_params>
         </events>
     </global>
     <frontend>
