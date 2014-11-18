@@ -12,7 +12,7 @@ Lesti_Fpc
 
 ## Release information
 
-*Lesti_Fpc 1.3.0*
+*Lesti_Fpc 1.3.1*
 
 ## System Requirements
 
