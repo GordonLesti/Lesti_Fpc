@@ -79,9 +79,17 @@ class Lesti_Fpc_Model_Observer_Save
     {
         if ($this->_getFpc()->isActive()) {
             $object = $observer->getEvent()->getObject();
-            if (get_class($object) == get_class(Mage::getModel('cms/block'))) {
-                $this->_getFpc()
-                    ->clean(sha1('cmsblock_' . $object->getIdentifier()));
+            if ($object instanceof Mage_Cms_Model_Block) {
+                $this->_cmsBlockSaveAfter($object);
+            } elseif ($object instanceof Mage_Index_Model_Event) {
+                $dataObject = $object->getDataObject();
+                if ($object->getType() === 'mass_action' &&
+                    $object->getEntity() === 'catalog_product' &&
+                    $dataObject instanceof Mage_Catalog_Model_Product_Action) {
+                    $this->_catalogProductSaveAfterMassAction(
+                        $dataObject->getProductIds()
+                    );
+                }
             }
         }
     }
@@ -98,50 +106,28 @@ class Lesti_Fpc_Model_Observer_Save
     }
 
     /**
-     * @todo I guess there is a easier solution
-     * @param $observer
-     */
-    public function catalogProductMassActionBefore($observer)
-    {
-        if ($this->_getFpc()->isActive()) {
-            $entities = $observer->getEvent()->getData();
-            $productIds = $entities['product_ids'];
-
-            $coreSession = Mage::getSingleton('core/session');
-
-            $currentProductIds = $coreSession
-                ->getData(self::PRODUCT_IDS_MASS_ACTION_KEY);
-            if (!empty($currentProductIds)) {
-                $productIds = array_merge($currentProductIds, $productIds);
-            }
-
-            $coreSession->setData(
-                self::PRODUCT_IDS_MASS_ACTION_KEY,
-                $productIds
-            );
-        }
-    }
-
-    /**
-     * @todo I guess there is a easier solution
-     */
-    public function catalogProductMassActionAfter()
-    {
-        if ($this->_getFpc()->isActive()) {
-            $productIds = Mage::getSingleton('core/session')
-                ->getData(self::PRODUCT_IDS_MASS_ACTION_KEY, true);
-
-            foreach ($productIds as $productId) {
-                $this->_getFpc()->clean(sha1('product_' . $productId));
-            }
-        }
-    }
-
-    /**
      * @return Lesti_Fpc_Model_Fpc
      */
     protected function _getFpc()
     {
         return Mage::getSingleton('fpc/fpc');
+    }
+
+    /**
+     * @param Mage_Cms_Model_Block $block
+     */
+    protected function _cmsBlockSaveAfter(Mage_Cms_Model_Block $block)
+    {
+        $this->_getFpc()->clean(sha1('cmsblock_'.$block->getIdentifier()));
+    }
+
+    /**
+     * @param array $productIds
+     */
+    protected function _catalogProductSaveAfterMassAction(array $productIds)
+    {
+        foreach ($productIds as $productId) {
+            $this->_getFpc()->clean(sha1('product_' . $productId));
+        }
     }
 }
