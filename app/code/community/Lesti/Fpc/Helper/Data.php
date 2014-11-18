@@ -92,11 +92,17 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
             $params = $this->_addCurrencyParams($params);
             // design
             $params = $this->_addDesignParams($params);
+
+	        $customerSession = Mage::getSingleton('customer/session');
             if (Mage::getStoreConfig(self::XML_PATH_CUSTOMER_GROUPS)) {
-                $customerSession = Mage::getSingleton('customer/session');
                 $params['customer_group_id'] = $customerSession
                     ->getCustomerGroupId();
             }
+	        if($customerSession->isLoggedIn()){
+		        $customerData = Mage::getSingleton('customer/session')->getCustomer();
+		        $params['customer_id'] = $customerData->getId();
+	        }
+
             $sessionParams = $this->_getSessionParams();
             $catalogSession = Mage::getSingleton('catalog/session');
             foreach ($sessionParams as $param) {
