@@ -106,7 +106,7 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
     /**
      * @test
      */
-    public function testModelSaveAfter()
+    public function testCmsBlockSaveAfter()
     {
         $this->_fpc->save(
             'page1',
@@ -125,6 +125,40 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
 
         $this->assertFalse($this->_fpc->load('page1_cache_id'));
         $this->assertEquals('page2', $this->_fpc->load('page2_cache_id'));
+    }
+
+    /**
+     * @test
+     */
+    public function testCatalogProductSaveAfterMassAction()
+    {
+        $this->_fpc->save(
+            'product1',
+            'product1_cache_id',
+            array(sha1('product_1'))
+        );
+        $this->_fpc->save(
+            'product2',
+            'product2_cache_id',
+            array(sha1('product_2'))
+        );
+        $this->_fpc->save(
+            'product3',
+            'product3_cache_id',
+            array(sha1('product_3'))
+        );
+
+        $event = new Mage_Index_Model_Event();
+        $productAction = new Mage_Catalog_Model_Product_Action();
+        $productAction->setProductIds(array(2, 3));
+        $event->setType('mass_action');
+        $event->setEntity('catalog_product');
+        $event->setDataObject($productAction);
+        Mage::dispatchEvent('model_save_after', array('object' => $event));
+
+        $this->assertEquals('product1', $this->_fpc->load('product1_cache_id'));
+        $this->assertFalse($this->_fpc->load('product2_cache_id'));
+        $this->assertFalse($this->_fpc->load('product3_cache_id'));
     }
 
     /**
