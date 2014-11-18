@@ -67,8 +67,7 @@ class Lesti_Fpc_Model_Observer
                     $lazyBlocks
                 );
                 $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
-                $this->_html[] = $session->getSessionIdQueryParam().'='.
-                    $session->getEncryptedSessionId();
+                $this->_html[] = $session->getEncryptedSessionId();
                 $this->_replaceFormKey();
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 if (Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
@@ -116,9 +115,8 @@ class Lesti_Fpc_Model_Observer
                     $this->_placeholder[] = self::FORM_KEY_PLACEHOLDER;
                     $this->_html[] = $formKey;
                 }
-                $sid = $session->getSessionIdQueryParam().'='.
-                    $session->getEncryptedSessionId();
-                if ($session->getEncryptedSessionId()) {
+                $sid = $session->getEncryptedSessionId();
+                if ($sid) {
                     $body = str_replace(
                         $sid,
                         self::SESSION_ID_PLACEHOLDER,
