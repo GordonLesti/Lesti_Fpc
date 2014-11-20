@@ -253,6 +253,7 @@ display_mode]]></session_params>
                 <customer_groups>0</customer_groups>
                 <use_recently_viewed_products>0</use_recently_viewed_products>
                 <show_age>1</show_age>
+                <gzcompress_level>-2</gzcompress_level>
             </fpc>
         </system>
     </default>

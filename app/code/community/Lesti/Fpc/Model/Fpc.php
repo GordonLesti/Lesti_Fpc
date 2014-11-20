@@ -16,6 +16,7 @@
  */
 class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
 {
+    const GZCOMPRESS_LEVEL_XML_PATH = 'system/fpc/gzcompress_level';
     const CACHE_TAG = 'FPC';
 
     /**
@@ -24,7 +25,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
      * @var array
      */
     protected $_defaultBackendOptions = array(
-        'hashed_directory_level'    => 3,
+        'hashed_directory_level'    => 6,
         'hashed_directory_perm'    => 0777,
         'file_name_prefix'          => 'fpc',
     );
@@ -36,7 +37,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
      * @var array
      */
     protected $_legacyDefaultBackendOptions = array(
-        'hashed_directory_level'    => 3,
+        'hashed_directory_level'    => 6,
         'hashed_directory_umask'    => 0777,
         'file_name_prefix'          => 'fpc',
     );
@@ -90,13 +91,33 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         $id = $cacheData->getCacheId();
         $tags = $cacheData->getTags();
         $lifeTime = $cacheData->getLifeTime();
+
+        $compressLevel = Mage::getStoreConfig(self::GZCOMPRESS_LEVEL_XML_PATH);
+        if ($compressLevel != -2) {
+            $data = gzcompress($data, $compressLevel);
+        }
         
         return $this->_frontend->save(
-            (string)$data,
+            $data,
             $this->_id($id),
             $this->_tags($tags),
             $lifeTime
         );
+    }
+
+    /**
+     * @param string $id
+     * @return string
+     */
+    public function load($id)
+    {
+        $data = parent::load($id);
+        $compressLevel = Mage::getStoreConfig(self::GZCOMPRESS_LEVEL_XML_PATH);
+        if ($compressLevel != -2) {
+            $data = gzuncompress($data);
+        }
+
+        return $data;
     }
 
     /**

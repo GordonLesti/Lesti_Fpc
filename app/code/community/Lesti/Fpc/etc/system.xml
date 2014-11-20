@@ -125,6 +125,16 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </show_age>
+                        <gzcompress_level>
+                            <label>gzcompress Level</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>Compress the cache (only for filecache, flush Lesti_Fpc after changing value)</comment>
+                            <source_model>fpc/adminhtml_system_config_source_gzcompress</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gzcompress_level>
                     </fields>
                 </fpc>
             </groups>
