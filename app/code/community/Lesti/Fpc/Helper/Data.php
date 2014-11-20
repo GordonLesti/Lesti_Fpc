@@ -98,16 +98,14 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     $params['session_' . $param] = $data;
                 }
             }
-            // add additional parameters via event
-            $additional = new Varien_Object();
-            $additional->setParams(array());
+            // edit parameters via event
+            $parameters = new Varien_Object();
+            $parameters->setValue($params);
             Mage::dispatchEvent(
                 'fpc_helper_collect_params',
-                array('additional' => $additional)
+                array('parameters' => $parameters)
             );
-            if ($additionalParams = $additional->getParams()) {
-                $params = array_merge($params, $additionalParams);
-            }
+            $params = $parameters->getValue();
 
             Mage::register(self::REGISTRY_KEY_PARAMS, serialize($params));
         }
@@ -214,16 +212,6 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
                     ->getCatalogCategoryViewCacheTags($request);
                 break;
         }
-        $additional = new Varien_Object();
-        $additional->setCacheTags(array());
-        Mage::dispatchEvent(
-            'fpc_helper_collect_cache_tags',
-            array('additional' => $additional)
-        );
-        if ($additionalCacheTags = $additional->getCacheTags()) {
-            $cacheTags = array_merge($cacheTags, $additionalCacheTags);
-        }
-
         return $cacheTags;
     }
 

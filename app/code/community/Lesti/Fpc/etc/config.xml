@@ -106,7 +106,7 @@
             <fpc_helper_collect_params>
                 <observers>
                     <fpc_fpc_helper_collect_params>
-                        <class>fpc/observer_helper</class>
+                        <class>fpc/observer_parameters</class>
                         <type>singleton</type>
                         <method>fpcHelperCollectParams</method>
                     </fpc_fpc_helper_collect_params>

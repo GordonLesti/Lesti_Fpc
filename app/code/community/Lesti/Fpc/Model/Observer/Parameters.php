@@ -12,9 +12,9 @@
  */
 
 /**
- * Class Lesti_Fpc_Model_Observer_Helper
+ * Class Lesti_Fpc_Model_Observer_Parameters
  */
-class Lesti_Fpc_Model_Observer_Helper
+class Lesti_Fpc_Model_Observer_Parameters
 {
     /**
      * @param $observer
@@ -37,8 +37,9 @@ class Lesti_Fpc_Model_Observer_Helper
         $params['design'] = $design->getPackageName().'_'.
             $design->getTheme('template');
 
-        $additionalParams = $observer->getEvent()->getAdditional()->getParams();
+        $parameters = $observer->getEvent()->getParameters();
+        $additionalParams = $parameters->getValue();
         $additionalParams = array_merge($additionalParams, $params);
-        $observer->getEvent()->getAdditional()->setParams($addionalParams);
+        $parameters->setValue($additionalParams);
     }
 }
