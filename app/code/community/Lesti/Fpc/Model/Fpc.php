@@ -76,6 +76,21 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         if ($lifeTime === null) {
             $lifeTime = (int) $this->getFrontend()->getOption('lifetime');
         }
+        // edit cached object
+        $cacheData = new Varien_Object();
+        $cacheData->setCachedata($data);
+        $cacheData->setCacheId($id);
+        $cacheData->setTags($tags);
+        $cacheData->setLifeTime($lifeTime);
+        Mage::dispatchEvent(
+            'fpc_save_data_before',
+            array('cache_data' => $cacheData)
+        );
+        $data = $cacheData->getCachedata();
+        $id = $cacheData->getCacheId();
+        $tags = $cacheData->getTags();
+        $lifeTime = $cacheData->getLifeTime();
+        
         return $this->_frontend->save(
             (string)$data,
             $this->_id($id),
