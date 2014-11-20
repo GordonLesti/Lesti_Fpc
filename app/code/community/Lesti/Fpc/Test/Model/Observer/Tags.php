@@ -34,9 +34,9 @@ class Lesti_Fpc_Test_Model_Observer_Tags extends Lesti_Fpc_Test_TestCase
         $this->setFullActionName($routeName, $controllerName, $actionName);
         Mage::app()->getRequest()->setParams($params);
 
-        $additionalCacheTags = array('fpc_tag');
-        $cacheTags = $this->dispatchCollectTagsEvent($additionalCacheTags);
-        $expectedCacheTags = array_merge($additionalCacheTags, $expectedCacheTags);
+        $tags = array('fpc_tag');
+        $cacheTags = $this->dispatchCollectTagsEvent($tags);
+        $expectedCacheTags = array_merge($tags, $expectedCacheTags);
         $this->assertEquals($expectedCacheTags, $cacheTags);
     }
 

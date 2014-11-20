@@ -71,7 +71,11 @@ abstract class Lesti_Fpc_Test_TestCase extends
      * @param $controllerName
      * @param $actionName
      */
-    protected function setFullActionName($routeName, $controllerName, $actionName)
+    protected function setFullActionName(
+        $routeName,
+        $controllerName,
+        $actionName
+    )
     {
         Mage::app()->getRequest()->setRouteName($routeName);
         Mage::app()->getRequest()->setControllerName($controllerName);
