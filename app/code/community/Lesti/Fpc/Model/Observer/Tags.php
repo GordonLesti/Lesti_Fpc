@@ -12,14 +12,45 @@
  */
 
 /**
- * Class Lesti_Fpc_Helper_Data_Tag
+ * Class Lesti_Fpc_Model_Observer_Tags
  */
-class Lesti_Fpc_Helper_Data_Tag extends Mage_Core_Helper_Abstract
+class Lesti_Fpc_Model_Observer_Tags
 {
+    /**
+     * @param $observer
+     */
+    public function fpcObserverCollectCacheTags($observer)
+    {
+        /** @var Lesti_Fpc_Helper_Data $helper */
+        $helper = Mage::helper('fpc');
+        $fullActionName = $helper->getFullActionName();
+        $cacheTags = array();
+        $request = Mage::app()->getRequest();
+        switch ($fullActionName) {
+            case 'cms_index_index' :
+                $cacheTags = $this->getCmsIndexIndexCacheTags();
+                break;
+            case 'cms_page_view' :
+                $cacheTags = $this->getCmsPageViewCacheTags($request);
+                break;
+            case 'catalog_product_view' :
+                $cacheTags = $this->getCatalogProductViewCacheTags($request);
+                break;
+            case 'catalog_category_view' :
+                $cacheTags = $this->getCatalogCategoryViewCacheTags($request);
+                break;
+        }
+
+        $cacheTagObject = $observer->getEvent()->getCacheTags();
+        $additionalCacheTags = $cacheTagObject->getValue();
+        $additionalCacheTags = array_merge($additionalCacheTags, $cacheTags);
+        $cacheTagObject->setValue($additionalCacheTags);
+    }
+
     /**
      * @return array
      */
-    public function getCmsIndexIndexCacheTags()
+    protected function getCmsIndexIndexCacheTags()
     {
         $cacheTags = array();
         $cacheTags[] = sha1('cms');
@@ -36,7 +67,7 @@ class Lesti_Fpc_Helper_Data_Tag extends Mage_Core_Helper_Abstract
      * @param Mage_Core_Controller_Request_Http $request
      * @return array
      */
-    public function getCmsPageViewCacheTags(
+    protected function getCmsPageViewCacheTags(
         Mage_Core_Controller_Request_Http $request
     )
     {
@@ -56,7 +87,7 @@ class Lesti_Fpc_Helper_Data_Tag extends Mage_Core_Helper_Abstract
      * @param Mage_Core_Controller_Request_Http $request
      * @return array
      */
-    public function getCatalogProductViewCacheTags(
+    protected function getCatalogProductViewCacheTags(
         Mage_Core_Controller_Request_Http $request
     )
     {
@@ -112,7 +143,7 @@ class Lesti_Fpc_Helper_Data_Tag extends Mage_Core_Helper_Abstract
      * @param Mage_Core_Controller_Request_Http $request
      * @return array
      */
-    public function getCatalogCategoryViewCacheTags(
+    protected function getCatalogCategoryViewCacheTags(
         Mage_Core_Controller_Request_Http $request
     )
     {

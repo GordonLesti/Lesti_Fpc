@@ -187,35 +187,6 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @return array
-     */
-    public function getCacheTags()
-    {
-        $fullActionName = $this->getFullActionName();
-        $cacheTags = array();
-        $request = Mage::app()->getRequest();
-        /** @var Lesti_Fpc_Helper_Data_Tag $tagHelper */
-        $tagHelper = Mage::helper('fpc/data_tag');
-        switch ($fullActionName) {
-            case 'cms_index_index' :
-                $cacheTags = $tagHelper->getCmsIndexIndexCacheTags();
-                break;
-            case 'cms_page_view' :
-                $cacheTags = $tagHelper->getCmsPageViewCacheTags($request);
-                break;
-            case 'catalog_product_view' :
-                $cacheTags = $tagHelper
-                    ->getCatalogProductViewCacheTags($request);
-                break;
-            case 'catalog_category_view' :
-                $cacheTags = $tagHelper
-                    ->getCatalogCategoryViewCacheTags($request);
-                break;
-        }
-        return $cacheTags;
-    }
-
-    /**
      * @return string
      */
     public function getFullActionName()

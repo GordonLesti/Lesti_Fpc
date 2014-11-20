@@ -112,6 +112,15 @@
                     </fpc_fpc_helper_collect_params>
                 </observers>
             </fpc_helper_collect_params>
+            <fpc_observer_collect_cache_tags>
+                <observers>
+                    <fpc_fpc_observer_collect_cache_tags>
+                        <class>fpc/observer_tags</class>
+                        <type>singleton</type>
+                        <method>fpcObserverCollectCacheTags</method>
+                    </fpc_fpc_observer_collect_cache_tags>
+                </observers>
+            </fpc_observer_collect_cache_tags>
         </events>
     </global>
     <frontend>

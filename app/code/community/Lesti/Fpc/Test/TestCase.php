@@ -65,4 +65,16 @@ abstract class Lesti_Fpc_Test_TestCase extends
         $baseUrlCacheProperty->setAccessible(true);
         $baseUrlCacheProperty->setValue(Mage::app()->getStore(), array());
     }
+
+    /**
+     * @param $routeName
+     * @param $controllerName
+     * @param $actionName
+     */
+    protected function setFullActionName($routeName, $controllerName, $actionName)
+    {
+        Mage::app()->getRequest()->setRouteName($routeName);
+        Mage::app()->getRequest()->setControllerName($controllerName);
+        Mage::app()->getRequest()->setActionName($actionName);
+    }
 }

@@ -125,10 +125,14 @@ class Lesti_Fpc_Model_Observer
                     $this->_placeholder[] = self::SESSION_ID_PLACEHOLDER;
                     $this->_html[] = $sid;
                 }
-                $this->_cacheTags = array_merge(
-                    Mage::helper('fpc')->getCacheTags(),
-                    $this->_cacheTags
+                // edit cacheTags via event
+                $cacheTags = new Varien_Object();
+                $cacheTags->setValue($this->_cacheTags);
+                Mage::dispatchEvent(
+                    'fpc_observer_collect_cache_tags',
+                    array('cache_tags' => $cacheTags)
                 );
+                $this->_cacheTags = $cacheTags->getValue();
                 $this->_getFpc()->save(time() . $body, $key, $this->_cacheTags);
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
