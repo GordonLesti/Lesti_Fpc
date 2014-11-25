@@ -10,7 +10,7 @@ Lesti_Fpc
 [![Build Status](https://travis-ci.org/GordonLesti/Lesti_Fpc.svg?branch=develop)](https://travis-ci.org/GordonLesti/Lesti_Fpc)
 [![Coverage Status](https://coveralls.io/repos/GordonLesti/Lesti_Fpc/badge.png?branch=develop)](https://coveralls.io/r/GordonLesti/Lesti_Fpc?branch=develop)
 
-## Release information
+## Release Information
 
 *Lesti_Fpc 1.3.4*
 
