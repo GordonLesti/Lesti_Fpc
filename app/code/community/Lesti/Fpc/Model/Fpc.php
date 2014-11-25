@@ -74,7 +74,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         if (!in_array(self::CACHE_TAG, $tags)) {
             $tags[] = self::CACHE_TAG;
         }
-        if ($lifeTime === null) {
+        if (is_null($lifeTime)) {
             $lifeTime = (int) $this->getFrontend()->getOption('lifetime');
         }
         // edit cached object
@@ -96,7 +96,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         if ($compressLevel != -2) {
             $data = gzcompress($data, $compressLevel);
         }
-        
+
         return $this->_frontend->save(
             $data,
             $this->_id($id),
@@ -113,7 +113,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
     {
         $data = parent::load($id);
         $compressLevel = Mage::getStoreConfig(self::GZCOMPRESS_LEVEL_XML_PATH);
-        if ($compressLevel != -2) {
+        if ($data !== false && $compressLevel != -2) {
             $data = gzuncompress($data);
         }
 

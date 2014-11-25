@@ -126,8 +126,12 @@ class Lesti_Fpc_Model_Observer_Save
      */
     protected function _catalogProductSaveAfterMassAction(array $productIds)
     {
-        foreach ($productIds as $productId) {
-            $this->_getFpc()->clean(sha1('product_' . $productId));
+        if (!empty($productIds)) {
+            $tags = array();
+            foreach ($productIds as $productId) {
+                $tags[] = sha1('product_' . $productId);
+            }
+            $this->_getFpc()->clean($tags);
         }
     }
 }
