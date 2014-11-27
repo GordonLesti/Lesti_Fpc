@@ -1,0 +1,8 @@
+{
+    "require-dev": {
+        "ecomdev/ecomdev_phpunit": "*",
+        "phpmd/phpmd" : "*",
+        "squizlabs/php_codesniffer": "*",
+        "satooshi/php-coveralls": "dev-master"
+    }
+}
