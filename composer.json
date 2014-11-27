@@ -1,5 +1,5 @@
 {
-    "name": "lesti/fpc",
+    "name": "gordonlesti/lesti_fpc",
     "type": "magento-module",
     "description": "Simple Magento Fullpagecache",
     "keywords": ["fpc"],
