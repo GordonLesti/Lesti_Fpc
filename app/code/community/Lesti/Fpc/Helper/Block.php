@@ -28,8 +28,12 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
     public function getDynamicBlocks()
     {
         $blocks = Mage::getStoreConfig(self::DYNAMIC_BLOCKS_XML_PATH);
-        $blocks = array_unique(array_map('trim', explode(',', $blocks)));
-        return $blocks;
+
+        if ($blocks) {
+            return array_unique(array_map('trim', explode(',', $blocks)));
+        }
+
+        return array();
     }
 
     /**
@@ -38,8 +42,12 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
     public function getLazyBlocks()
     {
         $blocks = Mage::getStoreConfig(self::LAZY_BLOCKS_XML_PATH);
-        $blocks = array_unique(array_map('trim', explode(',', $blocks)));
-        return $blocks;
+
+        if ($blocks) {
+            return array_unique(array_map('trim', explode(',', $blocks)));
+        }
+
+        return array();
     }
 
     /**
@@ -81,9 +89,9 @@ class Lesti_Fpc_Helper_Block extends Mage_Core_Helper_Abstract
         $design = Mage::getDesign();
         $params['design'] = $design->getPackageName().'_'.
             $design->getTheme('template');
-        
+
         $params['blocks'] = implode(',', $this->getLazyBlocks());
-        
+
         return sha1(serialize($params));
     }
 
