@@ -33,7 +33,12 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     public function getCacheableActions()
     {
         $actions = Mage::getStoreConfig(self::XML_PATH_CACHEABLE_ACTIONS);
-        return array_unique(array_map('trim', explode(',', $actions)));
+
+        if ($actions) {
+            return array_unique(array_map('trim', explode(',', $actions)));
+        }
+
+        return array();
     }
 
     /**
@@ -42,7 +47,12 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     public function getBypassHandles()
     {
         $handles = Mage::getStoreConfig(self::XML_PATH_BYPASS_HANDLES);
-        return array_unique(array_map('trim', explode(',', $handles)));
+
+        if ($handles) {
+            return array_unique(array_map('trim', explode(',', $handles)));
+        }
+
+        return array();
     }
 
     /**
@@ -51,7 +61,12 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     public function getRefreshActions()
     {
         $actions = Mage::getStoreConfig(self::XML_PATH_REFRESH_ACTIONS);
-        return array_unique(array_map('trim', explode(',', $actions)));
+
+        if ($actions) {
+            return array_unique(array_map('trim', explode(',', $actions)));
+        }
+
+        return array();
     }
 
     /**
@@ -115,7 +130,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * Matches URI param against expression
      * (string comparison or regular expression)
-     * 
+     *
      * @param string $expression
      * @param string $param
      * @return boolean
@@ -136,7 +151,12 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     public function _getUriParams()
     {
         $params = Mage::getStoreConfig(self::XML_PATH_URI_PARAMS);
-        return array_map('trim', explode(',', $params));
+
+        if ($params) {
+            return array_map('trim', explode(',', $params));
+        }
+
+        return array();
     }
 
     /**
@@ -145,7 +165,12 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     protected function _getSessionParams()
     {
         $params = Mage::getStoreConfig(self::XML_PATH_SESSION_PARAMS);
-        return array_map('trim', explode(',', $params));
+
+        if ($params) {
+            return array_map('trim', explode(',', $params));
+        }
+
+        return array();
     }
 
     /**
@@ -154,7 +179,12 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
     protected function _getMissUriParams()
     {
         $params = Mage::getStoreConfig(self::XML_PATH_MISS_URI_PARAMS);
-        return array_unique(array_map('trim', explode(',', $params)));
+
+        if ($params) {
+            return array_unique(array_map('trim', explode(',', $params)));
+        }
+
+        return array();
     }
 
     /**
