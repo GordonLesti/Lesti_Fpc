@@ -32,7 +32,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCacheableActions()
     {
-        $actions = Mage::getStoreConfig(self::XML_PATH_CACHEABLE_ACTIONS);
+        $actions = trim(Mage::getStoreConfig(self::XML_PATH_CACHEABLE_ACTIONS));
 
         if ($actions) {
             return array_unique(array_map('trim', explode(',', $actions)));
@@ -46,7 +46,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getBypassHandles()
     {
-        $handles = Mage::getStoreConfig(self::XML_PATH_BYPASS_HANDLES);
+        $handles = trim(Mage::getStoreConfig(self::XML_PATH_BYPASS_HANDLES));
 
         if ($handles) {
             return array_unique(array_map('trim', explode(',', $handles)));
@@ -60,7 +60,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getRefreshActions()
     {
-        $actions = Mage::getStoreConfig(self::XML_PATH_REFRESH_ACTIONS);
+        $actions = trim(Mage::getStoreConfig(self::XML_PATH_REFRESH_ACTIONS));
 
         if ($actions) {
             return array_unique(array_map('trim', explode(',', $actions)));

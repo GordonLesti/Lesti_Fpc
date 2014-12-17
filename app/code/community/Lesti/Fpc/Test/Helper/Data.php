@@ -37,17 +37,15 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
             array('cms_index_index', 'cms_page_view', 'catalog_product_view'),
             $this->_helper->getCacheableActions()
         );
+    }
 
-        $configPath = Lesti_Fpc_Helper_Data::XML_PATH_CACHEABLE_ACTIONS;
-        $oldConfig = Mage::getStoreConfig($configPath);
-        Mage::app()->getStore()->setConfig($configPath, '');
-
-        $this->assertEquals(
-            array(),
-            $this->_helper->getCacheableActions()
-        );
-
-        Mage::app()->getStore()->setConfig($configPath, $oldConfig);
+    /**
+     * @test
+     * @loadFixture get_cacheable_actions_empty.yaml
+     */
+    public function testGetCacheableActionsEmpty()
+    {
+        $this->assertEquals(array(), $this->_helper->getCacheableActions());
     }
 
     /**
@@ -60,17 +58,15 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
             array('some_handle', 'logged_in', 'CATEGORY_25'),
             $this->_helper->getBypassHandles()
         );
+    }
 
-        $configPath = Lesti_Fpc_Helper_Data::XML_PATH_BYPASS_HANDLES;
-        $oldConfig = Mage::getStoreConfig($configPath);
-        Mage::app()->getStore()->setConfig($configPath, '');
-
-        $this->assertEquals(
-            array(),
-            $this->_helper->getBypassHandles()
-        );
-
-        Mage::app()->getStore()->setConfig($configPath, $oldConfig);
+    /**
+     * @test
+     * @loadFixture get_bypass_handles_empty.yaml
+     */
+    public function testGetBypassHandlesEmpty()
+    {
+        $this->assertEquals(array(), $this->_helper->getBypassHandles());
     }
 
     /**
@@ -87,17 +83,15 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
             ),
             $this->_helper->getRefreshActions()
         );
+    }
 
-        $configPath = Lesti_Fpc_Helper_Data::XML_PATH_REFRESH_ACTIONS;
-        $oldConfig = Mage::getStoreConfig($configPath);
-        Mage::app()->getStore()->setConfig($configPath, '');
-
-        $this->assertEquals(
-            array(),
-            $this->_helper->getRefreshActions()
-        );
-
-        Mage::app()->getStore()->setConfig($configPath, $oldConfig);
+    /**
+     * @test
+     * @loadFixture get_refresh_actions_empty.yaml
+     */
+    public function testGetRefreshActionsEmpty()
+    {
+        $this->assertEquals(array(), $this->_helper->getRefreshActions());
     }
 
     /**

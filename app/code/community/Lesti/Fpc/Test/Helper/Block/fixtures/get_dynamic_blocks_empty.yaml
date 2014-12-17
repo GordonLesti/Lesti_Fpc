@@ -1,0 +1,2 @@
+config:
+    default/system/fpc/dynamic_blocks: " "

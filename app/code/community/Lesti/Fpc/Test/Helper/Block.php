@@ -13,6 +13,8 @@
 
 /**
  * Class Lesti_Fpc_Test_Helper_Block
+ *
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
 {
@@ -37,17 +39,15 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
             array('messages', 'global_messages', 'global_notices'),
             $this->_blockHelper->getDynamicBlocks()
         );
+    }
 
-        $configPath = Lesti_Fpc_Helper_Block::DYNAMIC_BLOCKS_XML_PATH;
-        $oldConfig = Mage::getStoreConfig($configPath);
-        Mage::app()->getStore()->setConfig($configPath, '');
-
-        $this->assertEquals(
-            array(),
-            $this->_blockHelper->getDynamicBlocks()
-        );
-
-        Mage::app()->getStore()->setConfig($configPath, $oldConfig);
+    /**
+     * @test
+     * @loadFixture get_dynamic_blocks_empty.yaml
+     */
+    public function testGetDynamicBlocksEmpty()
+    {
+        $this->assertEquals(array(), $this->_blockHelper->getDynamicBlocks());
     }
 
     /**
@@ -60,17 +60,15 @@ class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
             array('top.links', 'cart_sidebar', 'catalog.compare.sidebar'),
             $this->_blockHelper->getLazyBlocks()
         );
+    }
 
-        $configPath = Lesti_Fpc_Helper_Block::LAZY_BLOCKS_XML_PATH;
-        $oldConfig = Mage::getStoreConfig($configPath);
-        Mage::app()->getStore()->setConfig($configPath, '');
-
-        $this->assertEquals(
-            array(),
-            $this->_blockHelper->getLazyBlocks()
-        );
-
-        Mage::app()->getStore()->setConfig($configPath, $oldConfig);
+    /**
+     * @test
+     * @loadFixture get_lazy_blocks_empty.yaml
+     */
+    public function testGetLazyBlocksEmpty()
+    {
+        $this->assertEquals(array(), $this->_blockHelper->getLazyBlocks());
     }
 
     /**
