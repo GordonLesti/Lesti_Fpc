@@ -34,7 +34,7 @@ before_script:
   - cd ..
 
 script:
-  - php vendor/bin/phpcs --standard=Zend app/
+  - php vendor/bin/phpcs --standard=Zend -n app/
   - php vendor/bin/phpmd app/ text codesize,design,unusedcode
   - cd magento && php ../vendor/bin/phpunit --coverage-clover ../build/logs/clover.xml && cd ..
 
