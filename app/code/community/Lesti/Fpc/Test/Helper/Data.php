@@ -44,7 +44,7 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
 
         $this->assertEquals(
             array(),
-            $this->_blockHelper->getCacheableActions()
+            $this->_helper->getCacheableActions()
         );
 
         Mage::app()->getStore()->setConfig($configPath, $oldConfig);
@@ -67,7 +67,7 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
 
         $this->assertEquals(
             array(),
-            $this->_blockHelper->getBypassHandles()
+            $this->_helper->getBypassHandles()
         );
 
         Mage::app()->getStore()->setConfig($configPath, $oldConfig);
@@ -94,7 +94,7 @@ class Lesti_Fpc_Test_Helper_Data extends Lesti_Fpc_Test_TestCase
 
         $this->assertEquals(
             array(),
-            $this->_blockHelper->getRefreshActions()
+            $this->_helper->getRefreshActions()
         );
 
         Mage::app()->getStore()->setConfig($configPath, $oldConfig);
