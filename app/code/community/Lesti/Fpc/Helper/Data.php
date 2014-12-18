@@ -14,7 +14,7 @@
 /**
  * Class Lesti_Fpc_Helper_Data
  */
-class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
+class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
 {
     const XML_PATH_CACHEABLE_ACTIONS = 'system/fpc/cache_actions';
     const XML_PATH_BYPASS_HANDLES = 'system/fpc/bypass_handles';
@@ -32,13 +32,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCacheableActions()
     {
-        $actions = trim(Mage::getStoreConfig(self::XML_PATH_CACHEABLE_ACTIONS));
-
-        if ($actions) {
-            return array_unique(array_map('trim', explode(',', $actions)));
-        }
-
-        return array();
+        return $this->getCSStoreConfigs(self::XML_PATH_CACHEABLE_ACTIONS);
     }
 
     /**
@@ -46,13 +40,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getBypassHandles()
     {
-        $handles = trim(Mage::getStoreConfig(self::XML_PATH_BYPASS_HANDLES));
-
-        if ($handles) {
-            return array_unique(array_map('trim', explode(',', $handles)));
-        }
-
-        return array();
+        return $this->getCSStoreConfigs(self::XML_PATH_BYPASS_HANDLES);
     }
 
     /**
@@ -60,13 +48,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getRefreshActions()
     {
-        $actions = trim(Mage::getStoreConfig(self::XML_PATH_REFRESH_ACTIONS));
-
-        if ($actions) {
-            return array_unique(array_map('trim', explode(',', $actions)));
-        }
-
-        return array();
+        return $this->getCSStoreConfigs(self::XML_PATH_REFRESH_ACTIONS);
     }
 
     /**
@@ -150,13 +132,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function _getUriParams()
     {
-        $params = Mage::getStoreConfig(self::XML_PATH_URI_PARAMS);
-
-        if ($params) {
-            return array_map('trim', explode(',', $params));
-        }
-
-        return array();
+        return $this->getCSStoreConfigs(self::XML_PATH_URI_PARAMS);
     }
 
     /**
@@ -164,13 +140,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     protected function _getSessionParams()
     {
-        $params = Mage::getStoreConfig(self::XML_PATH_SESSION_PARAMS);
-
-        if ($params) {
-            return array_map('trim', explode(',', $params));
-        }
-
-        return array();
+        return $this->getCSStoreConfigs(self::XML_PATH_SESSION_PARAMS);
     }
 
     /**
@@ -178,13 +148,7 @@ class Lesti_Fpc_Helper_Data extends Mage_Core_Helper_Abstract
      */
     protected function _getMissUriParams()
     {
-        $params = Mage::getStoreConfig(self::XML_PATH_MISS_URI_PARAMS);
-
-        if ($params) {
-            return array_unique(array_map('trim', explode(',', $params)));
-        }
-
-        return array();
+        return $this->getCSStoreConfigs(self::XML_PATH_MISS_URI_PARAMS);
     }
 
     /**
