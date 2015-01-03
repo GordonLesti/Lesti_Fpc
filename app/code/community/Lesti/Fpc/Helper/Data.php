@@ -88,11 +88,13 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
                 $params['customer_group_id'] = $customerSession
                     ->getCustomerGroupId();
             }
-            $sessionParams = $this->_getSessionParams();
-            $catalogSession = Mage::getSingleton('catalog/session');
-            foreach ($sessionParams as $param) {
-                if ($data = $catalogSession->getData($param)) {
-                    $params['session_' . $param] = $data;
+            if ($this->getFullActionName() === 'catalog_category_view') {
+                $sessionParams = $this->_getSessionParams();
+                $catalogSession = Mage::getSingleton('catalog/session');
+                foreach ($sessionParams as $param) {
+                    if ($data = $catalogSession->getData($param)) {
+                        $params['session_' . $param] = $data;
+                    }
                 }
             }
             // edit parameters via event
