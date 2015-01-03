@@ -1,0 +1,4 @@
+config:
+  default/system/fpc/session_params: >
+    magento,
+    fpc

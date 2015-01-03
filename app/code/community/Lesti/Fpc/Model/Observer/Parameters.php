@@ -16,6 +16,8 @@
  */
 class Lesti_Fpc_Model_Observer_Parameters
 {
+    const XML_PATH_SESSION_PARAMS = 'system/fpc/session_params';
+
     /**
      * @param $observer
      */
@@ -36,10 +38,31 @@ class Lesti_Fpc_Model_Observer_Parameters
         $design = Mage::getDesign();
         $params['design'] = $design->getPackageName().'_'.
             $design->getTheme('template');
+        // session paramaters
+        /** @var Lesti_Fpc_Helper_Data $helper */
+        $helper = Mage::helper('fpc');
+        if ($helper->getFullActionName() === 'catalog_category_view') {
+            $sessionParams = $this->_getSessionParams();
+            $catalogSession = Mage::getSingleton('catalog/session');
+            foreach ($sessionParams as $param) {
+                if ($data = $catalogSession->getData($param)) {
+                    $params['session_' . $param] = $data;
+                }
+            }
+        }
 
         $parameters = $observer->getEvent()->getParameters();
         $additionalParams = $parameters->getValue();
         $additionalParams = array_merge($additionalParams, $params);
         $parameters->setValue($additionalParams);
+    }
+
+    /**
+     * @return array
+     */
+    protected function _getSessionParams()
+    {
+        $helper = Mage::helper('fpc');
+        return $helper->getCSStoreConfigs(self::XML_PATH_SESSION_PARAMS);
     }
 }

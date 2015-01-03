@@ -18,7 +18,6 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
 {
     const XML_PATH_CACHEABLE_ACTIONS = 'system/fpc/cache_actions';
     const XML_PATH_BYPASS_HANDLES = 'system/fpc/bypass_handles';
-    const XML_PATH_SESSION_PARAMS = 'system/fpc/session_params';
     const XML_PATH_URI_PARAMS = 'system/fpc/uri_params';
     const XML_PATH_CUSTOMER_GROUPS = 'system/fpc/customer_groups';
     const XML_PATH_REFRESH_ACTIONS = 'system/fpc/refresh_actions';
@@ -88,15 +87,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
                 $params['customer_group_id'] = $customerSession
                     ->getCustomerGroupId();
             }
-            if ($this->getFullActionName() === 'catalog_category_view') {
-                $sessionParams = $this->_getSessionParams();
-                $catalogSession = Mage::getSingleton('catalog/session');
-                foreach ($sessionParams as $param) {
-                    if ($data = $catalogSession->getData($param)) {
-                        $params['session_' . $param] = $data;
-                    }
-                }
-            }
+
             // edit parameters via event
             $parameters = new Varien_Object();
             $parameters->setValue($params);
@@ -135,14 +126,6 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
     public function _getUriParams()
     {
         return $this->getCSStoreConfigs(self::XML_PATH_URI_PARAMS);
-    }
-
-    /**
-     * @return array
-     */
-    protected function _getSessionParams()
-    {
-        return $this->getCSStoreConfigs(self::XML_PATH_SESSION_PARAMS);
     }
 
     /**
