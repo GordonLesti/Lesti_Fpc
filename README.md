@@ -12,7 +12,7 @@ Lesti_Fpc
 
 ## Release Information
 
-*Lesti_Fpc 1.3.5*
+*Lesti_Fpc 1.3.6*
 
 ## System Requirements
 
@@ -30,7 +30,7 @@ Lesti_Fpc
                 "gordonlesti/lesti_fpc": "*"
             }
         }
-    
+
 * Install manually:
     * Download latest version [here](https://github.com/GordonLesti/Lesti_Fpc/archive/master.zip)
     * Unzip
