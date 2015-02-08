@@ -15,7 +15,7 @@
 <config>
     <modules>
         <Lesti_Fpc>
-            <version>1.3.6</version>
+            <version>1.3.7</version>
         </Lesti_Fpc>
     </modules>
     <global>

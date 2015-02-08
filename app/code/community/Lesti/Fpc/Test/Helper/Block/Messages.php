@@ -102,6 +102,27 @@ class Lesti_Fpc_Test_Helper_Block_Messages extends Lesti_Fpc_Test_TestCase
 
     /**
      * @test
+     */
+    public function testInitLayoutMessagesCustomer()
+    {
+        $layout = Mage::app()->getLayout();
+        /** @var Mage_Customer_Model_Session $customerStorage */
+        $customerStorage = Mage::getSingleton('customer/session');
+        $customerStorage->addSuccess('Fpc is cool.');
+        $customerStorage->addError('Fpc has no errors.');
+        $this->assertInstanceOf(
+            'Mage_Core_Model_Layout',
+            $this->_messagesHelper->initLayoutMessages($layout)
+        );
+
+        // test if session is now empty
+        $this->assertEquals(0, $customerStorage->getMessages()->count());
+        $messages = $layout->getMessagesBlock()->getMessages();
+        $this->assertCount(2, $messages);
+    }
+
+    /**
+     * @test
      * @expectedException Mage_Core_exception
      * @expectedExceptionMessage Invalid messages storage "fpc/session"
      * for layout messages initialization
