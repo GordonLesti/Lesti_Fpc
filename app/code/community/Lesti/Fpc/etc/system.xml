@@ -27,7 +27,7 @@
                         <cache_actions>
                             <label>Cachable actions</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All cachable Actions, seperated with Comma</comment>
+                            <comment>All cachable Actions, separated with Comma</comment>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -36,7 +36,7 @@
                         <dynamic_blocks>
                             <label>Dynamic Blocks</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All dynamic Blocks, seperated with Comma</comment>
+                            <comment>All dynamic Blocks, separated with Comma</comment>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -45,7 +45,7 @@
                         <refresh_actions>
                             <label>Refresh Actions</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All Action to refresh lazy blocks, seperated with Comma</comment>
+                            <comment>All Action to refresh lazy blocks, separated with Comma</comment>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -54,7 +54,7 @@
                         <bypass_handles>
                             <label>Bypass Handles</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All layout handles to bypass FPC, seperated with Comma</comment>
+                            <comment>All layout handles to bypass FPC, separated with Comma</comment>
                             <sort_order>35</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -63,7 +63,7 @@
                         <lazy_blocks>
                             <label>Lazy Blocks</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All lazy Blocks, seperated with Comma</comment>
+                            <comment>All lazy Blocks, separated with Comma</comment>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -72,7 +72,7 @@
                         <uri_params>
                             <label>Uri Params</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All Uri Params, seperated with Comma. Params enclosed with "/" are treated as regular expression.</comment>
+                            <comment>All Uri Params, separated with Comma. Params enclosed with "/" are treated as regular expression.</comment>
                             <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -81,7 +81,7 @@
                         <miss_uri_params>
                             <label>Miss Uri Params</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>Ignore Requests with this paramters. Regex seperated with comma.</comment>
+                            <comment>Ignore Requests with this parameters. Regex separated with comma.</comment>
                             <sort_order>55</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -90,7 +90,7 @@
                         <session_params>
                             <label>Category Session Params</label>
                             <frontend_type>textarea</frontend_type>
-                            <comment>All Session Params, seperated with comma. Works only on category pages.</comment>
+                            <comment>All Session Params, separated with comma. Works only on category pages.</comment>
                             <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -99,7 +99,7 @@
                         <customer_groups>
                             <label>Customer Group Caching</label>
                             <frontend_type>select</frontend_type>
-                            <comment>Only enable if you have different price or layout for different customergroups.</comment>
+                            <comment>Only enable if you have different price or layout for different customer groups.</comment>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
