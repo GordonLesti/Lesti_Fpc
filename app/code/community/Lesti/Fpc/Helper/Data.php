@@ -27,7 +27,12 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
 
     const REGISTRY_KEY_PARAMS = 'fpc_params';
 
-    static protected $_pagesWithLayeredNavigation = array('catalogsearch_result_index', 'catalog_category_layered', 'catalog_category_view');
+    // List of pages that contain layered navigation
+    static protected $_pagesWithLayeredNavigation = array(
+        'catalogsearch_result_index',
+        'catalog_category_layered',
+        'catalog_category_view'
+    );
 
     /**
      * @return array
@@ -154,7 +159,8 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
             /** @var Mage_Catalog_Model_Resource_Product_Attribute_Collection $attributeCollection */
             $attributeCollection = Mage::getResourceModel('catalog/product_attribute_collection');
 
-            // The category and search pages may have different filterable attributes, based on how the attributes are configured
+            // The category and search pages may have different filterable attributes, based on how the attributes
+            // are configured
             switch ($currentFullActionName) {
                 case 'catalogsearch_result_index':
                     $filterableField = 'is_filterable_in_search';
