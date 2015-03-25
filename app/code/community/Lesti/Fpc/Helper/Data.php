@@ -154,7 +154,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
         // List of attributes that are used in layered navigation
         $layeredNavigationAttributes = array();
 
-        $currentFullActionName = Mage::app()->getFrontController()->getAction()->getFullActionName();
+        $currentFullActionName = $this->getFullActionName();
         if (in_array($currentFullActionName, self::$_pagesWithLayeredNavigation)) {
             /** @var Mage_Catalog_Model_Resource_Product_Attribute_Collection $attributeCollection */
             $attributeCollection = Mage::getResourceModel('catalog/product_attribute_collection');
