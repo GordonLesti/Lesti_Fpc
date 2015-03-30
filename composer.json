@@ -18,5 +18,14 @@
     },
     "require-dev": {
         "ecomdev/ecomdev_phpunit": "*"
+    },
+    "extra": {
+        "map" : [
+            ["app/code/community/Lesti/Fpc", "app/code/community/Lesti/Fpc"],
+            ["app/design/frontend/base/default/layout/fpc.xml", "app/design/frontend/base/default/layout/fpc.xml"],
+            ["app/design/frontend/base/default/template/fpc", "app/design/frontend/base/default/template/fpc"],
+            ["app/etc/modules/Lesti_Fpc.xml", "app/etc/modules/Lesti_Fpc.xml"]
+            ["app/etc/fpc.xml.sample", "app/etc/fpc.xml.sample"]
+        ]
     }
 }
