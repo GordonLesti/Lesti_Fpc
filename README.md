@@ -18,7 +18,7 @@ Develop | [![Build Status](https://img.shields.io/travis/GordonLesti/Lesti_Fpc/d
 ## Installation
 
 * Install with [modman](https://github.com/colinmollenhour/modman):
-    * ```$ modman clone git@github.com:GordonLesti/Lesti_Fpc.git```
+    * ```$ modman clone https://github.com/GordonLesti/Lesti_Fpc.git```
 * Install with [Magento Composer Installer](https://github.com/magento-hackathon/magento-composer-installer) and add a requirement `gordonlesti/lesti_fpc`
 
         {
