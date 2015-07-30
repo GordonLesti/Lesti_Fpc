@@ -24,6 +24,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
     const XML_PATH_REFRESH_ACTIONS = 'system/fpc/refresh_actions';
     const XML_PATH_MISS_URI_PARAMS = 'system/fpc/miss_uri_params';
     const LAYOUT_ELEMENT_CLASS = 'Mage_Core_Model_Layout_Element';
+    const CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES = 'layeredNavigationAttributes';
 
     const REGISTRY_KEY_PARAMS = 'fpc_params';
 
@@ -170,12 +171,22 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
                 default:
                     $filterableField = 'is_filterable';
             }
-            $attributeCollection->addFieldToFilter($filterableField, true);
 
-            foreach ($attributeCollection as $attribute) {
-                $layeredNavigationAttributes[] = $attribute->getAttributeCode();
+            $cache = Mage::app()->getCache();
+            $layeredNavigationAttributesCache = $cache->load(SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES.'_'.$filterableField);
+
+            if (!$layeredNavigationAttributesCache) {
+                $attributeCollection->addFieldToFilter($filterableField, true);
+                foreach ($attributeCollection as $attribute) {
+                    $layeredNavigationAttributes[] = $attribute->getAttributeCode();
+                }
+                $cache->save(serialize($layeredNavigationAttributes), SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES.'_'.$filterableField, array(SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES));
+            }
+            else {
+                $layeredNavigationAttributes = unserialize($layeredNavigationAttributesCache);
             }
         }
+
         return $layeredNavigationAttributes;
     }
 
