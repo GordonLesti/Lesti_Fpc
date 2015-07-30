@@ -180,7 +180,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
                 foreach ($attributeCollection as $attribute) {
                     $layeredNavigationAttributes[] = $attribute->getAttributeCode();
                 }
-                $cache->save(serialize($layeredNavigationAttributes), SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES.'_'.$filterableField, array(SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES));
+                $cache->save(serialize($layeredNavigationAttributes), SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES.'_'.$filterableField, array('FPC', SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES));
             }
             else {
                 $layeredNavigationAttributes = unserialize($layeredNavigationAttributesCache);
