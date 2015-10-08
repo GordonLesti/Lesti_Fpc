@@ -174,6 +174,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
 
             $cache = Mage::app()->getCache();
             $cacheId = SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES.'_'.$filterableField;
+            $cacheTags = array('FPC', SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES);
             $layeredNavigationAttributesCache = $cache->load($cacheId);
 
             if (!$layeredNavigationAttributesCache) {
@@ -181,7 +182,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
                 foreach ($attributeCollection as $attribute) {
                     $layeredNavigationAttributes[] = $attribute->getAttributeCode();
                 }
-                $cache->save(serialize($layeredNavigationAttributes), $cacheId, array('FPC', SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES));
+                $cache->save(serialize($layeredNavigationAttributes), $cacheId, $cacheTags);
             } else {
                 $layeredNavigationAttributes = unserialize($layeredNavigationAttributesCache);
             }
