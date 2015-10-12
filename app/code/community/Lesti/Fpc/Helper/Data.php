@@ -77,7 +77,9 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
             $request = Mage::app()->getRequest();
             $params = array('host' => $request->getServer('HTTP_HOST'),
                 'port' => $request->getServer('SERVER_PORT'),
-                'full_action_name' => $this->getFullActionName());
+                'full_action_name' => $this->getFullActionName(),
+                'ajax' => $request->isAjax(),
+              );
             $uriParams = $this->_getUriParams();
             foreach ($request->getParams() as $requestParam =>
                      $requestParamValue) {
@@ -105,6 +107,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
                 array('parameters' => $parameters)
             );
             $params = $parameters->getValue();
+
 
             Mage::register(self::REGISTRY_KEY_PARAMS, serialize($params));
         }
