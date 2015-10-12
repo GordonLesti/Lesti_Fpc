@@ -211,6 +211,7 @@ catalog_category_view]]></cache_actions>
                 <dynamic_blocks><![CDATA[messages,
 global_messages,
 global_notices,
+global_cookie_notice,
 right.reports.product.viewed]]></dynamic_blocks>
                 <refresh_actions><![CDATA[checkout_cart_add,
 checkout_cart_delete,
