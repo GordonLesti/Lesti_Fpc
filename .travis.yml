@@ -3,8 +3,8 @@ language: php
 sudo: false
 
 php:
-  - 5.3
   - 5.4
+  - 5.5
 
 env:
   - MAGE=magento-1-9-1-0

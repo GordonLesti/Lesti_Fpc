@@ -12,7 +12,7 @@ Develop | [![Build Status](https://img.shields.io/travis/GordonLesti/Lesti_Fpc/d
 
 ## System Requirements
 
-* PHP 5.3 or higher
+* PHP 5.4 or higher
 * Magento CE1.5.x-1.9.x
 
 ## Installation
