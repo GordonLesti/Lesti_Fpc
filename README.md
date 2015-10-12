@@ -8,7 +8,7 @@ Develop | [![Build Status](https://img.shields.io/travis/GordonLesti/Lesti_Fpc/d
 
 ## Release Information
 
-*Lesti_Fpc 1.3.7*
+*Lesti_Fpc 1.4.0*
 
 ## System Requirements
 
