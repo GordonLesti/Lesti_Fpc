@@ -225,6 +225,7 @@ wishlist_index_update,
 wishlist_index_allcart,
 wishlist_index_configure,
 checkout_onepage_success,
+customer_account_login,
 poll_vote_add]]></refresh_actions>
                 <lazy_blocks><![CDATA[top.links,
 cart_sidebar,
