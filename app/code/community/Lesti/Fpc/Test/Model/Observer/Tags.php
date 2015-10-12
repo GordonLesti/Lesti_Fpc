@@ -14,7 +14,7 @@
 /**
  * Class Lesti_Fpc_Test_Model_Observer_Tags
  *
- * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Lesti_Fpc_Test_Model_Observer_Tags extends Lesti_Fpc_Test_TestCase
 {

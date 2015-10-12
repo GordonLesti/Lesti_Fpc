@@ -14,7 +14,7 @@
 /**
  * Class Lesti_Fpc_Test_Helper_Block
  *
- * @SuppressWarnings(PHPMD.TooManyMethods)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Lesti_Fpc_Test_Helper_Block extends Lesti_Fpc_Test_TestCase
 {
