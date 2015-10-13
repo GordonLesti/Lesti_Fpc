@@ -85,6 +85,24 @@
                     </fpc_model_save_after>
                 </observers>
             </model_save_after>
+            <review_delete_after>
+                <observers>
+                    <fpc_review_delete_after>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>reviewDeleteAfter</method>
+                    </fpc_review_delete_after>
+                </observers>
+            </review_delete_after>
+            <review_save_after>
+                <observers>
+                    <fpc_review_save_after>
+                        <class>fpc/observer_save</class>
+                        <type>singleton</type>
+                        <method>reviewSaveAfter</method>
+                    </fpc_review_save_after>
+                </observers>
+            </review_save_after>
             <core_clean_cache>
                 <observers>
                     <fpc_core_clean_cache>
