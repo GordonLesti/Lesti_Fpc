@@ -176,7 +176,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
             }
 
             $cache = Mage::app()->getCache();
-            $cacheId = SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES.'_'.$filterableField;
+            $cacheId = self::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES.'_'.$filterableField;
             $cacheTags = array('FPC', SELF::CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES);
             $layeredNavigationAttributesCache = $cache->load($cacheId);
 
