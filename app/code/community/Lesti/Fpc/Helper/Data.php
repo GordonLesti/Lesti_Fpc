@@ -77,6 +77,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
             $request = Mage::app()->getRequest();
             $params = array('host' => $request->getServer('HTTP_HOST'),
                 'port' => $request->getServer('SERVER_PORT'),
+                'secure' => Mage::app()->getStore()->isCurrentlySecure(),
                 'full_action_name' => $this->getFullActionName(),
                 'ajax' => $request->isAjax(),
               );
