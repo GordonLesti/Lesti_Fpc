@@ -15,7 +15,7 @@
 <config>
     <modules>
         <Lesti_Fpc>
-            <version>1.4.2</version>
+            <version>1.4.3</version>
         </Lesti_Fpc>
     </modules>
     <global>
@@ -216,6 +216,9 @@ right.reports.product.viewed]]></dynamic_blocks>
                 <refresh_actions><![CDATA[checkout_cart_add,
 checkout_cart_delete,
 checkout_cart_updatePost,
+checkout_cart_ajaxDelete,
+checkout_cart_ajaxUpdate,
+checkout_cart_updateItemOptions,
 catalog_product_compare_add,
 catalog_product_compare_clear,
 catalog_product_compare_remove,
