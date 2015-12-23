@@ -49,8 +49,8 @@ abstract class Lesti_Fpc_Helper_Abstract extends Mage_Core_Helper_Abstract
         $return = array();
 
         // if the config contain a value, use that, otherwise use the tag-name
-        foreach($data as $key => $value){
-            if($value != ''){
+        foreach ($data as $key => $value) {
+            if ($value != '') {
                 $return[] = $value;
             } else {
                 $return[] = $key;
