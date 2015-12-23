@@ -31,3 +31,39 @@ Develop | [![Build Status](https://img.shields.io/travis/GordonLesti/Lesti_Fpc/d
     * Download latest version [here](https://github.com/GordonLesti/Lesti_Fpc/archive/master.zip)
     * Unzip
     * Copy `app` directory into Magento
+
+## For module creators
+
+You can now make your modules compatible with Lesti_Fpc by injecting configuration to it. There is no longer a need to manually configure handles and parameters in admin.
+
+See this example, configuration goes in your config.xml
+
+```xml
+<config>
+    <!--  // your modules normal config // -->
+
+    <default>
+        <lesti_fpc>
+            <cache_actions>
+                <cms_index_index />
+                <right.reports.product.viewed />
+            </cache_actions>
+            <miss_uri_params>
+                <limit><![CDATA[limit=/^([0-9]+)|(all)$/"]]></limit>
+            </miss_uri_params>
+        </lesti_fpc>
+    </default>
+</config>
+```
+
+The keys used have the same name as the fields in admin, possible keys are:
+
+* cache_actions
+* bypass_handles
+* uri_params
+* refresh_actions
+* miss_uri_params
+* dynamic_blocks
+* lazy_blocks
+
+If a tag does *not* contain a value (like ```cms_index_index``` above), the tagname is used. If it *does* contain a value, that value is used (like ```limit``` above). 

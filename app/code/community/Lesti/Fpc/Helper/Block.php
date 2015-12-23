@@ -18,6 +18,8 @@ class Lesti_Fpc_Helper_Block extends Lesti_Fpc_Helper_Abstract
 {
     const DYNAMIC_BLOCKS_XML_PATH = 'system/fpc/dynamic_blocks';
     const LAZY_BLOCKS_XML_PATH = 'system/fpc/lazy_blocks';
+    const INJECTED_DYNAMIC_BLOCKS_XML_PATH = 'lesti_fpc/dynamic_blocks';
+    const INJECTED_LAZY_BLOCKS_XML_PATH = 'lesti_fpc/lazy_blocks';
     const LAZY_BLOCKS_VALID_SESSION_PARAM = 'fpc_lazy_blocks_valid';
     const USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH =
         'system/fpc/use_recently_viewed_products';
@@ -27,7 +29,10 @@ class Lesti_Fpc_Helper_Block extends Lesti_Fpc_Helper_Abstract
      */
     public function getDynamicBlocks()
     {
-        return $this->getCSStoreConfigs(self::DYNAMIC_BLOCKS_XML_PATH);
+        $configParams = $this->getCSStoreConfigs(self::DYNAMIC_BLOCKS_XML_PATH);
+        $injectedParams = $this->getInjectedStoreConfigs(self::INJECTED_DYNAMIC_BLOCKS_XML_PATH);
+
+        return array_unique(array_merge($configParams, $injectedParams));
     }
 
     /**
@@ -35,7 +40,10 @@ class Lesti_Fpc_Helper_Block extends Lesti_Fpc_Helper_Abstract
      */
     public function getLazyBlocks()
     {
-        return $this->getCSStoreConfigs(self::LAZY_BLOCKS_XML_PATH);
+        $configParams = $this->getCSStoreConfigs(self::LAZY_BLOCKS_XML_PATH);
+        $injectedParams = $this->getInjectedStoreConfigs(self::INJECTED_LAZY_BLOCKS_XML_PATH);
+
+        return array_unique(array_merge($configParams, $injectedParams));
     }
 
     /**
