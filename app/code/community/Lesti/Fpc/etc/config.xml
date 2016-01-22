@@ -208,8 +208,8 @@
 cms_page_view,
 catalog_product_view,
 catalog_category_view]]></cache_actions>
-                <dynamic_blocks><![CDATA[messages,
-global_messages,
+                <dynamic_blocks><![CDATA[global_messages,
+messages,
 global_notices,
 global_cookie_notice,
 right.reports.product.viewed]]></dynamic_blocks>
