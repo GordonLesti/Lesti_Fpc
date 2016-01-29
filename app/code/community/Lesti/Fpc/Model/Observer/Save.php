@@ -97,6 +97,28 @@ class Lesti_Fpc_Model_Observer_Save
     /**
      * @param $observer
      */
+    public function reviewDeleteAfter($observer)
+    {
+        if ($this->_getFpc()->isActive()) {
+            $object = $observer->getEvent()->getObject();
+            $this->_getFpc()->clean(sha1('product_' . $object->getEntityPkValue()));
+        }
+    }
+
+    /**
+     * @param $observer
+     */
+    public function reviewSaveAfter($observer)
+    {
+        if ($this->_getFpc()->isActive()) {
+            $object = $observer->getEvent()->getObject();
+            $this->_getFpc()->clean(sha1('product_' . $object->getEntityPkValue()));
+        }
+    }
+
+    /**
+     * @param $observer
+     */
     public function cataloginventoryStockItemSaveAfter($observer)
     {
         $item = $observer->getEvent()->getItem();
