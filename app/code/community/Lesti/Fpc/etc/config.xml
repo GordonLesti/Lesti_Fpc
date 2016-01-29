@@ -251,6 +251,7 @@ poll_vote_add]]></refresh_actions>
                 <lazy_blocks><![CDATA[top.links,
 cart_sidebar,
 catalog.compare.sidebar,
+right.reports.product.compared,
 wishlist_sidebar,
 welcome,
 minicart_head,
