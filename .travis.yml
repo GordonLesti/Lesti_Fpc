@@ -15,7 +15,7 @@ env:
 
 install:
   - cp -f .travis/composer.json composer.json
-  - composer install --dev
+  - composer install --dev --prefer-dist
   - curl https://gordonlesti.com/"$MAGE".tar.gz | tar xz
   - mv $MAGE magento
   - cd magento
