@@ -4,6 +4,6 @@
         "phpmd/phpmd" : "*",
         "squizlabs/php_codesniffer": "*",
         "sebastian/phpcpd": "*",
-        "satooshi/php-coveralls": "dev-master"
+        "satooshi/php-coveralls": "v1.0.1"
     }
 }
