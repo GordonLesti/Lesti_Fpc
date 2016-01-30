@@ -33,4 +33,36 @@ abstract class Lesti_Fpc_Helper_Abstract extends Mage_Core_Helper_Abstract
 
         return array();
     }
+
+    /**
+     * Returns data from config-xml (possibly from other modules) as array
+     *
+     * @param $path
+     * @param null $store
+     * @return array
+     */
+    public function getInjectedStoreConfigs($path, $store = null)
+    {
+        $data = Mage::getStoreConfig($path, $store);
+        if(!is_array($data)) return array();
+
+        $return = array();
+
+        // if the config contain a value, use that, otherwise use the tag-name
+        foreach ($data as $key => $value) {
+            if ($value != '') {
+                $return[] = $value;
+            } else {
+                $return[] = $key;
+            }
+        }
+
+        unset($data, $key, $value);
+
+        if (count($return)) {
+            return array_unique(array_map('trim', $return));
+        }
+
+        return array();
+    }
 }

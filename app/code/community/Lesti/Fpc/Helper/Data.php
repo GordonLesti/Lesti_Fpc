@@ -23,6 +23,13 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
     const XML_PATH_CUSTOMER_GROUPS = 'system/fpc/customer_groups';
     const XML_PATH_REFRESH_ACTIONS = 'system/fpc/refresh_actions';
     const XML_PATH_MISS_URI_PARAMS = 'system/fpc/miss_uri_params';
+
+    const XML_PATH_INJECTED_CACHEABLE_ACTIONS = 'lesti_fpc/cache_actions';
+    const XML_PATH_INJECTED_BYPASS_HANDLES = 'lesti_fpc/bypass_handles';
+    const XML_PATH_INJECTED_URI_PARAMS = 'lesti_fpc/uri_params';
+    const XML_PATH_INJECTED_REFRESH_ACTIONS = 'lesti_fpc/refresh_actions';
+    const XML_PATH_INJECTED_MISS_URI_PARAMS = 'lesti_fpc/miss_uri_params';
+
     const LAYOUT_ELEMENT_CLASS = 'Mage_Core_Model_Layout_Element';
     const CACHE_KEY_LAYERED_NAVIGATION_ATTRIBUTES = 'layeredNavigationAttributes';
 
@@ -40,7 +47,10 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
      */
     public function getCacheableActions()
     {
-        return $this->getCSStoreConfigs(self::XML_PATH_CACHEABLE_ACTIONS);
+        $configParams = $this->getCSStoreConfigs(self::XML_PATH_CACHEABLE_ACTIONS);
+        $injectedParams = $this->getInjectedStoreConfigs(self::XML_PATH_INJECTED_CACHEABLE_ACTIONS);
+
+        return array_unique(array_merge($configParams, $injectedParams));
     }
 
     /**
@@ -48,7 +58,10 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
      */
     public function getBypassHandles()
     {
-        return $this->getCSStoreConfigs(self::XML_PATH_BYPASS_HANDLES);
+        $configParams = $this->getCSStoreConfigs(self::XML_PATH_BYPASS_HANDLES);
+        $injectedParams = $this->getInjectedStoreConfigs(self::XML_PATH_INJECTED_BYPASS_HANDLES);
+
+        return array_unique(array_merge($configParams, $injectedParams));
     }
 
     /**
@@ -56,7 +69,10 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
      */
     public function getRefreshActions()
     {
-        return $this->getCSStoreConfigs(self::XML_PATH_REFRESH_ACTIONS);
+        $configParams = $this->getCSStoreConfigs(self::XML_PATH_REFRESH_ACTIONS);
+        $injectedParams = $this->getInjectedStoreConfigs(self::XML_PATH_INJECTED_REFRESH_ACTIONS);
+
+        return array_unique(array_merge($configParams, $injectedParams));
     }
 
     /**
@@ -146,7 +162,9 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
             $layeredNavigationParams = array();
         }
 
-        return array_merge($configParams, $layeredNavigationParams);
+        $injectedParams = $this->getInjectedStoreConfigs(self::XML_PATH_INJECTED_URI_PARAMS);
+
+        return array_unique(array_merge($configParams, $layeredNavigationParams, $injectedParams));
     }
 
     /**
@@ -200,7 +218,10 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
      */
     protected function _getMissUriParams()
     {
-        return $this->getCSStoreConfigs(self::XML_PATH_MISS_URI_PARAMS);
+        $configParams = $this->getCSStoreConfigs(self::XML_PATH_MISS_URI_PARAMS);
+        $injectedParams = $this->getInjectedStoreConfigs(self::XML_PATH_INJECTED_MISS_URI_PARAMS);
+
+        return array_unique(array_merge($configParams, $injectedParams));
     }
 
     /**
