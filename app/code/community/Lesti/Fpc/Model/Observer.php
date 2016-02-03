@@ -38,7 +38,7 @@ class Lesti_Fpc_Model_Observer
             Mage::helper('fpc')->canCacheRequest()) {
             $key = Mage::helper('fpc')->getKey();
             if ($object = $this->_getFpc()->load($key)) {
-                $content_type = $this->_getFpc()->load($key.self::CACHE_HEADER_POSTFIX);
+                $contentType = $this->_getFpc()->load($key.self::CACHE_HEADER_POSTFIX);
                 $time = (int)substr($object, 0, 10);
                 $body = substr($object, 10);
                 $this->_cached = true;
@@ -78,8 +78,8 @@ class Lesti_Fpc_Model_Observer
                 }
                 $response = Mage::app()->getResponse();
                 $response->setBody($body);
-                if ($content_type) {
-                    $response->setHeader('Content-Type',$content_type);
+                if ($contentType) {
+                    $response->setHeader('Content-Type', $contentType);
                 }
                 Mage::dispatchEvent(
                     'fpc_http_response_send_before',
@@ -140,14 +140,14 @@ class Lesti_Fpc_Model_Observer
                 $this->_cacheTags = $cacheTags->getValue();
                 $this->_getFpc()->save(time() . $body, $key, $this->_cacheTags);
                 $headers = $observer->getEvent()->getResponse()->getHeaders();
-                $content_type = '';
+                $contentType = '';
                 foreach ($headers as $header) {
                     if ($header['name'] == "Content-Type") {
-                        $content_type = $header['value'];
+                        $contentType = $header['value'];
                     }
                 }
-                if (!empty($content_type)) {
-                    $this->_getFpc()->save($content_type, $key.self::CACHE_HEADER_POSTFIX, $this->_cacheTags);
+                if (!empty($contentType)) {
+                    $this->_getFpc()->save($contentType, $key.self::CACHE_HEADER_POSTFIX, $this->_cacheTags);
                 }
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
