@@ -20,6 +20,7 @@ class Lesti_Fpc_Model_Observer
     const SHOW_AGE_XML_PATH = 'system/fpc/show_age';
     const FORM_KEY_PLACEHOLDER = '<!-- fpc form_key_placeholder -->';
     const SESSION_ID_PLACEHOLDER = '<!-- fpc session_id_placeholder -->';
+    const CACHE_HEADER_POSTFIX = '_content_type';
 
     protected $_cached = false;
     protected $_html = array();
@@ -37,6 +38,7 @@ class Lesti_Fpc_Model_Observer
             Mage::helper('fpc')->canCacheRequest()) {
             $key = Mage::helper('fpc')->getKey();
             if ($object = $this->_getFpc()->load($key)) {
+                $content_type = $this->_getFpc()->load($key.self::CACHE_HEADER_POSTFIX);
                 $time = (int)substr($object, 0, 10);
                 $body = substr($object, 10);
                 $this->_cached = true;
@@ -76,6 +78,9 @@ class Lesti_Fpc_Model_Observer
                 }
                 $response = Mage::app()->getResponse();
                 $response->setBody($body);
+                if ($content_type) {
+                    $response->setHeader('Content-Type',$content_type);
+                }
                 Mage::dispatchEvent(
                     'fpc_http_response_send_before',
                     array('response' => $response)
@@ -134,6 +139,16 @@ class Lesti_Fpc_Model_Observer
                 );
                 $this->_cacheTags = $cacheTags->getValue();
                 $this->_getFpc()->save(time() . $body, $key, $this->_cacheTags);
+                $headers = $observer->getEvent()->getResponse()->getHeaders();
+                $content_type = '';
+                foreach ($headers as $header) {
+                    if ($header['name'] == "Content-Type") {
+                        $content_type = $header['value'];
+                    }
+                }
+                if (!empty($content_type)) {
+                    $this->_getFpc()->save($content_type, $key.self::CACHE_HEADER_POSTFIX, $this->_cacheTags);
+                }
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 $observer->getEvent()->getResponse()->setBody($body);
