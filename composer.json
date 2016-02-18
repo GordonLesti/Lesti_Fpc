@@ -3,7 +3,7 @@
     "type": "magento-module",
     "description": "Simple Magento Fullpagecache",
     "keywords": ["fpc"],
-    "homepage": "https://gordonlesti.com/lestifpc/",
+    "homepage": "https://github.com/GordonLesti/Lesti_Fpc",
     "license": "OSL-3.0",
     "authors": [
         {
