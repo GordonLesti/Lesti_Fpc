@@ -29,9 +29,9 @@ class Lesti_Fpc_Model_Observer_Save
                 $this->_getFpc()->clean(sha1('product_' . $product->getId()));
 
                 $origData = $product->getOrigData();
-                if (empty($origData) ||
-                    (!empty($origData) &&
-                        $product->getStatus() != $origData['status'])) {
+                if (empty($origData)
+                    || (!empty($origData) && $product->dataHasChangedFor('status'))
+                ) {
                     $categories = $product->getCategoryIds();
                     foreach ($categories as $categoryId) {
                         $this->_getFpc()->clean(
