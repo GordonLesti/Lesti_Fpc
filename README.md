@@ -31,3 +31,7 @@ Develop | [![Build Status](https://img.shields.io/travis/GordonLesti/Lesti_Fpc/d
     * Download latest version [here](https://github.com/GordonLesti/Lesti_Fpc/archive/master.zip)
     * Unzip
     * Copy `app` directory into Magento
+
+## Configuration
+
+Admin panel - Config - System - Lesti FPC section
