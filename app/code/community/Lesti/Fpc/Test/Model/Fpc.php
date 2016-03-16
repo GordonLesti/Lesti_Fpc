@@ -33,7 +33,7 @@ class Lesti_Fpc_Test_Model_Fpc extends Lesti_Fpc_Test_TestCase
      */
     public function saveLoadClean()
     {
-        $data = 'fpc_data';
+        $data = new \Lesti_Fpc_Model_Fpc_CacheItem('fpc_data', time(), 'text/html');
         $id = 'fpc_id';
         $tag = 'tag1';
 
