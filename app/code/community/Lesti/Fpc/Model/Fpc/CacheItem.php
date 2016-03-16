@@ -8,17 +8,17 @@ class Lesti_Fpc_Model_Fpc_CacheItem
     /**
      * @var string
      */
-    private $content;
+    private $_content;
 
     /**
      * @var int
      */
-    private $time;
+    private $_time;
 
     /**
      * @var string
      */
-    private $contentType;
+    private $_contentType;
 
     /**
      * @param string $content
@@ -27,9 +27,9 @@ class Lesti_Fpc_Model_Fpc_CacheItem
      */
     public function __construct($content, $time, $contentType)
     {
-        $this->content = $content;
-        $this->time = $time;
-        $this->contentType = $contentType;
+        $this->_content = $content;
+        $this->_time = $time;
+        $this->_contentType = $contentType;
     }
 
     /**
@@ -37,7 +37,7 @@ class Lesti_Fpc_Model_Fpc_CacheItem
      */
     public function getContent()
     {
-        return $this->content;
+        return $this->_content;
     }
 
     /**
@@ -45,7 +45,7 @@ class Lesti_Fpc_Model_Fpc_CacheItem
      */
     public function getTime()
     {
-        return $this->time;
+        return $this->_time;
     }
 
     /**
@@ -53,6 +53,6 @@ class Lesti_Fpc_Model_Fpc_CacheItem
      */
     public function getContentType()
     {
-        return $this->contentType;
+        return $this->_contentType;
     }
 }

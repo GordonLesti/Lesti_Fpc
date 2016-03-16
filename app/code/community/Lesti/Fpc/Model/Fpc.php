@@ -69,7 +69,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
      * @param int $lifeTime
      * @return bool
      */
-    public function save($data, $id, $tags=array(), $lifeTime=null)
+    public function save(\Lesti_Fpc_Model_Fpc_CacheItem $data, $id, $tags=array(), $lifeTime=null)
     {
         if (!in_array(self::CACHE_TAG, $tags)) {
             $tags[] = self::CACHE_TAG;
@@ -93,6 +93,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         $lifeTime = $cacheData->getLifeTime();
 
         $compressLevel = Mage::getStoreConfig(self::GZCOMPRESS_LEVEL_XML_PATH);
+        $data = serialize($data);
         if ($compressLevel != -2) {
             $data = gzcompress($data, $compressLevel);
         }
@@ -107,7 +108,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
 
     /**
      * @param string $id
-     * @return string
+     * @return \Lesti_Fpc_Model_Fpc_CacheItem
      */
     public function load($id)
     {
@@ -117,7 +118,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
             $data = gzuncompress($data);
         }
 
-        return $data;
+        return unserialize($data);
     }
 
     /**

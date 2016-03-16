@@ -14,8 +14,7 @@ env:
   - MAGE=magento-1-5-1-0
 
 install:
-  - cp -f .travis/composer.json composer.json
-  - composer install --dev --prefer-dist
+  - composer install --dev --prefer-dist --no-scripts
   - curl https://gordonlesti.com/"$MAGE".tar.gz | tar xz
   - mv $MAGE magento
   - cd magento
