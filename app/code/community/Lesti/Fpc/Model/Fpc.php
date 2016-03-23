@@ -63,13 +63,13 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
     /**
      * Save data
      *
-     * @param string $data
+     * @param \Lesti_Fpc_Model_Fpc_CacheItem $item
      * @param string $id
      * @param array $tags
      * @param int $lifeTime
      * @return bool
      */
-    public function save(\Lesti_Fpc_Model_Fpc_CacheItem $data, $id, $tags=array(), $lifeTime=null)
+    public function save(Lesti_Fpc_Model_Fpc_CacheItem $item, $id, $tags=array(), $lifeTime=null)
     {
         if (!in_array(self::CACHE_TAG, $tags)) {
             $tags[] = self::CACHE_TAG;
@@ -77,6 +77,11 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         if (is_null($lifeTime)) {
             $lifeTime = (int) $this->getFrontend()->getOption('lifetime');
         }
+		$data = array(
+			$item->getContent(),
+			$item->getTime(),
+			$item->getContentType(),
+		);
         // edit cached object
         $cacheData = new Varien_Object();
         $cacheData->setCachedata($data);
@@ -108,7 +113,7 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
 
     /**
      * @param string $id
-     * @return \Lesti_Fpc_Model_Fpc_CacheItem
+     * @return null|\Lesti_Fpc_Model_Fpc_CacheItem
      */
     public function load($id)
     {
@@ -118,7 +123,10 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
             $data = gzuncompress($data);
         }
 
-        return unserialize($data);
+        $data = unserialize($data);
+		if (is_array($data)) {
+			return new Lesti_Fpc_Model_Fpc_CacheItem($data[0], $data[1], $data[2]);
+		}
     }
 
     /**
