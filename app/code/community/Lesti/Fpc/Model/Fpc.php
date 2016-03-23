@@ -113,20 +113,22 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
 
     /**
      * @param string $id
-     * @return null|\Lesti_Fpc_Model_Fpc_CacheItem
+     * @return boolean|\Lesti_Fpc_Model_Fpc_CacheItem
      */
     public function load($id)
     {
         $data = parent::load($id);
+        if ($data === false) {
+            return false;
+        }
         $compressLevel = Mage::getStoreConfig(self::GZCOMPRESS_LEVEL_XML_PATH);
         if ($data !== false && $compressLevel != -2) {
             $data = gzuncompress($data);
         }
 
         $data = unserialize($data);
-        if (is_array($data)) {
-            return new Lesti_Fpc_Model_Fpc_CacheItem($data[0], $data[1], $data[2]);
-        }
+
+        return new Lesti_Fpc_Model_Fpc_CacheItem($data[0], $data[1], $data[2]);
     }
 
     /**
