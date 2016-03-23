@@ -77,11 +77,11 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         if (is_null($lifeTime)) {
             $lifeTime = (int) $this->getFrontend()->getOption('lifetime');
         }
-		$data = array(
-			$item->getContent(),
-			$item->getTime(),
-			$item->getContentType(),
-		);
+        $data = array(
+            $item->getContent(),
+            $item->getTime(),
+            $item->getContentType(),
+        );
         // edit cached object
         $cacheData = new Varien_Object();
         $cacheData->setCachedata($data);
@@ -124,9 +124,9 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
         }
 
         $data = unserialize($data);
-		if (is_array($data)) {
-			return new Lesti_Fpc_Model_Fpc_CacheItem($data[0], $data[1], $data[2]);
-		}
+        if (is_array($data)) {
+            return new Lesti_Fpc_Model_Fpc_CacheItem($data[0], $data[1], $data[2]);
+        }
     }
 
     /**
