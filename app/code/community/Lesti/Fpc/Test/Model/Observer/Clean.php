@@ -38,7 +38,8 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
      */
     public function testCoreCleanCache()
     {
-        $this->_fpc->save('fpc_old_data', 'fpc_old_id', array('fpc'), 1);
+        $data = new \Lesti_Fpc_Model_Fpc_CacheItem('fpc_old_data', time(), 'text/html');
+        $this->_fpc->save($data, 'fpc_old_id', array('fpc'), 1);
         sleep(2);
         $this->_cleanObserver->coreCleanCache();
         $this->assertFalse($this->_fpc->remove('fpc_old_id'));
@@ -49,14 +50,15 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
      */
     public function testControllerActionPredispatchAdminhtmlCacheMassRefresh()
     {
-        $this->_fpc->save('test_data', 'test_id');
+        $data = new \Lesti_Fpc_Model_Fpc_CacheItem('test_data', time(), 'text/html');
+        $this->_fpc->save($data, 'test_id');
         Mage::app()->getRequest()->setParam('types', array('core'));
         $this->_cleanObserver->
             controllerActionPredispatchAdminhtmlCacheMassRefresh();
-        $this->assertEquals('test_data', $this->_fpc->load('test_id'));
+        $this->assertEquals($data, $this->_fpc->load('test_id'));
 
         $this->_fpc->clean();
-        $this->_fpc->save('test_data', 'test_id');
+        $this->_fpc->save($data, 'test_id');
         Mage::app()->getRequest()->setParam(
             'types',
             array('core', Lesti_Fpc_Model_Observer_Clean::CACHE_TYPE)
@@ -66,7 +68,7 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
         $this->assertFalse($this->_fpc->load('test_id'));
 
         $this->_fpc->clean();
-        $this->_fpc->save('test_data', 'test_id');
+        $this->_fpc->save($data, 'test_id');
         Mage::app()->getRequest()->setParam(
             'types',
             array('core', Lesti_Fpc_Model_Observer_Clean::CACHE_TYPE)
@@ -74,6 +76,6 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
         Mage::app()->getCacheInstance()->banUse('fpc');
         $this->_cleanObserver->
             controllerActionPredispatchAdminhtmlCacheMassRefresh();
-        $this->assertEquals('test_data', $this->_fpc->load('test_id'));
+        $this->assertEquals($data, $this->_fpc->load('test_id'));
     }
 }

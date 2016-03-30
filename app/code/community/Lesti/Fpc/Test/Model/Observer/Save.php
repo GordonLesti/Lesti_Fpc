@@ -21,18 +21,21 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testCalaogProductSaveAfter()
     {
+        $product1Data = new \Lesti_Fpc_Model_Fpc_CacheItem('product1', time(), 'text/html');
         $this->_fpc->save(
-            'product1',
+            $product1Data,
             'product1_cache_id',
             array(sha1('product_1'))
         );
+        $category1Data = new \Lesti_Fpc_Model_Fpc_CacheItem('category1', time(), 'text/html');
         $this->_fpc->save(
-            'category1',
+            $category1Data,
             'category1_cache_id',
             array(sha1('category_1'))
         );
+        $category2Data = new \Lesti_Fpc_Model_Fpc_CacheItem('category2', time(), 'text/html');
         $this->_fpc->save(
-            'category2',
+            $category2Data,
             'category2_cache_id',
             array(sha1('category_2'))
         );
@@ -49,7 +52,7 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
         $this->assertFalse($this->_fpc->load('product1_cache_id'));
         $this->assertFalse($this->_fpc->load('category1_cache_id'));
         $this->assertEquals(
-            'category2',
+            $category2Data,
             $this->_fpc->load('category2_cache_id')
         );
     }
@@ -59,13 +62,15 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testCatalogCategorySaveAfter()
     {
+        $category1Data = new \Lesti_Fpc_Model_Fpc_CacheItem('category1', time(), 'text/html');
         $this->_fpc->save(
-            'category1',
+            $category1Data,
             'category1_cache_id',
             array(sha1('category_1'))
         );
+        $category2Data = new \Lesti_Fpc_Model_Fpc_CacheItem('category2', time(), 'text/html');
         $this->_fpc->save(
-            'category2',
+            $category2Data,
             'category2_cache_id',
             array(sha1('category_2'))
         );
@@ -79,7 +84,7 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
 
         $this->assertFalse($this->_fpc->load('category1_cache_id'));
         $this->assertEquals(
-            'category2',
+            $category2Data,
             $this->_fpc->load('category2_cache_id')
         );
     }
@@ -89,9 +94,12 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testCmsPageSaveAfter()
     {
-        $this->_fpc->save('page1', 'page1_cache_id', array(sha1('cms_1')));
-        $this->_fpc->save('page2', 'page2_cache_id', array(sha1('cms_2')));
-        $this->_fpc->save('page3', 'page3_cache_id', array(sha1('cms_3')));
+        $page1Data = new \Lesti_Fpc_Model_Fpc_CacheItem('page1', time(), 'text/html');
+        $this->_fpc->save($page1Data, 'page1_cache_id', array(sha1('cms_1')));
+        $page2Data = new \Lesti_Fpc_Model_Fpc_CacheItem('page2', time(), 'text/html');
+        $this->_fpc->save($page2Data, 'page2_cache_id', array(sha1('cms_2')));
+        $page3Data = new \Lesti_Fpc_Model_Fpc_CacheItem('page3', time(), 'text/html');
+        $this->_fpc->save($page3Data, 'page3_cache_id', array(sha1('cms_3')));
 
         $page = new Mage_Cms_Model_Page();
         $page->setId(1);
@@ -100,7 +108,7 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
 
         $this->assertFalse($this->_fpc->load('page1_cache_id'));
         $this->assertFalse($this->_fpc->load('page3_cache_id'));
-        $this->assertEquals('page2', $this->_fpc->load('page2_cache_id'));
+        $this->assertEquals($page2Data, $this->_fpc->load('page2_cache_id'));
     }
 
     /**
@@ -108,13 +116,15 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testCmsBlockSaveAfter()
     {
+        $page1Data = new \Lesti_Fpc_Model_Fpc_CacheItem('page1', time(), 'text/html');
         $this->_fpc->save(
-            'page1',
+            $page1Data,
             'page1_cache_id',
             array(sha1('cmsblock_1'))
         );
+        $page2Data = new \Lesti_Fpc_Model_Fpc_CacheItem('page2', time(), 'text/html');
         $this->_fpc->save(
-            'page2',
+            $page2Data,
             'page2_cache_id',
             array(sha1('cmsblock_2'))
         );
@@ -124,7 +134,7 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
         Mage::dispatchEvent('model_save_after', array('object' => $cmsBlock));
 
         $this->assertFalse($this->_fpc->load('page1_cache_id'));
-        $this->assertEquals('page2', $this->_fpc->load('page2_cache_id'));
+        $this->assertEquals($page2Data, $this->_fpc->load('page2_cache_id'));
     }
 
     /**
@@ -132,18 +142,21 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testCatalogProductSaveAfterMassAction()
     {
+        $product1Data = new \Lesti_Fpc_Model_Fpc_CacheItem('product1', time(), 'text/html');
         $this->_fpc->save(
-            'product1',
+            $product1Data,
             'product1_cache_id',
             array(sha1('product_1'))
         );
+        $product2Data = new \Lesti_Fpc_Model_Fpc_CacheItem('product2', time(), 'text/html');
         $this->_fpc->save(
-            'product2',
+            $product2Data,
             'product2_cache_id',
             array(sha1('product_2'))
         );
+        $product3Data = new \Lesti_Fpc_Model_Fpc_CacheItem('product3', time(), 'text/html');
         $this->_fpc->save(
-            'product3',
+            $product3Data,
             'product3_cache_id',
             array(sha1('product_3'))
         );
@@ -156,7 +169,7 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
         $event->setDataObject($productAction);
         Mage::dispatchEvent('model_save_after', array('object' => $event));
 
-        $this->assertEquals('product1', $this->_fpc->load('product1_cache_id'));
+        $this->assertEquals($product1Data, $this->_fpc->load('product1_cache_id'));
         $this->assertFalse($this->_fpc->load('product2_cache_id'));
         $this->assertFalse($this->_fpc->load('product3_cache_id'));
     }
@@ -166,13 +179,15 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
      */
     public function testCataloginventoryStockItemSaveAfter()
     {
+        $product1Data = new \Lesti_Fpc_Model_Fpc_CacheItem('product1', time(), 'text/html');
         $this->_fpc->save(
-            'product1',
+            $product1Data,
             'product1_cache_id',
             array(sha1('product_1'))
         );
+        $product2Data = new \Lesti_Fpc_Model_Fpc_CacheItem('product2', time(), 'text/html');
         $this->_fpc->save(
-            'product2',
+            $product2Data,
             'product2_cache_id',
             array(sha1('product_2'))
         );
@@ -187,7 +202,7 @@ class Lesti_Fpc_Test_Model_Observer_Save extends Lesti_Fpc_Test_TestCase
 
         $this->assertFalse($this->_fpc->load('product1_cache_id'));
         $this->assertEquals(
-            'product2',
+            $product2Data,
             $this->_fpc->load('product2_cache_id')
         );
     }

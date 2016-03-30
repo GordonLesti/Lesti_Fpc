@@ -1,9 +1,0 @@
-{
-    "require-dev": {
-        "phpunit/phpunit": "*",
-        "phpmd/phpmd" : "*",
-        "squizlabs/php_codesniffer": "*",
-        "sebastian/phpcpd": "*",
-        "satooshi/php-coveralls": "v1.0.1"
-    }
-}

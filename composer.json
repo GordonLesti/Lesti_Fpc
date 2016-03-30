@@ -14,11 +14,22 @@
         }
     ],
     "require": {
-        "magento-hackathon/magento-composer-installer": "*"
+        "magento-hackathon/magento-composer-installer": "^3.0"
     },
     "require-dev": {
-        "ecomdev/ecomdev_phpunit": "*"
+        "ecomdev/ecomdev_phpunit": "^0.3.7",
+        "phpunit/phpunit": "4.*",
+        "phpmd/phpmd": "^2.4",
+        "squizlabs/php_codesniffer": "^2.5",
+        "sebastian/phpcpd": "^2.0",
+        "satooshi/php-coveralls": "^1.0"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.firegento.com/"
+        }
+    ],
     "extra": {
         "map" : [
             ["app/code/community/Lesti/Fpc", "app/code/community/Lesti/Fpc"],

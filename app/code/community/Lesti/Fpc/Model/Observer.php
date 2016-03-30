@@ -37,8 +37,8 @@ class Lesti_Fpc_Model_Observer
             Mage::helper('fpc')->canCacheRequest()) {
             $key = Mage::helper('fpc')->getKey();
             if ($object = $this->_getFpc()->load($key)) {
-                $time = (int)substr($object, 0, 10);
-                $body = substr($object, 10);
+                $time = $object->getTime();
+                $body = $object->getContent();
                 $this->_cached = true;
                 $session = Mage::getSingleton('customer/session');
                 $lazyBlocks = Mage::helper('fpc/block')->getLazyBlocks();
@@ -71,9 +71,9 @@ class Lesti_Fpc_Model_Observer
                 $this->_replaceFormKey();
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 if (Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
-                    Mage::app()->getResponse()
-                        ->setHeader('Age', time() - $time);
+                    Mage::app()->getResponse()->setHeader('Age', time() - $time);
                 }
+                Mage::app()->getResponse()->setHeader('Content-Type', $object->getContentType());
                 $response = Mage::app()->getResponse();
                 $response->setBody($body);
                 Mage::dispatchEvent(
@@ -133,7 +133,11 @@ class Lesti_Fpc_Model_Observer
                     array('cache_tags' => $cacheTags)
                 );
                 $this->_cacheTags = $cacheTags->getValue();
-                $this->_getFpc()->save(time() . $body, $key, $this->_cacheTags);
+                $this->_getFpc()->save(
+                    new Lesti_Fpc_Model_Fpc_CacheItem($body, time(), Mage::helper('fpc')->getContentType($response)),
+                    $key,
+                    $this->_cacheTags
+                );
                 $this->_cached = true;
                 $body = str_replace($this->_placeholder, $this->_html, $body);
                 $observer->getEvent()->getResponse()->setBody($body);
