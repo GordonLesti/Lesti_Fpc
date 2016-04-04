@@ -63,13 +63,13 @@ class Lesti_Fpc_Model_Fpc extends Mage_Core_Model_Cache
     /**
      * Save data
      *
-     * @param \Lesti_Fpc_Model_Fpc_CacheItem $item
+     * @param mixed $item
      * @param string $id
      * @param array $tags
      * @param int $lifeTime
      * @return bool
      */
-    public function save(Lesti_Fpc_Model_Fpc_CacheItem $item, $id, $tags=array(), $lifeTime=null)
+    public function save($item, $id, $tags=array(), $lifeTime=null)
     {
         if (!in_array(self::CACHE_TAG, $tags)) {
             $tags[] = self::CACHE_TAG;
