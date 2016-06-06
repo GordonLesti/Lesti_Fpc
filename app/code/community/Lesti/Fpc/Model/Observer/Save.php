@@ -15,14 +15,15 @@
 /**
  * Class Lesti_Fpc_Model_Observer_Save
  */
-class Lesti_Fpc_Model_Observer_Save {
-
+class Lesti_Fpc_Model_Observer_Save
+{
     const PRODUCT_IDS_MASS_ACTION_KEY = 'fpc_product_ids_mass_action';
 
     /**
      * @param $observer
      */
-    public function catalogProductSaveAfter($observer) {
+    public function catalogProductSaveAfter($observer)
+    {
         if ($this->_getFpc()->isActive()) {
             $product = $observer->getEvent()->getProduct();
             if ($product->getId()) {
@@ -31,12 +32,13 @@ class Lesti_Fpc_Model_Observer_Save {
                 $this->_cleanAllCMSPages();
 
                 $origData = $product->getOrigData();
-                if (empty($origData) || (!empty($origData) && $product->dataHasChangedFor('status'))
+                if (empty($origData)
+                    || (!empty($origData) && $product->dataHasChangedFor('status'))
                 ) {
                     $categories = $product->getCategoryIds();
                     foreach ($categories as $categoryId) {
                         $this->_getFpc()->clean(
-                                sha1('category_' . $categoryId)
+                            sha1('category_' . $categoryId)
                         );
                     }
                 }
@@ -47,7 +49,8 @@ class Lesti_Fpc_Model_Observer_Save {
     /**
      * @param $observer
      */
-    public function catalogCategorySaveAfter($observer) {
+    public function catalogCategorySaveAfter($observer)
+    {
         if ($this->_getFpc()->isActive()) {
             $category = $observer->getEvent()->getCategory();
             if ($category->getId()) {
@@ -61,14 +64,15 @@ class Lesti_Fpc_Model_Observer_Save {
     /**
      * @param $observer
      */
-    public function cmsPageSaveAfter($observer) {
+    public function cmsPageSaveAfter($observer)
+    {
         if ($this->_getFpc()->isActive()) {
             $page = $observer->getEvent()->getObject();
             if ($page->getId()) {
                 $tags = array(sha1('cms_' . $page->getId()),
                     sha1('cms_' . $page->getIdentifier()));
                 $this->_getFpc()
-                        ->clean($tags);
+                    ->clean($tags);
             }
         }
     }
@@ -76,7 +80,8 @@ class Lesti_Fpc_Model_Observer_Save {
     /**
      * @param $observer
      */
-    public function modelSaveAfter($observer) {
+    public function modelSaveAfter($observer)
+    {
         if ($this->_getFpc()->isActive()) {
             $object = $observer->getEvent()->getObject();
             if ($object instanceof Mage_Cms_Model_Block) {
@@ -87,7 +92,7 @@ class Lesti_Fpc_Model_Observer_Save {
                         $object->getEntity() === 'catalog_product' &&
                         $dataObject instanceof Mage_Catalog_Model_Product_Action) {
                     $this->_catalogProductSaveAfterMassAction(
-                            $dataObject->getProductIds()
+                        $dataObject->getProductIds()
                     );
                 }
             }
@@ -97,7 +102,8 @@ class Lesti_Fpc_Model_Observer_Save {
     /**
      * @param $observer
      */
-    public function reviewDeleteAfter($observer) {
+    public function reviewDeleteAfter($observer)
+    {
         if ($this->_getFpc()->isActive()) {
             $object = $observer->getEvent()->getObject();
             $this->_getFpc()->clean(sha1('product_' . $object->getEntityPkValue()));
@@ -107,7 +113,8 @@ class Lesti_Fpc_Model_Observer_Save {
     /**
      * @param $observer
      */
-    public function reviewSaveAfter($observer) {
+    public function reviewSaveAfter($observer)
+    {
         if ($this->_getFpc()->isActive()) {
             $object = $observer->getEvent()->getObject();
             $this->_getFpc()->clean(sha1('product_' . $object->getEntityPkValue()));
@@ -117,7 +124,8 @@ class Lesti_Fpc_Model_Observer_Save {
     /**
      * @param $observer
      */
-    public function cataloginventoryStockItemSaveAfter($observer) {
+    public function cataloginventoryStockItemSaveAfter($observer)
+    {
         $item = $observer->getEvent()->getItem();
         if ($item->getStockStatusChangedAuto()) {
             $this->_getFpc()->clean(sha1('product_' . $item->getProductId()));
@@ -127,21 +135,24 @@ class Lesti_Fpc_Model_Observer_Save {
     /**
      * @return Lesti_Fpc_Model_Fpc
      */
-    protected function _getFpc() {
+    protected function _getFpc()
+    {
         return Mage::getSingleton('fpc/fpc');
     }
 
     /**
      * @param Mage_Cms_Model_Block $block
      */
-    protected function _cmsBlockSaveAfter(Mage_Cms_Model_Block $block) {
-        $this->_getFpc()->clean(sha1('cmsblock_' . $block->getIdentifier()));
+    protected function _cmsBlockSaveAfter(Mage_Cms_Model_Block $block)
+    {
+        $this->_getFpc()->clean(sha1('cmsblock_'.$block->getIdentifier()));
     }
 
     /**
      * @param array $productIds
      */
-    protected function _catalogProductSaveAfterMassAction(array $productIds) {
+    protected function _catalogProductSaveAfterMassAction(array $productIds)
+    {
         if (!empty($productIds)) {
             $tags = array();
             foreach ($productIds as $productId) {
@@ -154,7 +165,8 @@ class Lesti_Fpc_Model_Observer_Save {
     /**
      * 
      */
-    protected function _cleanAllCMSPages() {
+    protected function _cleanAllCMSPages()
+    {
         $pages = Mage::getModel('cms/page')->getCollection();
         $tags = array();
         foreach ($pages as $page) {
@@ -166,7 +178,8 @@ class Lesti_Fpc_Model_Observer_Save {
         }
     }
 
-    protected function _cleanAllCMSBlocks() {
+    protected function _cleanAllCMSBlocks()
+    {
         $blocks = Mage::getModel('cms/block')->getCollection();
         foreach ($blocks as $block) {
             if ($block->getIdentifier()) {
