@@ -28,16 +28,11 @@ class Lesti_Fpc_Model_Observer_Save
             if ($product->getId()) {
                 $this->_getFpc()->clean(sha1('product_' . $product->getId()));
 
-                $origData = $product->getOrigData();
-                if (empty($origData)
-                    || (!empty($origData) && $product->dataHasChangedFor('status'))
-                ) {
-                    $categories = $product->getCategoryIds();
-                    foreach ($categories as $categoryId) {
-                        $this->_getFpc()->clean(
-                            sha1('category_' . $categoryId)
-                        );
-                    }
+                $categories = $product->getCategoryIds();
+                foreach ($categories as $categoryId) {
+                    $this->_getFpc()->clean(
+                        sha1('category_' . $categoryId)
+                    );
                 }
             }
         }
@@ -152,6 +147,14 @@ class Lesti_Fpc_Model_Observer_Save
             $tags = array();
             foreach ($productIds as $productId) {
                 $tags[] = sha1('product_' . $productId);
+
+                $product = Mage::getModel('catalog/product')->load($productId);
+                $categories = $product->getCategoryIds();
+                foreach ($categories as $categoryId) {
+                    $this->_getFpc()->clean(
+                        sha1('category_' . $categoryId)
+                    );
+                }
             }
             $this->_getFpc()->clean($tags);
         }
