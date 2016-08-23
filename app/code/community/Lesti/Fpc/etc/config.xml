@@ -112,6 +112,15 @@
                     </fpc_core_clean_cache>
                 </observers>
             </core_clean_cache>
+            <adminhtml_cache_flush_all>
+                <observers>
+                    <fpc_adminhtml_cache_flush_all>
+                        <class>fpc/observer_clean</class>
+                        <type>singleton</type>
+                        <method>adminhtmlCacheFlushAll</method>
+                    </fpc_adminhtml_cache_flush_all>
+                </observers>
+            </adminhtml_cache_flush_all>
             <cataloginventory_stock_item_save_after>
                 <observers>
                     <fpc_cataloginventory_stock_item_save_after>

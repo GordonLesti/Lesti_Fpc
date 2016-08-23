@@ -48,6 +48,17 @@ class Lesti_Fpc_Test_Model_Observer_Clean extends Lesti_Fpc_Test_TestCase
     /**
      * @test
      */
+    public function testAdminhtmlCacheFlushAll()
+    {
+        $data = new \Lesti_Fpc_Model_Fpc_CacheItem('fpc_old_data', time(), 'text/html');
+        $this->_fpc->save($data, 'fpc_id');
+        Mage::dispatchEvent('adminhtml_cache_flush_all');
+        $this->assertFalse($this->_fpc->remove('fpc_id'));
+    }
+
+    /**
+     * @test
+     */
     public function testControllerActionPredispatchAdminhtmlCacheMassRefresh()
     {
         $data = new \Lesti_Fpc_Model_Fpc_CacheItem('test_data', time(), 'text/html');
