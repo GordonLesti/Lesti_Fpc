@@ -23,6 +23,11 @@ class Lesti_Fpc_Model_Observer_Clean
         $this->_getFpc()->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
     }
 
+    public function adminhtmlCacheFlushAll()
+    {
+        $this->_getFpc()->clean();
+    }
+
     public function controllerActionPredispatchAdminhtmlCacheMassRefresh()
     {
         $types = Mage::app()->getRequest()->getParam('types');
