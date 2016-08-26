@@ -217,6 +217,20 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
             $pair = array_map('trim', explode('=', $missParam));
             $key = $pair[0];
             $param = $request->getParam($key);
+            if (is_array($param)) {
+                $param = array_reduce(
+                    $param,
+                    function ($carry, $item) {
+                        if (!is_array($item)) {
+                            return $carry . $item;
+                        }
+
+                        return '';
+                    },
+                    ''
+                );
+            }
+
             if ($param && isset($pair[1]) && preg_match($pair[1], $param)) {
                 return false;
             }
