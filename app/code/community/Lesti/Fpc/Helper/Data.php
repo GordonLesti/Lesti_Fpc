@@ -216,20 +216,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
         foreach ($missParams as $missParam) {
             $pair = array_map('trim', explode('=', $missParam));
             $key = $pair[0];
-            $param = $request->getParam($key);
-            if (is_array($param)) {
-                $param = array_reduce(
-                    $param,
-                    function ($carry, $item) {
-                        if (!is_array($item)) {
-                            return $carry . $item;
-                        }
-
-                        return '';
-                    },
-                    ''
-                );
-            }
+            $param = $this->_paramToString($request->getParam($key));
 
             if ($param && isset($pair[1]) && preg_match($pair[1], $param)) {
                 return false;
@@ -271,5 +258,31 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
         }
 
         return 'text/html; charset=UTF-8';
+    }
+
+    /**
+     * Transform array parameter to string to avoid error and make correct validation in regexp pattern
+     *
+     * @param mixed $param Input parameter
+     *
+     * @return mixed
+     */
+    protected function _paramToString($param)
+    {
+        if (is_array($param)) {
+            $param = array_reduce(
+                $param,
+                function ($carry, $item) {
+                    if (!is_array($item)) {
+                        return $carry . $item;
+                    }
+
+                    return '';
+                },
+                ''
+            );
+        }
+
+        return $param;
     }
 }
