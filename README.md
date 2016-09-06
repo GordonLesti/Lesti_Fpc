@@ -34,4 +34,4 @@ Develop | [![Build Status](https://img.shields.io/travis/GordonLesti/Lesti_Fpc/d
 
 ## Configuration
 
-Admin panel - Config - System - Lesti FPC section
+System => Configuration => Advanced => System => Lesti FPC
