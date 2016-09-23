@@ -73,7 +73,7 @@ class Lesti_Fpc_Model_Observer
                 if (Mage::getStoreConfig(self::SHOW_AGE_XML_PATH)) {
                     Mage::app()->getResponse()->setHeader('Age', time() - $time);
                 }
-                Mage::app()->getResponse()->setHeader('Content-Type', $object->getContentType());
+                Mage::app()->getResponse()->setHeader('Content-Type', $object->getContentType(), true);
                 $response = Mage::app()->getResponse();
                 $response->setBody($body);
                 Mage::dispatchEvent(
