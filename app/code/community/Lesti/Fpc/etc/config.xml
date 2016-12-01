@@ -149,6 +149,11 @@
                 </observers>
             </fpc_observer_collect_cache_tags>
         </events>
+        <catalogrule>
+            <related_cache_types>
+                <fpc />
+            </related_cache_types>
+        </catalogrule>
     </global>
     <frontend>
         <routers>
