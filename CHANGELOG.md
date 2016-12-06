@@ -21,6 +21,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
+## 1.4.8 - 2016-12-06
+
+### Added
+- [added utm_* parameters to uri params, fixes #274](https://github.com/GordonLesti/Lesti_Fpc/pull/275)
+
 ## 1.4.7 - 2016-12-03
 
 ### Added
