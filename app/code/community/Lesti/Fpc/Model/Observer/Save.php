@@ -28,7 +28,8 @@ class Lesti_Fpc_Model_Observer_Save
             if ($product->getId()) {
                 $stockItem  = $product->getStockItem();
                 $tags = array(sha1('product_' . $product->getId()));
-                $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+                $parentIds = Mage::getModel('catalog/product_type_configurable')
+                    ->getParentIdsByChild($product->getId());
                 // Clean tag for partner products, if any
                 foreach ($parentIds as $pid) {
                     $tags[] = sha1('product_' . $pid);
@@ -186,7 +187,7 @@ class Lesti_Fpc_Model_Observer_Save
         $table = $catRes->getTable('catalog/category_product');
         $conn = $catRes->getReadConnection();
 
-        $query = $conn->select()->from($table,array('category_id'))->where('product_id IN (?)',$productIds);
+        $query = $conn->select()->from($table, array('category_id'))->where('product_id IN (?)', $productIds);
         $results = $conn->fetchCol($query);
 
         return $results;
