@@ -182,7 +182,7 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
             $layeredNavigationAttributesCache = $cache->load($cacheId);
 
             if (!$layeredNavigationAttributesCache) {
-                $attributeCollection->addFieldToFilter($filterableField, true);
+                $attributeCollection->addFieldToFilter($filterableField, array('in' => array(1,2)));
                 foreach ($attributeCollection as $attribute) {
                     $layeredNavigationAttributes[] = $attribute->getAttributeCode();
                 }
