@@ -212,10 +212,7 @@ class Lesti_Fpc_Model_Observer
         array $dynamicBlocks
     )
     {
-        $xml = simplexml_load_string(
-            $layout->getXmlString(),
-            Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS
-        );
+        $xml = $layout->getNode();
         $cleanXml = simplexml_load_string(
             '<layout/>',
             Lesti_Fpc_Helper_Data::LAYOUT_ELEMENT_CLASS
