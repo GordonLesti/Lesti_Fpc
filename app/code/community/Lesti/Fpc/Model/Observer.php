@@ -32,10 +32,12 @@ class Lesti_Fpc_Model_Observer
      */
     public function controllerActionLayoutGenerateBlocksBefore($observer)
     {
-        if ($this->_getFpc()->isActive() &&
-            !$this->_cached &&
-            Mage::helper('fpc')->canCacheRequest()) {
-            $key = Mage::helper('fpc')->getKey();
+        $_helper = Mage::helper('fpc');
+        if ($this->_getFpc()->isActive() && !$this->_cached && $_helper->canCacheRequest()) {
+            $cacheableActions = $_helper->getCacheableActions();
+            if (!in_array($_helper->getFullActionName(), $cacheableActions)) return;
+
+            $key = $_helper->getKey();
             if ($object = $this->_getFpc()->load($key)) {
                 $time = $object->getTime();
                 $body = $object->getContent();
