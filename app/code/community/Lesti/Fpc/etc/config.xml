@@ -279,7 +279,9 @@ limit,
 dir,
 order,
 mode,
-/utm_.*/]]></uri_params>
+/utm_.*/,
+gclid,
+gclsrc]]></uri_params>
                 <uri_params_layered_navigation>1</uri_params_layered_navigation>
                 <miss_uri_params><![CDATA[no_cache=/^1$/,
 limit=/^([0-9]+)|(all)$/,
