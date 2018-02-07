@@ -26,8 +26,8 @@ class Lesti_Fpc_Model_Observer_Save
         if ($this->_getFpc()->isActive()) {
             $product = $observer->getEvent()->getProduct();
             if ($product->getId()) {
-                $this->_getFpc()->clean(sha1('product_' . $product->getId()));
-
+                $tags = $this->_getAllProductTags($product);
+                $this->_getFpc()->clean($tags);
                 $origData = $product->getOrigData();
                 if (empty($origData)
                     || (!empty($origData) && $product->dataHasChangedFor('status'))
@@ -156,4 +156,55 @@ class Lesti_Fpc_Model_Observer_Save
             $this->_getFpc()->clean($tags);
         }
     }
+
+    /**
+     * @param Mage_Catalog_Model_Product $product
+     */
+    protected function _getAllProductTags($product)
+    {
+        $tags = array();
+        if (!is_object($product) || !$product->getId()) {
+            return $tags;
+        }
+
+        $tags[] = sha1('product_' . $product->getId());
+        $stockItem  = $product->getStockItem();
+        $parentIds = Mage::getModel('catalog/product_type_configurable')
+            ->getParentIdsByChild($product->getId());
+        // Clean tag for partner products, if any
+        foreach ($parentIds as $pid) {
+            $tags[] = sha1('product_' . $pid);
+        }
+
+        if ($parentIds) {
+            // Clean cache for categories on parent products if stock has changed for simple products
+            if ($stockItem && $stockItem->dataHasChangedFor('is_in_stock')) {
+                foreach ($this->_getCategories($parentIds) as $catId) {
+                    $tags[] = sha1('category_' . $catId);
+                }
+            }
+        }
+
+        return $tags;
+    }
+
+    /**
+     * @param array $producIds
+     */
+    protected function _getCategories($productIds)
+    {
+        if (!is_array($productIds)) {
+            $productIds = array($productIds);
+        }
+
+        $catRes = Mage::getResourceModel('catalog/category');
+        $table = $catRes->getTable('catalog/category_product');
+        $conn = $catRes->getReadConnection();
+
+        $query = $conn->select()->from($table, array('category_id'))->where('product_id IN (?)', $productIds);
+        $results = $conn->fetchCol($query);
+
+        return $results;
+    }
+
 }
