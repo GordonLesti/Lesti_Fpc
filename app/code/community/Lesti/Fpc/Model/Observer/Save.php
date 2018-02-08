@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Lesti_Fpc (http:gordonlesti.com/lestifpc)
  *
@@ -27,6 +28,8 @@ class Lesti_Fpc_Model_Observer_Save
             $product = $observer->getEvent()->getProduct();
             if ($product->getId()) {
                 $this->_getFpc()->clean(sha1('product_' . $product->getId()));
+                $this->_cleanAllCMSBlocks();
+                $this->_cleanAllCMSPages();
 
                 $origData = $product->getOrigData();
                 if (empty($origData)
@@ -52,6 +55,8 @@ class Lesti_Fpc_Model_Observer_Save
             $category = $observer->getEvent()->getCategory();
             if ($category->getId()) {
                 $this->_getFpc()->clean(sha1('category_' . $category->getId()));
+                $this->_cleanAllCMSBlocks();
+                $this->_cleanAllCMSPages();
             }
         }
     }
@@ -67,7 +72,7 @@ class Lesti_Fpc_Model_Observer_Save
                 $tags = array(sha1('cms_' . $page->getId()),
                     sha1('cms_' . $page->getIdentifier()));
                 $this->_getFpc()
-                    ->clean($tags, Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG);
+                    ->clean($tags);
             }
         }
     }
@@ -84,8 +89,8 @@ class Lesti_Fpc_Model_Observer_Save
             } elseif ($object instanceof Mage_Index_Model_Event) {
                 $dataObject = $object->getDataObject();
                 if ($object->getType() === 'mass_action' &&
-                    $object->getEntity() === 'catalog_product' &&
-                    $dataObject instanceof Mage_Catalog_Model_Product_Action) {
+                        $object->getEntity() === 'catalog_product' &&
+                        $dataObject instanceof Mage_Catalog_Model_Product_Action) {
                     $this->_catalogProductSaveAfterMassAction(
                         $dataObject->getProductIds()
                     );
@@ -156,4 +161,32 @@ class Lesti_Fpc_Model_Observer_Save
             $this->_getFpc()->clean($tags);
         }
     }
+
+    /**
+     * 
+     */
+    protected function _cleanAllCMSPages()
+    {
+        $pages = Mage::getModel('cms/page')->getCollection();
+        $tags = array();
+        foreach ($pages as $page) {
+            if ($page->getId()) {
+                $tags = array(sha1('cms_' . $page->getId()),
+                    sha1('cms_' . $page->getIdentifier()));
+                $this->_getFpc()->clean($tags);
+            }
+        }
+    }
+
+    protected function _cleanAllCMSBlocks()
+    {
+        $blocks = Mage::getModel('cms/block')->getCollection();
+        foreach ($blocks as $block) {
+            if ($block->getIdentifier()) {
+                $tags = sha1('cmsblock_' . $block->getIdentifier());
+                $this->_getFpc()->clean($tags);
+            }
+        }
+    }
+
 }
