@@ -18,6 +18,7 @@ class Lesti_Fpc_Helper_Block extends Lesti_Fpc_Helper_Abstract
 {
     const DYNAMIC_BLOCKS_XML_PATH = 'system/fpc/dynamic_blocks';
     const LAZY_BLOCKS_XML_PATH = 'system/fpc/lazy_blocks';
+    const JSON_ENCODE_DYNAMIC_BLOCKS_XML_PATH = 'system/fpc/json_encode_dynamic_blocks';
     const LAZY_BLOCKS_VALID_SESSION_PARAM = 'fpc_lazy_blocks_valid';
     const USE_RECENTLY_VIEWED_PRODUCTS_XML_PATH =
         'system/fpc/use_recently_viewed_products';
@@ -36,6 +37,14 @@ class Lesti_Fpc_Helper_Block extends Lesti_Fpc_Helper_Abstract
     public function getLazyBlocks()
     {
         return $this->getCSStoreConfigs(self::LAZY_BLOCKS_XML_PATH);
+    }
+
+    /**
+     * @return array
+     */
+    public function getJsonEncodeDynamicBlocks()
+    {
+        return $this->getCSStoreConfigs(self::JSON_ENCODE_DYNAMIC_BLOCKS_XML_PATH);
     }
 
     /**

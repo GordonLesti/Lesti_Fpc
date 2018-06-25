@@ -258,4 +258,29 @@ class Lesti_Fpc_Helper_Data extends Lesti_Fpc_Helper_Abstract
 
         return 'text/html; charset=UTF-8';
     }
+
+    /**
+     * Use is_ajax as AJAX parameter
+     * @return bool
+     */
+    protected function _isAjaxRequest()
+    {
+        $params = Mage::app()->getRequest()->getParams();
+        return Mage::app()->getRequest()->isAjax() || (isset($params['is_ajax']) && $params['is_ajax'] == 1);
+    }
+
+    /**
+     * @param $blockName
+     * @param $html
+     * @return string
+     */
+    public function parseResponseBlockHtml($blockName, $html)
+    {
+        $jsonEncodeDynamicBlocks = Mage::helper('fpc/block')->getJsonEncodeDynamicBlocks();
+        if (in_array($blockName, $jsonEncodeDynamicBlocks) && $this->_isAjaxRequest()) {
+            return trim(Mage::helper('core')->jsonEncode($html), '"');
+        } else {
+            return $html;
+        }
+    }
 }
