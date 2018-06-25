@@ -42,6 +42,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </dynamic_blocks>
+                        <json_encode_dynamic_blocks>
+                            <label>Dynamic Blocks to JSON Encode in AJAX Response</label>
+                            <frontend_type>textarea</frontend_type>
+                            <comment>All dynamic Blocks which needs to be encoded as JSON in the AJAX response, separated with Comma</comment>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </json_encode_dynamic_blocks>
                         <refresh_actions>
                             <label>Refresh Actions</label>
                             <frontend_type>textarea</frontend_type>

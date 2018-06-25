@@ -169,7 +169,7 @@ class Lesti_Fpc_Model_Observer
                     $placeholder = Mage::helper('fpc/block')
                         ->getPlaceholderHtml($blockName);
                     $html = $observer->getTransport()->getHtml();
-                    $this->_html[] = $html;
+                    $this->_html[] = Mage::helper('fpc')->parseResponseBlockHtml($blockName, $html);
                     $this->_placeholder[] = $placeholder;
                     $observer->getTransport()->setHtml($placeholder);
                 }
@@ -266,7 +266,7 @@ class Lesti_Fpc_Model_Observer
                 if (in_array($blockName, $lazyBlocks)) {
                     $session->setData('fpc_lazy_block_' . $blockName, $html);
                 }
-                $this->_html[] = $html;
+                $this->_html[] = Mage::helper('fpc')->parseResponseBlockHtml($blockName, $html);
             }
         }
     }
