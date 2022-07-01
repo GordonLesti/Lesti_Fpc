@@ -1,9 +1,9 @@
 {
-    "name": "gordonlesti/lesti_fpc",
+    "name": "fballiano/openmage-lesti-fpc",
     "type": "magento-module",
     "description": "Simple Magento Fullpagecache",
     "keywords": ["fpc"],
-    "homepage": "https://github.com/GordonLesti/Lesti_Fpc",
+    "homepage": "https://github.com/fballiano/openmage-lesti-fpc",
     "license": "OSL-3.0",
     "authors": [
         {
@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "magento-hackathon/magento-composer-installer": "^3.0"
+        "magento-hackathon/magento-composer-installer": "^3.1 || ^2.1 || ^4.0"
     },
     "require-dev": {
         "ecomdev/ecomdev_phpunit": "^0.3.7",
