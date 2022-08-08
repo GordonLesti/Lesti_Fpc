@@ -231,6 +231,15 @@
                     </fpc_controller_action_predispatch_adminhtml_cache_massRefresh>
                 </observers>
             </controller_action_predispatch_adminhtml_cache_massRefresh>
+            <controller_action_predispatch_adminhtml_cache_flushSystem>
+                <observers>
+                    <fpc_controller_action_predispatch_adminhtml_cache_flushSystem>
+                        <class>fpc/observer_clean</class>
+                        <type>singleton</type>
+                        <method>adminhtmlCacheFlushAll</method>
+                    </fpc_controller_action_predispatch_adminhtml_cache_flushSystem>
+                </observers>
+            </controller_action_predispatch_adminhtml_cache_flushSystem>
         </events>
     </adminhtml>
     <default>
