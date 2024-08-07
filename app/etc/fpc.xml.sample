@@ -34,6 +34,7 @@
                 <compress_data>1</compress_data>
                 <compress_tags>1</compress_tags>
                 <compress_data>gzip</compress_data>
+                <use_lua>1</use_lua>
             </backend_options-->
 
             <!-- example for apc -->

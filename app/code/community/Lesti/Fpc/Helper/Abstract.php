@@ -25,7 +25,7 @@ abstract class Lesti_Fpc_Helper_Abstract extends Mage_Core_Helper_Abstract
      */
     public function getCSStoreConfigs($path, $store = null)
     {
-        $configs = trim(Mage::getStoreConfig($path, $store));
+        $configs = trim((string)Mage::getStoreConfig($path, $store));
 
         if ($configs) {
             return array_unique(array_map('trim', explode(',', $configs)));

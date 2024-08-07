@@ -23,26 +23,18 @@ class Lesti_Fpc_Model_Observer_Clean
         $this->_getFpc()->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
     }
 
-    public function adminhtmlCacheFlushAll()
+    public function flushFpc(Varien_Event_Observer $observer)
     {
+        // type only exist for event adminhtml_cache_refresh_type
+        $type = $observer->getEvent()->getData('type');
+        if (! empty($type) && ($type !== self::CACHE_TYPE || ! $this->_getFpc()->isActive())) {
+            return;
+        }
+
         $this->_getFpc()->clean();
     }
 
-    public function controllerActionPredispatchAdminhtmlCacheMassRefresh()
-    {
-        $types = Mage::app()->getRequest()->getParam('types');
-        if ($this->_getFpc()->isActive()) {
-            if ((is_array($types) && in_array(self::CACHE_TYPE, $types)) ||
-                $types == self::CACHE_TYPE) {
-                $this->_getFpc()->clean();
-            }
-        }
-    }
-
-    /**
-     * @return Lesti_Fpc_Model_Fpc
-     */
-    protected function _getFpc()
+    protected function _getFpc(): Lesti_Fpc_Model_Fpc
     {
         return Mage::getSingleton('fpc/fpc');
     }

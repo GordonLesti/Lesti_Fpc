@@ -15,7 +15,7 @@
 <config>
     <modules>
         <Lesti_Fpc>
-            <version>1.4.8</version>
+            <version>1.6.0</version>
         </Lesti_Fpc>
     </modules>
     <global>
@@ -117,10 +117,28 @@
                     <fpc_adminhtml_cache_flush_all>
                         <class>fpc/observer_clean</class>
                         <type>singleton</type>
-                        <method>adminhtmlCacheFlushAll</method>
+                        <method>flushFpc</method>
                     </fpc_adminhtml_cache_flush_all>
                 </observers>
             </adminhtml_cache_flush_all>
+            <adminhtml_cache_flush_system>
+                <observers>
+                    <fpc_application_cache_flush_system>
+                        <class>fpc/observer_clean</class>
+                        <type>singleton</type>
+                        <method>flushFpc</method>
+                    </fpc_application_cache_flush_system>
+                </observers>
+            </adminhtml_cache_flush_system>
+            <adminhtml_cache_refresh_type>
+                <observers>
+                    <fpc_adminhtml_cache_refresh_type>
+                        <class>fpc/observer_clean</class>
+                        <type>singleton</type>
+                        <method>flushFpc</method>
+                    </fpc_adminhtml_cache_refresh_type>
+                </observers>
+            </adminhtml_cache_refresh_type>
             <cataloginventory_stock_item_save_after>
                 <observers>
                     <fpc_cataloginventory_stock_item_save_after>
@@ -220,19 +238,6 @@
             </updates>
         </layout>
     </frontend>
-    <adminhtml>
-        <events>
-            <controller_action_predispatch_adminhtml_cache_massRefresh>
-                <observers>
-                    <fpc_controller_action_predispatch_adminhtml_cache_massRefresh>
-                        <class>fpc/observer_clean</class>
-                        <type>singleton</type>
-                        <method>controllerActionPredispatchAdminhtmlCacheMassRefresh</method>
-                    </fpc_controller_action_predispatch_adminhtml_cache_massRefresh>
-                </observers>
-            </controller_action_predispatch_adminhtml_cache_massRefresh>
-        </events>
-    </adminhtml>
     <default>
         <system>
             <fpc>
